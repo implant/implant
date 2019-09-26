@@ -11,15 +11,29 @@ get_config() {
     fi
 }
 
+install_deps() {
+    if [ -z $DEPS ]; then
+        return 0
+    fi
+    printf "installing dependencies..." 1>&2
+    apt-get update >> $LOG 2>&1
+    apt-get install -y $DEPS >> $LOG 2>&1
+    if [ $? -ne 0 ]; then
+        printf "FAILED\n" 1>&2
+        return 1
+    fi
+    printf "OK\n" 1>&2
+}
+
 install_apk() {
     APK=$1
     printf "installing $APK..." 1>&2
     $ADB -H host.docker.internal install $APK >> $LOG
-    if [ $? -eq 0 ]; then
-        printf "OK\n" 1>&2
-    else
+    if [ $? -ne 0 ]; then
         printf "FAILED\n" 1>&2
+        return 1
     fi
+    printf "OK\n" 1>&2
 }
 
 clone_and_patch() {

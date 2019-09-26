@@ -22,6 +22,7 @@ build() {
     SUBDIR=$(get_config subdir app)
     TARGET=$(get_config target debug)
     FLAVOR=$(get_config flavor)
+    DEPS=$(get_config deps)
     GIT_URL=$(get_config git.url)
     GIT_SHA=$(get_config git.sha)
 
@@ -34,10 +35,12 @@ build() {
     printf "SUBDIR: $SUBDIR\n" >> $LOG
     printf "TARGET: $TARGET\n" >> $LOG
     printf "FLAVOR: $FLAVOR\n" >> $LOG
+    printf "DEPS: $DEPS\n" >> $LOG
     printf "URL: $GIT_URL\n" >> $LOG
     printf "SHA: $GIT_SHA\n" >> $LOG
     printf "\n" >> $LOG
 
+    install_deps
 
     clone_and_patch
 

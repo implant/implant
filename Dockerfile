@@ -5,7 +5,7 @@ ENV SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
     ANDROID_HOME=/root/Android/Sdk
 
 RUN apt-get update && \
-    apt-get install -y wget git unzip bzip2 && \
+    apt-get install -y wget git unzip && \
     wget $YQ -O /usr/local/bin/yq -o /dev/null && \
     chmod +x /usr/local/bin/yq && \
     rm -rf /var/lib/apt/lists/* && \

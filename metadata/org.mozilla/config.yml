@@ -2,3 +2,4 @@ git:
     url: https://github.com/mozilla-mobile/fenix
     sha: da66c04
 flavor: GeckoBeta
+deps: bzip2
