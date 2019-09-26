@@ -9,23 +9,35 @@ build() {
     METADATA=/metadata/$PACKAGE
 
     if [ -d $METADATA ]; then
-        source $METADATA/env
-    elif [ -f $METADATA ]; then
-        source $METADATA
+        CONFIG=$METADATA/config.yml
+    elif [ -f $METADATA.yml ]; then
+        CONFIG=$METADATA.yml
     else
         printf "Invalid package: $PACKAGE\n" 1>&2
         return 1
     fi
 
-    printf "\n\n***** $PACKAGE *****\n\n" 1>&2
-
     OUT_DIR=/output/$PACKAGE
     LOG=$OUT_DIR/build.log
-    SUBDIR=${SUBDIR:-app}
-    TARGET=${TARGET:-Debug}
+    SUBDIR=$(get_config subdir app)
+    TARGET=$(get_config target debug)
+    FLAVOR=$(get_config flavor)
+    GIT_URL=$(get_config git.url)
+    GIT_SHA=$(get_config git.sha)
 
     rm -f $OUT_DIR/*.apk
     mkdir -p $OUT_DIR
+
+    printf "\n" >> $LOG
+    printf "***** $PACKAGE *****\n" >> $LOG
+    printf "TIME: $(date)\n" >> $LOG
+    printf "SUBDIR: $SUBDIR\n" >> $LOG
+    printf "TARGET: $TARGET\n" >> $LOG
+    printf "FLAVOR: $FLAVOR\n" >> $LOG
+    printf "URL: $GIT_URL\n" >> $LOG
+    printf "SHA: $GIT_SHA\n" >> $LOG
+    printf "\n" >> $LOG
+
 
     clone_and_patch
 

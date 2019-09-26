@@ -1,0 +1,4 @@
+git:
+    url: https://github.com/mozilla-mobile/focus-android
+    sha: 3c87673
+flavor: FocusArm

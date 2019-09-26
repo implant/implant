@@ -1,5 +1,16 @@
 #!/bin/bash
 
+get_config() {
+    PROP=$1
+    DEFAULT=$2
+    value=`yq r $CONFIG $PROP`
+    if [ $value != null ]; then
+        echo $value
+    else
+        echo $DEFAULT
+    fi
+}
+
 install_apk() {
     APK=$1
     printf "installing $APK..." 1>&2
@@ -15,8 +26,8 @@ clone_and_patch() {
     printf "cloning $GIT_URL\n" 1>&2
     git clone --recurse-submodules $GIT_URL $PACKAGE >> $LOG 2>&1
     cd $PACKAGE
-    printf "resetting HEAD to $VERSION\n" 1>&2
-    git reset --hard $VERSION >> $LOG 2>&1
+    printf "resetting HEAD to $GIT_SHA\n" 1>&2
+    git reset --hard $GIT_SHA >> $LOG 2>&1
     git submodule update >> $LOG 2>&1
 
     if [ -f $METADATA/patch ]; then
