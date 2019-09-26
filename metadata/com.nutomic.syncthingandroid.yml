@@ -1,0 +1,9 @@
+git:
+    url: https://github.com/syncthing/syncthing-android
+    sha: fdcb36d
+deps: python libncurses5
+ndk: r15c
+prebuild: >
+    GO_URL=https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz &&
+    wget -o /dev/null -c -O- $GO_URL | tar xzf - -C /usr/local &&
+    PATH=$PATH:/usr/local/go/bin $GRADLE buildNative

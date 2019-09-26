@@ -1,10 +1,47 @@
 #!/bin/bash
 
+prebuild() {
+    if [ -z "$PREBUILD" ]; then
+        return 0
+    fi
+    printf "prebuild..." 1>&2
+    eval "$PREBUILD" >> $LOG 2>&1
+    if [ $? -ne 0 ]; then
+        printf "FAILED\n" 1>&2
+        exit 1
+    fi
+    printf "OK\n" 1>&2
+}
+
+setup_ndk() {
+    if [ -z "$NDK" ]; then
+        return 0
+    fi
+    NDK_DIR=android-ndk-$NDK
+    NDK_ZIP=$NDK_DIR-linux-x86_64.zip
+    NDK_URL=https://dl.google.com/android/repository/$NDK_ZIP &&
+    export ANDROID_NDK_HOME=/$NDK_DIR
+    printf "downloading ndk..." 1>&2
+    wget -o /dev/null -c -O $DOWNLOADS/$NDK_ZIP $NDK_URL
+    if [ $? -ne 0 ]; then
+        printf "FAILED\n" 1>&2
+        exit 1
+    fi
+    printf "OK\n" 1>&2
+    printf "unzipping ndk..." 1>&2
+    unzip -oq $DOWNLOADS/$NDK_ZIP -d /
+    if [ $? -ne 0 ]; then
+        printf "FAILED\n" 1>&2
+        exit 1
+    fi
+    printf "OK\n" 1>&2
+}
+
 get_config() {
     PROP=$1
     DEFAULT=$2
     value=`yq r $CONFIG $PROP`
-    if [ $value != null ]; then
+    if [ "$value" != null ]; then
         echo $value
     else
         echo $DEFAULT
@@ -12,7 +49,7 @@ get_config() {
 }
 
 install_deps() {
-    if [ -z $DEPS ]; then
+    if [ -z "$DEPS" ]; then
         return 0
     fi
     printf "installing dependencies..." 1>&2
@@ -52,19 +89,20 @@ clone_and_patch() {
 
 download_gradle() {
     DISTRIBUTION=$(grep -e "^distributionUrl=https\\\\://services.gradle.org/" gradle/wrapper/gradle-wrapper.properties)
-    GRADLE=$(echo $DISTRIBUTION | grep -o "[0-9]\+\(\.[0-9]\+\)\+")
-    GRADLE_ZIP=$HOME/.gradle/caches/gradle-$GRADLE-bin.zip
+    GRADLE_VERSION=$(echo $DISTRIBUTION | grep -o "[0-9]\+\(\.[0-9]\+\)\+")
+    GRADLE_ZIP=$DOWNLOADS/gradle-$GRADLE_VERSION-bin.zip
     GRADLE_SHA=$GRADLE_ZIP.sha256
-    GRADLE_ZIP_URL=https://services.gradle.org/distributions/gradle-$GRADLE-bin.zip
+    GRADLE_ZIP_URL=https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
     GRADLE_SHA_URL=$GRADLE_ZIP_URL.sha256
+    GRADLE=/gradle-$GRADLE_VERSION/bin/gradle
 
     if [ ! -f $GRADLE_SHA ]; then
-        printf "downloading gradle-$GRADLE checksum\n" 1>&2
+        printf "downloading gradle-$GRADLE_VERSION checksum\n" 1>&2
         wget --quiet $GRADLE_SHA_URL -O $GRADLE_SHA
     fi
 
     if [ ! -f $GRADLE_ZIP ]; then
-        printf "downloading gradle-$GRADLE\n" 1>&2
+        printf "downloading gradle-$GRADLE_VERSION\n" 1>&2
         wget --quiet $GRADLE_ZIP_URL -O $GRADLE_ZIP
     fi
 
@@ -76,7 +114,7 @@ download_gradle() {
         exit 1;
     fi
 
-    printf "unzipping gradle-$GRADLE\n" 1>&2
+    printf "unzipping gradle-$GRADLE_VERSION\n" 1>&2
 
     unzip -oq $GRADLE_ZIP -d /
 }
