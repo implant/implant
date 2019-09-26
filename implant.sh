@@ -43,7 +43,11 @@ build() {
     printf "URL: $GIT_URL\n" >> $LOG
     GIT_SHA=$(get_config git.sha)
     printf "SHA: $GIT_SHA\n" >> $LOG
+    GRADLEPROPS=$(get_config gradle_props)
+    printf "GRADLEPROPS: $GRADLEPROPS\n" >> $LOG
     printf "\n" >> $LOG
+
+    setup_gradle_properties
 
     setup_ndk
 

@@ -13,6 +13,15 @@ prebuild() {
     printf "OK\n" 1>&2
 }
 
+setup_gradle_properties() {
+    if [ -z "$GRADLEPROPS" ]; then
+        return 0
+    fi
+    printf "creating gradle.properties..." 1>&2
+    echo $GRADLEPROPS >> gradle.properties
+    printf "OK\n" 1>&2
+}
+
 setup_ndk() {
     if [ -z "$NDK" ]; then
         return 0
