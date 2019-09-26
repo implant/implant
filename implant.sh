@@ -13,8 +13,16 @@ build() {
         CONFIG=$METADATA/config.yml
     elif [ -f $METADATA.yml ]; then
         CONFIG=$METADATA.yml
+    elif [ -f $METADATA ]; then
+        CONFIG=$METADATA
     else
         printf "Invalid package: $PACKAGE\n" 1>&2
+        return 1
+    fi
+
+    yq r $CONFIG > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        printf "Invalid yml file: $CONFIG\n" 1>&2
         return 1
     fi
 
