@@ -97,18 +97,13 @@ install_apk() {
     puts "OK"
 }
 
-clone_and_patch() {
+clone() {
     puts "cloning $GIT_URL"
     git clone --recurse-submodules $GIT_URL $PACKAGE >> $LOG 2>&1
     cd $PACKAGE
     puts "resetting HEAD to $GIT_SHA"
     git reset --hard $GIT_SHA >> $LOG 2>&1
     git submodule update >> $LOG 2>&1
-
-    if [ -f $METADATA/patch ]; then
-        puts "applying patch"
-        git apply $METADATA/patch >> $LOG
-    fi
 }
 
 download_gradle() {

@@ -10,9 +10,7 @@ DOWNLOADS=$HOME/.implant/downloads
 build() {
     METADATA=/metadata/$PACKAGE
 
-    if [ -d $METADATA ]; then
-        CONFIG=$METADATA/config.yml
-    elif [ -f $METADATA.yml ]; then
+    if [ -f $METADATA.yml ]; then
         CONFIG=$METADATA.yml
     elif [ -f $METADATA ]; then
         CONFIG=$METADATA
@@ -50,7 +48,7 @@ build() {
 
     install_deps
 
-    clone_and_patch
+    clone
 
     download_gradle
 
