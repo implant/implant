@@ -1,0 +1,4 @@
+git:
+    url: https://github.com/mendhak/gpslogger
+    sha: 3701107
+subdir: gpslogger
