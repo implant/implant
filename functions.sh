@@ -1,25 +1,37 @@
 #!/bin/bash
 
+log() {
+    printf "${1:-}\n" >> $LOG
+}
+
+put() {
+    printf "$1" 1>&2
+}
+
+puts() {
+    printf "$1\n" 1>&2
+}
+
 prebuild() {
     if [ -z "$PREBUILD" ]; then
         return 0
     fi
-    printf "prebuild..." 1>&2
+    put "prebuild..."
     eval "$PREBUILD" >> $LOG 2>&1
     if [ $? -ne 0 ]; then
-        printf "FAILED\n" 1>&2
+        puts "FAILED"
         exit 1
     fi
-    printf "OK\n" 1>&2
+    puts "OK"
 }
 
 setup_gradle_properties() {
     if [ -z "$GRADLEPROPS" ]; then
         return 0
     fi
-    printf "creating gradle.properties..." 1>&2
+    put "creating gradle.properties..."
     echo $GRADLEPROPS >> gradle.properties
-    printf "OK\n" 1>&2
+    puts "OK"
 }
 
 setup_ndk() {
@@ -30,29 +42,31 @@ setup_ndk() {
     NDK_ZIP=$NDK_DIR-linux-x86_64.zip
     NDK_URL=https://dl.google.com/android/repository/$NDK_ZIP &&
     export ANDROID_NDK_HOME=/$NDK_DIR
-    printf "downloading ndk..." 1>&2
+    put "downloading ndk..."
     wget -o /dev/null -c -O $DOWNLOADS/$NDK_ZIP $NDK_URL
     if [ $? -ne 0 ]; then
-        printf "FAILED\n" 1>&2
+        puts "FAILED"
         exit 1
     fi
-    printf "OK\n" 1>&2
-    printf "unzipping ndk..." 1>&2
+    puts "OK"
+    put "unzipping ndk..."
     unzip -oq $DOWNLOADS/$NDK_ZIP -d /
     if [ $? -ne 0 ]; then
-        printf "FAILED\n" 1>&2
+        puts "FAILED"
         exit 1
     fi
-    printf "OK\n" 1>&2
+    puts "OK"
 }
 
 get_config() {
     PROP=$1
-    DEFAULT=$2
+    DEFAULT=${2:-}
     value=`yq r $CONFIG $PROP`
     if [ "$value" != null ]; then
+        log "$1=$value"
         echo $value
     else
+        log "$1=$DEFAULT [default]"
         echo $DEFAULT
     fi
 }
@@ -61,37 +75,37 @@ install_deps() {
     if [ -z "$DEPS" ]; then
         return 0
     fi
-    printf "installing dependencies..." 1>&2
+    put "installing dependencies..."
     apt-get update >> $LOG 2>&1
     apt-get install -y $DEPS >> $LOG 2>&1
     if [ $? -ne 0 ]; then
-        printf "FAILED\n" 1>&2
+        puts "FAILED"
         return 1
     fi
-    printf "OK\n" 1>&2
+    puts "OK"
 }
 
 install_apk() {
     APK=$1
-    printf "installing $APK..." 1>&2
+    put "installing $APK..."
     $ADB -H host.docker.internal install $APK >> $LOG
     if [ $? -ne 0 ]; then
-        printf "FAILED\n" 1>&2
+        puts "FAILED"
         return 1
     fi
-    printf "OK\n" 1>&2
+    puts "OK"
 }
 
 clone_and_patch() {
-    printf "cloning $GIT_URL\n" 1>&2
+    puts "cloning $GIT_URL"
     git clone --recurse-submodules $GIT_URL $PACKAGE >> $LOG 2>&1
     cd $PACKAGE
-    printf "resetting HEAD to $GIT_SHA\n" 1>&2
+    puts "resetting HEAD to $GIT_SHA"
     git reset --hard $GIT_SHA >> $LOG 2>&1
     git submodule update >> $LOG 2>&1
 
     if [ -f $METADATA/patch ]; then
-        printf "applying patch\n" 1>&2
+        puts "applying patch"
         git apply $METADATA/patch >> $LOG
     fi
 }
@@ -106,12 +120,12 @@ download_gradle() {
     GRADLE=/gradle-$GRADLE_VERSION/bin/gradle
 
     if [ ! -f $GRADLE_SHA ]; then
-        printf "downloading gradle-$GRADLE_VERSION checksum\n" 1>&2
+        puts "downloading gradle-$GRADLE_VERSION checksum"
         wget --quiet $GRADLE_SHA_URL -O $GRADLE_SHA
     fi
 
     if [ ! -f $GRADLE_ZIP ]; then
-        printf "downloading gradle-$GRADLE_VERSION\n" 1>&2
+        puts "downloading gradle-$GRADLE_VERSION"
         wget --quiet $GRADLE_ZIP_URL -O $GRADLE_ZIP
     fi
 
@@ -119,11 +133,11 @@ download_gradle() {
 
     if [ $? != 0 ]; then
         rm $GRADLE_ZIP $GRADLE_SHA
-        printf "gradle download failed\n" 1>&2
+        puts "gradle download failed"
         exit 1;
     fi
 
-    printf "unzipping gradle-$GRADLE_VERSION\n" 1>&2
+    puts "unzipping gradle-$GRADLE_VERSION"
 
     unzip -oq $GRADLE_ZIP -d /
 }

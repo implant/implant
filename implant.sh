@@ -16,13 +16,13 @@ build() {
     elif [ -f $METADATA ]; then
         CONFIG=$METADATA
     else
-        printf "Invalid package: $PACKAGE\n" 1>&2
+        puts "Invalid package: $PACKAGE"
         return 1
     fi
 
     yq r $CONFIG > /dev/null 2>&1
     if [ $? -ne 0 ]; then
-        printf "Invalid yml file: $CONFIG\n" 1>&2
+        puts "Invalid yml file: $CONFIG"
         return 1
     fi
 
@@ -32,28 +32,18 @@ build() {
     mkdir -p $OUT_DIR $DOWNLOADS
 
     LOG=$OUT_DIR/build.log
-    printf "\n" >> $LOG
-    printf "***** $PACKAGE *****\n" >> $LOG
-    printf "TIME: $(date)\n" >> $LOG
+    log
+    log "***** $PACKAGE $(date) *****"
     SUBDIR=$(get_config subdir app)
-    printf "SUBDIR: $SUBDIR\n" >> $LOG
     TARGET=$(get_config target debug)
-    printf "TARGET: $TARGET\n" >> $LOG
     FLAVOR=$(get_config flavor)
-    printf "FLAVOR: $FLAVOR\n" >> $LOG
     NDK=$(get_config ndk)
-    printf "NDK: $NDK\n" >> $LOG
     PREBUILD=$(get_config prebuild)
-    printf "PREBUILD: $PREBUILD\n" >> $LOG
     DEPS=$(get_config deps)
-    printf "DEPS: $DEPS\n" >> $LOG
     GIT_URL=$(get_config git.url)
-    printf "URL: $GIT_URL\n" >> $LOG
     GIT_SHA=$(get_config git.sha)
-    printf "SHA: $GIT_SHA\n" >> $LOG
     GRADLEPROPS=$(get_config gradle_props)
-    printf "GRADLEPROPS: $GRADLEPROPS\n" >> $LOG
-    printf "\n" >> $LOG
+    log
 
     setup_gradle_properties
 
@@ -74,13 +64,13 @@ build() {
         BUILDDIR=$SUBDIR/$BUILDDIR
     fi
 
-    printf "building $TASK..." 1>&2
+    put "building $TASK..."
 
     /bin/bash -c "$GRADLE --stacktrace $TASK" >> $LOG 2>&1
     if [ $? -eq 0 ]; then
-        printf "OK\n" 1>&2
+        puts "OK"
     else
-        printf "FAILED\n" 1>&2
+        puts "FAILED"
         return 1
     fi
 
