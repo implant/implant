@@ -1,7 +1,7 @@
 git:
     url: https://github.com/signalapp/Signal-Android
     sha: 1b48fd0
-subdir: ''
+project: ''
 flavor: website
 prebuild: >
     sed -i 's/universalApk true/universalApk false/g' build.gradle &&

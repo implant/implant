@@ -33,7 +33,7 @@ build() {
     LOG=$OUT_DIR/build.log
     log
     log "***** $PACKAGE $(date) *****"
-    SUBDIR=$(get_config subdir app)
+    PROJECT=$(get_config project app)
     TARGET=$(get_config target debug)
     FLAVOR=$(get_config flavor)
     NDK=$(get_config ndk)
@@ -58,9 +58,9 @@ build() {
 
     TASK=assemble$FLAVOR$TARGET
     BUILDDIR=build/
-    if [ ! -z $SUBDIR ]; then
-        TASK=$SUBDIR:$TASK
-        BUILDDIR=$SUBDIR/$BUILDDIR
+    if [ ! -z $PROJECT ]; then
+        TASK=$PROJECT:$TASK
+        BUILDDIR=$PROJECT/$BUILDDIR
     fi
 
     put "building $TASK..."
@@ -73,7 +73,7 @@ build() {
         return 1
     fi
 
-    find $SUBDIR -regex '^.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
+    find $PROJECT -regex '^.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
 
     for apk in $OUT_DIR/*.apk; do
         install_apk $apk
