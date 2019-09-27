@@ -87,8 +87,9 @@ install_deps() {
 
 install_apk() {
     APK=$1
+    HOST=$(getent hosts host.docker.internal | awk '{ printf $1 }')
     put "installing $APK..."
-    $ADB -H host.docker.internal install $APK >> $LOG
+    $ADB -H ${HOST:-localhost} install $APK >> $LOG
     if [ $? -ne 0 ]; then
         puts "FAILED"
         return 1
