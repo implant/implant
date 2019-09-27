@@ -1,0 +1,9 @@
+git:
+    url: https://github.com/signalapp/Signal-Android
+    sha: 1b48fd0
+subdir: ''
+flavor: website
+prebuild: >
+    sed -i 's/universalApk true/universalApk false/g' build.gradle &&
+    sed -i 's/[[:space:]]*abiFilters .*//g' build.gradle &&
+    sed -i "s/include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'/include 'armeabi-v7a'/g" build.gradle
