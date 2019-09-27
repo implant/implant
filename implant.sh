@@ -45,8 +45,6 @@ build() {
     GRADLEPROPS=$(get_config gradle_props)
     log
 
-    setup_gradle_properties
-
     setup_ndk
 
     install_deps
@@ -54,6 +52,8 @@ build() {
     clone_and_patch
 
     download_gradle
+
+    setup_gradle_properties
 
     prebuild
 
