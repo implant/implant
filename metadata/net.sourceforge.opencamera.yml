@@ -1,0 +1,4 @@
+git:
+    url: https://git.code.sf.net/p/opencamera/code
+    sha: 330ee6
+deps: libncurses5
