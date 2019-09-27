@@ -99,8 +99,8 @@ install_apk() {
 
 clone() {
     puts "cloning $GIT_URL"
-    git clone --recurse-submodules $GIT_URL $PACKAGE >> $LOG 2>&1
-    cd $PACKAGE
+    git clone --recurse-submodules $GIT_URL $SRC/$PACKAGE >> $LOG 2>&1
+    cd $SRC/$PACKAGE
     puts "resetting HEAD to $GIT_SHA"
     git reset --hard $GIT_SHA >> $LOG 2>&1
     git submodule update >> $LOG 2>&1

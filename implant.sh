@@ -1,19 +1,21 @@
 #!/bin/bash
 set -o errexit -o pipefail -o noclobber -o nounset
 
-source /functions.sh
-
 ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 ADB=$ANDROID_HOME/platform-tools/adb
-DOWNLOADS=$HOME/.implant/downloads
+IMPLANT=$HOME/.implant
+DOWNLOADS=$IMPLANT/downloads
+METADATA=$IMPLANT/metadata
+SRC=$IMPLANT/src
+OUT=$IMPLANT/output
+
+source $IMPLANT/functions.sh
 
 build() {
-    METADATA=/metadata/$PACKAGE
-
-    if [ -f $METADATA.yml ]; then
-        CONFIG=$METADATA.yml
-    elif [ -f $METADATA ]; then
-        CONFIG=$METADATA
+    if [ -f $METADATA/$PACKAGE.yml ]; then
+        CONFIG=$METADATA/$PACKAGE.yml
+    elif [ -f $METADATA/$PACKAGE ]; then
+        CONFIG=$METADATA/$PACKAGE
     else
         puts "Invalid package: $PACKAGE"
         return 1
@@ -25,7 +27,7 @@ build() {
         return 1
     fi
 
-    OUT_DIR=/output/$PACKAGE
+    OUT_DIR=$OUT/$PACKAGE
 
     rm -f $OUT_DIR/*.apk
     mkdir -p $OUT_DIR $DOWNLOADS
