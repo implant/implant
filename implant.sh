@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o errexit -o pipefail -o noclobber -o nounset
 
 source /functions.sh
 
@@ -81,6 +82,35 @@ build() {
     done
 }
 
-for PACKAGE in "$@"; do
-    $(build)
-done
+if [ "$#" -eq 0 ]; then
+    puts "missing arguments"
+    # TODO: print usage
+    exit 1
+fi
+
+case $1 in
+    i|install)
+        shift
+        for PACKAGE in "$@"; do
+            $(build)
+        done
+        ;;
+    l|list)
+        puts "not implemented"
+        # TODO: list apps
+        exit 1
+        ;;
+    init|initialize)
+        puts "not implemented"
+        # TODO: generate keys
+        exit 1
+        ;;
+    -h|--help|h|help)
+        puts "not implemented"
+        # TODO: print usage
+        exit 1
+        ;;
+    *)
+        puts "unknown command: $1"
+        exit 1
+esac
