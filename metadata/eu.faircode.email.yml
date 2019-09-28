@@ -1,0 +1,5 @@
+git:
+    url: https://github.com/M66B/FairEmail
+    sha: ced0103
+prebuild: >
+    sed -i 's/.*keystoreProperties.*//g' app/build.gradle
