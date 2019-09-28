@@ -20,12 +20,12 @@ implant install com.mozilla com.nutomic.syncthing org.schabi.newpipe
 
 * Install Docker for [Linux](https://docs.docker.com/v17.12/install/#server), [macOS](https://docs.docker.com/docker-for-mac/install/), or [Windows](https://docs.docker.com/docker-for-windows/install/)
 * [Enable USB debugging](https://developer.android.com/studio/debug/dev-options) on your Android device
-* **macOS/Windows:** Start an `adb` server. Docker can't see your phone :sob:
+* **macOS/Windows:** [Start an `adb` server](https://github.com/abaker/implant/wiki/Start-an-adb-server). Docker can't see your phone :sob:
 
 ### Recommended setup
 
-* Generate adb and signing keys
-* Create an `implant` alias
+* [Generate adb and signing keys](https://github.com/abaker/implant/wiki/Don't-lose-your-keys!)
+* [Create an `implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
 
 ### Please contribute!
 
