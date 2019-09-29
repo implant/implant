@@ -1,0 +1,4 @@
+git:
+    url: https://github.com/jcarolus/android-chess
+    sha: e1078f1
+flavor: playStore
