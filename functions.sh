@@ -97,13 +97,18 @@ install_apk() {
     puts "OK"
 }
 
+clone_and_cd() {
+    clone $1 $2 $3
+    cd $3
+}
+
 clone() {
-    puts "cloning $GIT_URL"
-    git clone --recurse-submodules $GIT_URL $SRC/$PACKAGE >> $LOG 2>&1
-    cd $SRC/$PACKAGE
-    puts "resetting HEAD to $GIT_SHA"
-    git reset --hard $GIT_SHA >> $LOG 2>&1
-    git submodule update >> $LOG 2>&1
+    URL=$1
+    SHA=$2
+    DIR=$3
+    puts "cloning $URL@$SHA"
+    git clone $URL $DIR >> $LOG 2>&1
+    (cd $DIR ; git reset --hard $SHA ; git submodule update --init --recursive) >> $LOG 2>&1
 }
 
 download_gradle() {
