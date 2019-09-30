@@ -11,7 +11,7 @@ OUT=$IMPLANT/output
 
 source $IMPLANT/functions.sh
 
-build() {
+build_app() {
     if [ -f $METADATA/$PACKAGE.yml ]; then
         CONFIG=$METADATA/$PACKAGE.yml
     elif [ -f $METADATA/$PACKAGE ]; then
@@ -76,7 +76,9 @@ build() {
     fi
 
     find $PROJECT -regex '^.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
+}
 
+install_app() {
     for apk in $OUT_DIR/*.apk; do
         install_apk $apk
     done
@@ -92,7 +94,14 @@ case $1 in
     i|install)
         shift
         for PACKAGE in "$@"; do
-            $(build)
+            $(build_app)
+            $(install_app)
+        done
+        ;;
+    b|build)
+        shift
+        for PACKAGE in "$@"; do
+            $(build_app)
         done
         ;;
     l|list)
