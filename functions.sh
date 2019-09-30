@@ -77,7 +77,7 @@ install_deps() {
     fi
     put "installing dependencies..."
     apt-get update >> $LOG 2>&1
-    apt-get install -y $DEPS >> $LOG 2>&1
+    apt-get install --no-install-suggests --no-install-recommends -y $DEPS >> $LOG 2>&1
     if [ $? -ne 0 ]; then
         puts "FAILED"
         return 1

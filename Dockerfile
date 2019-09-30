@@ -8,7 +8,7 @@ ENV SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
 
 RUN apt-get update && \
     apt-get install -y wget git unzip && \
-    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
     wget $YQ -O /usr/local/bin/yq -o /dev/null && \
     chmod +x /usr/local/bin/yq && \
     wget $SDK -O sdk.zip -o /dev/null && \
