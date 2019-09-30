@@ -1,0 +1,26 @@
+git:
+    url: https://github.com/videolan/vlc-android
+    sha: 1c70d30
+project: vlc-android
+ndk: r18b
+deps: >
+    openjdk-8-jdk-headless autoconf m4 automake ant autopoint bison flex
+    build-essential libtool libtool-bin patch pkg-config ragel rpm2cpio
+    libwebkitgtk-1.0-0 yasm ragel g++ protobuf-compiler gettext libgsm1-dev
+    expect python3 locales libltdl-dev
+gradle: 4.10.1
+prebuild: >
+    echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list &&
+    apt-get update && apt-get -y -t stretch-backports install cmake &&
+    rm -f /etc/apt/sources.list.d/stretch-backports.list &&
+    echo "deb http://deb.debian.org/debian testing main" > /etc/apt/sources.list.d/testing.list &&
+    apt-get update && apt-get -y -t testing --no-install-suggests --no-install-recommends install automake &&
+    rm -f /etc/apt/sources.list.d/testing.list &&
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 &&
+    mkdir -p gradle/wrapper &&
+    clone https://git.videolan.org/git/vlc/vlc-3.0 vlc dedb3bd &&
+    clone http://code.videolan.org/videolan/medialibrary medialibrary/medialibrary d473709 &&
+    sed -i 's/git am /git apply /g' compile.sh &&
+    sed -i 's/\.\/gradlew/$GRADLE/g' compile.sh
+build: >
+    GRADLE="$GRADLE" ANDROID_SDK="$ANDROID_HOME" ANDROID_NDK="$ANDROID_NDK_HOME" ./compile.sh -a armeabi-v7a

@@ -1,10 +1,9 @@
 #!/bin/bash
-set -o errexit -o pipefail -o noclobber -o nounset
 
 ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 ADB=$ANDROID_HOME/platform-tools/adb
 IMPLANT=$HOME/.implant
-TMP=$HOME/.implant/tmp
+TMP=$IMPLANT/tmp
 DOWNLOADS=$IMPLANT/downloads
 METADATA=$IMPLANT/metadata
 SRC=$IMPLANT/src
@@ -43,6 +42,7 @@ build_app() {
     PREBUILD=$(get_config prebuild)
     BUILD=$(get_config build)
     DEPS=$(get_config deps)
+    GRADLE_VERSION=$(get_config gradle)
     GIT_URL=$(get_config git.url)
     GIT_SHA=$(get_config git.sha)
     GRADLEPROPS=$(get_config gradle_props)
