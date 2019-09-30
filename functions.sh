@@ -41,7 +41,7 @@ setup_ndk() {
     NDK_DIR=android-ndk-$NDK
     NDK_ZIP=$NDK_DIR-linux-x86_64.zip
     NDK_URL=https://dl.google.com/android/repository/$NDK_ZIP &&
-    export ANDROID_NDK_HOME=/$NDK_DIR
+    export ANDROID_NDK_HOME=$TMP/$NDK_DIR
     put "downloading ndk..."
     wget -o /dev/null -c -O $DOWNLOADS/$NDK_ZIP $NDK_URL
     if [ $? -ne 0 ]; then
@@ -50,7 +50,7 @@ setup_ndk() {
     fi
     puts "OK"
     put "unzipping ndk..."
-    unzip -oq $DOWNLOADS/$NDK_ZIP -d /
+    unzip -oq $DOWNLOADS/$NDK_ZIP -d $TMP/
     if [ $? -ne 0 ]; then
         puts "FAILED"
         exit 1
@@ -118,7 +118,7 @@ download_gradle() {
     GRADLE_SHA=$GRADLE_ZIP.sha256
     GRADLE_ZIP_URL=https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
     GRADLE_SHA_URL=$GRADLE_ZIP_URL.sha256
-    GRADLE=/gradle-$GRADLE_VERSION/bin/gradle
+    GRADLE=$TMP/gradle-$GRADLE_VERSION/bin/gradle
 
     if [ ! -f $GRADLE_SHA ]; then
         puts "downloading gradle-$GRADLE_VERSION checksum"
@@ -140,6 +140,6 @@ download_gradle() {
 
     puts "unzipping gradle-$GRADLE_VERSION"
 
-    unzip -oq $GRADLE_ZIP -d /
+    unzip -oq $GRADLE_ZIP -d $TMP/
 }
 

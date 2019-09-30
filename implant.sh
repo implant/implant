@@ -4,6 +4,7 @@ set -o errexit -o pipefail -o noclobber -o nounset
 ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 ADB=$ANDROID_HOME/platform-tools/adb
 IMPLANT=$HOME/.implant
+TMP=$HOME/.implant/tmp
 DOWNLOADS=$IMPLANT/downloads
 METADATA=$IMPLANT/metadata
 SRC=$IMPLANT/src
@@ -30,7 +31,7 @@ build_app() {
     OUT_DIR=$OUT/$PACKAGE
 
     rm -f $OUT_DIR/*.apk
-    mkdir -p $OUT_DIR $DOWNLOADS
+    mkdir -p $OUT_DIR $DOWNLOADS $TMP
 
     LOG=$OUT_DIR/build.log
     log
