@@ -99,13 +99,13 @@ install_apk() {
 
 clone_and_cd() {
     clone $1 $2 $3
-    cd $3
+    cd $2
 }
 
 clone() {
     URL=$1
-    SHA=$2
-    DIR=$3
+    DIR=$2
+    SHA=$3
     puts "cloning $URL@$SHA"
     git clone $URL $DIR >> $LOG 2>&1
     (cd $DIR ; git reset --hard $SHA ; git submodule update --init --recursive) >> $LOG 2>&1

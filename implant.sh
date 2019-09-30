@@ -51,7 +51,7 @@ build_app() {
 
     install_deps
 
-    clone_and_cd $GIT_URL $GIT_SHA $SRC/$PACKAGE
+    clone_and_cd $GIT_URL $SRC/$PACKAGE $GIT_SHA
 
     download_gradle
 
