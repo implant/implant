@@ -25,6 +25,25 @@ prebuild() {
     puts "OK"
 }
 
+build() {
+    put "building $PACKAGE..."
+    if [ -z "$BUILD" ]; then
+        TASK=assemble$FLAVOR$TARGET
+        if [ ! -z $PROJECT ]; then
+            TASK=$PROJECT:$TASK
+        fi
+
+        /bin/bash -c "$GRADLE --stacktrace $TASK" >> $LOG 2>&1
+    else
+        eval "$BUILD" >> $LOG 2>&1
+    fi
+    if [ $? -ne 0 ]; then
+        puts "FAILED"
+        exit 1
+    fi
+    puts "OK"
+}
+
 setup_gradle_properties() {
     if [ -z "$GRADLEPROPS" ]; then
         return 0

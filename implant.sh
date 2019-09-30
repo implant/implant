@@ -41,6 +41,7 @@ build_app() {
     FLAVOR=$(get_config flavor)
     NDK=$(get_config ndk)
     PREBUILD=$(get_config prebuild)
+    BUILD=$(get_config build)
     DEPS=$(get_config deps)
     GIT_URL=$(get_config git.url)
     GIT_SHA=$(get_config git.sha)
@@ -59,22 +60,7 @@ build_app() {
 
     prebuild
 
-    TASK=assemble$FLAVOR$TARGET
-    BUILDDIR=build/
-    if [ ! -z $PROJECT ]; then
-        TASK=$PROJECT:$TASK
-        BUILDDIR=$PROJECT/$BUILDDIR
-    fi
-
-    put "building $TASK..."
-
-    /bin/bash -c "$GRADLE --stacktrace $TASK" >> $LOG 2>&1
-    if [ $? -eq 0 ]; then
-        puts "OK"
-    else
-        puts "FAILED"
-        return 1
-    fi
+    build
 
     find $PROJECT -regex '^.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
 }
