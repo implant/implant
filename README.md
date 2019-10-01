@@ -1,21 +1,27 @@
-#### `bakerba/implant` is a Docker image that can build and install open-source Android apps
+#### Implant can build and install open-source Android apps
 
 :construction: Implant is under construction. Use at your own risk :construction:
 
 Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker), and it *might* work on other platforms in the future
 
-### Example
+### List available apps
 
-Build and install Firefox, Syncthing, and NewPipe
 ```
-implant install com.mozilla com.nutomic.syncthing org.schabi.newpipe
+docker run --rm -it bakerba/implant list
 ```
 
-### Usage
+### Example: Build and Install Firefox, Syncthing, and NewPipe
 
-* `implant list` to show available apps
-* `implant build [package ...]` to build apps
-* `implant install [package ...]` to build and install apps
+```
+docker run --rm bakerba/implant \
+    install com.mozilla com.nutomic.syncthing org.schabi.newpipe
+```
+
+### Commands
+
+* `list` to show available apps
+* `build [package ...]` to build apps
+* `install [package ...]` to build and install apps
 
 ### Requirements
 
