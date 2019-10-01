@@ -1,0 +1,5 @@
+git:
+    url: https://github.com/SimpleMobileTools/Simple-Flashlight
+    sha: 4cc3ef7
+prebuild: >
+    sed -i 's/.*keystoreProperties.*//g' app/build.gradle

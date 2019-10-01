@@ -1,0 +1,5 @@
+git:
+    url: https://github.com/SimpleMobileTools/Simple-Gallery
+    sha: 466bbf0
+prebuild: >
+    sed -i 's/.*keystoreProperties.*//g' app/build.gradle

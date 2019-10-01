@@ -1,0 +1,5 @@
+git:
+    url: https://github.com/SimpleMobileTools/Simple-File-Manager
+    sha: 60792ae
+prebuild: >
+    sed -i 's/.*keystoreProperties.*//g' app/build.gradle
