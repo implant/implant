@@ -6,7 +6,10 @@ ENV SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
     IMPLANT=/root/.implant \
     ANDROID_HOME=/root/Android/Sdk
 
-RUN wget $YQ -O /usr/local/bin/yq -o /dev/null && \
+RUN apt-get update && \
+    apt-get install --no-install-suggests --no-install-recommends -y sudo && \
+    apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
+    wget $YQ -O /usr/local/bin/yq -o /dev/null && \
     chmod +x /usr/local/bin/yq && \
     wget $SDK -O sdk.zip -o /dev/null && \
     mkdir -p $ANDROID_HOME && \

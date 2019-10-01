@@ -95,8 +95,8 @@ install_deps() {
         return 0
     fi
     put "installing dependencies..."
-    apt-get update >> $LOG 2>&1
-    apt-get install --no-install-suggests --no-install-recommends -y $DEPS >> $LOG 2>&1
+    sudo apt-get update >> $LOG 2>&1
+    sudo apt-get install --no-install-suggests --no-install-recommends -y $DEPS >> $LOG 2>&1
     if [ $? -ne 0 ]; then
         puts "FAILED"
         return 1

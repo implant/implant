@@ -1,15 +1,17 @@
 #!/bin/bash
 
-ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
+cd "${0%/*}"
+
+export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 ADB=$ANDROID_HOME/platform-tools/adb
+METADATA=./metadata
 IMPLANT=$HOME/.implant
 TMP=$IMPLANT/tmp
 DOWNLOADS=$IMPLANT/downloads
-METADATA=$IMPLANT/metadata
 SRC=$IMPLANT/src
 OUT=$IMPLANT/output
 
-source $IMPLANT/functions.sh
+source ./functions.sh
 
 build_app() {
     if [ -f $METADATA/$PACKAGE.yml ]; then
@@ -20,6 +22,12 @@ build_app() {
         puts "Invalid package: $PACKAGE"
         return 1
     fi
+
+    type yq >/dev/null 2>&1 || {
+	# TODO: download automatically
+	echo >&2 "yq must be in your PATH, please download from https://github.com/mikefarah/yq/releases"
+	exit 1
+    }
 
     yq r $CONFIG > /dev/null 2>&1
     if [ $? -ne 0 ]; then
