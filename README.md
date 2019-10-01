@@ -2,12 +2,7 @@
 
 :construction: Implant is under construction. Use at your own risk :construction:
 
-Implant is designed for use with Docker, but `implant.sh` *probably* works on Debian-based distros, and it *might* work on other platforms in the future
-
-### Usage
-
-* `implant list` to show available apps
-* `implant install [package ...]` to build and install apps
+Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker), and it *might* work on other platforms in the future
 
 ### Example
 
@@ -16,11 +11,17 @@ Build and install Firefox, Syncthing, and NewPipe
 implant install com.mozilla com.nutomic.syncthing org.schabi.newpipe
 ```
 
+### Usage
+
+* `implant list` to show available apps
+* `implant build [package ...]` to build apps
+* `implant install [package ...]` to build and install apps
+
 ### Requirements
 
 * Install Docker for [Linux](https://docs.docker.com/v17.12/install/#server), [macOS](https://docs.docker.com/docker-for-mac/install/), or [Windows](https://docs.docker.com/docker-for-windows/install/)
 * [Enable USB debugging](https://developer.android.com/studio/debug/dev-options) on your Android device
-* **macOS/Windows:** [Start an `adb` server](https://github.com/abaker/implant/wiki/Start-an-adb-server). Docker can't see your phone :sob:
+* **macOS/Windows:** Docker can't see your phone, so [start an `adb` server](https://github.com/abaker/implant/wiki/Start-an-adb-server) :sob:
 
 ### Recommended setup
 
