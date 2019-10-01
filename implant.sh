@@ -55,7 +55,7 @@ load_config() {
 build_app() {
     load_config
 
-    if [$? -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         return 1
     fi
 
@@ -83,6 +83,11 @@ install_app() {
         install_apk $apk
     done
 }
+
+if [ ! -t 0 ]; then
+    readarray STDIN_ARGS < /dev/stdin
+    set -- $@ ${STDIN_ARGS[@]}
+fi
 
 if [ "$#" -eq 0 ]; then
     puts "missing arguments"
