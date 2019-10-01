@@ -1,3 +1,4 @@
+name: VLC
 git:
     url: https://github.com/videolan/vlc-android
     sha: 1c70d30

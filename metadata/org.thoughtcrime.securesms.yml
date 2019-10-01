@@ -1,3 +1,4 @@
+name: Signal
 git:
     url: https://github.com/signalapp/Signal-Android
     sha: 1b48fd0

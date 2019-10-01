@@ -1,3 +1,4 @@
+name: Termux
 git:
     url: https://github.com/termux/termux-app
     sha: e206121

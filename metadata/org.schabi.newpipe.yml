@@ -1,3 +1,4 @@
+name: NewPipe
 git:
     url: https://github.com/TeamNewPipe/NewPipe
     sha: 748f70b

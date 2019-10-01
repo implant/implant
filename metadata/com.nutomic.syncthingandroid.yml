@@ -1,3 +1,4 @@
+name: Syncthing
 git:
     url: https://github.com/syncthing/syncthing-android
     sha: fdcb36d

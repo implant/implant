@@ -1,3 +1,4 @@
+name: WiFi Analyzer
 git:
     url: https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer
     sha: 298ca39

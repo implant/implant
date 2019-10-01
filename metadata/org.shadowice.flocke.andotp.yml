@@ -1,3 +1,4 @@
+name: andOTP
 git:
     url: https://github.com/andOTP/andOTP.git
     sha: e71f378
