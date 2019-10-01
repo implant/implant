@@ -13,21 +13,17 @@ OUT=$IMPLANT/output
 
 source ./functions.sh
 
-build_app() {
+load_config() {
     if [ -f $METADATA/$PACKAGE.yml ]; then
         CONFIG=$METADATA/$PACKAGE.yml
     elif [ -f $METADATA/$PACKAGE ]; then
         CONFIG=$METADATA/$PACKAGE
+    elif [ -f $PACKAGE ]; then
+        CONFIG=$PACKAGE
     else
         puts "Invalid package: $PACKAGE"
         return 1
     fi
-
-    type yq >/dev/null 2>&1 || {
-	# TODO: download automatically
-	echo >&2 "yq must be in your PATH, please download from https://github.com/mikefarah/yq/releases"
-	exit 1
-    }
 
     yq r $CONFIG > /dev/null 2>&1
     if [ $? -ne 0 ]; then
@@ -36,13 +32,12 @@ build_app() {
     fi
 
     OUT_DIR=$OUT/$PACKAGE
-
-    rm -f $OUT_DIR/*.apk
+    LOG=$OUT_DIR/build.log
     mkdir -p $OUT_DIR $DOWNLOADS $TMP
 
-    LOG=$OUT_DIR/build.log
     log
     log "***** $PACKAGE $(date) *****"
+    NAME=$(get_config name)
     PROJECT=$(get_config project app)
     TARGET=$(get_config target debug)
     FLAVOR=$(get_config flavor)
@@ -55,6 +50,16 @@ build_app() {
     GIT_SHA=$(get_config git.sha)
     GRADLEPROPS=$(get_config gradle_props)
     log
+}
+
+build_app() {
+    load_config
+
+    if [$? -ne 0 ]; then
+        return 1
+    fi
+
+    rm -f $OUT_DIR/*.apk
 
     setup_ndk
 
@@ -85,6 +90,12 @@ if [ "$#" -eq 0 ]; then
     exit 1
 fi
 
+type yq >/dev/null 2>&1 || {
+    # TODO: download automatically
+    echo >&2 "yq must be in your PATH, please download from https://github.com/mikefarah/yq/releases"
+    exit 1
+}
+
 case $1 in
     i|install)
         shift
@@ -100,9 +111,14 @@ case $1 in
         done
         ;;
     l|list)
-        puts "not implemented"
-        # TODO: list apps
-        exit 1
+        apps=()
+        for PACKAGE in metadata/*.yml; do
+            load_config
+            filename=$(basename $PACKAGE)
+            apps+=("$NAME (${filename%.*})")
+        done
+        IFS=$'\n' sorted=($(sort -f <<<"${apps[*]}")); unset IFS
+        printf "%s\n" "${sorted[@]}" | less
         ;;
     init|initialize)
         puts "not implemented"
