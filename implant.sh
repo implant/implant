@@ -120,7 +120,7 @@ case $1 in
         for PACKAGE in metadata/*.yml; do
             load_config
             filename=$(basename $PACKAGE)
-            apps+=("$NAME (${filename%.*})")
+            apps+=("$NAME - ${filename%.*}")
         done
         IFS=$'\n' sorted=($(sort -f <<<"${apps[*]}")); unset IFS
         printf "%s\n" "${sorted[@]}" | less
