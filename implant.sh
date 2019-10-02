@@ -11,6 +11,7 @@ DOWNLOADS=$IMPLANT/downloads
 SRC=$IMPLANT/src
 OUT=$IMPLANT/output
 LOG=$IMPLANT/build.log
+INSTALL=0
 
 source ./functions.sh
 
@@ -76,6 +77,10 @@ build_app() {
     build
 
     find $PROJECT -regex '^.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
+
+    if [ $INSTALL -eq 1 ]; then
+        install_app
+    fi
 }
 
 install_app() {
@@ -104,9 +109,9 @@ type yq >/dev/null 2>&1 || {
 case $1 in
     i|install)
         shift
+        INSTALL=1
         for PACKAGE in "$@"; do
             $(build_app)
-            $(install_app)
         done
         ;;
     b|build)
