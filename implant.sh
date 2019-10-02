@@ -3,7 +3,9 @@
 cd "${0%/*}"
 
 export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
+TOOLS=$ANDROID_HOME/build-tools
 ADB=$ANDROID_HOME/platform-tools/adb
+KEYSTORE=$HOME/.android/release.keystore
 METADATA=./metadata
 IMPLANT=$HOME/.implant
 TMP=$IMPLANT/tmp
@@ -12,6 +14,7 @@ SRC=$IMPLANT/src
 OUT=$IMPLANT/output
 LOG=$IMPLANT/build.log
 INSTALL=0
+DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"
 
 source ./functions.sh
 
@@ -40,7 +43,7 @@ load_config() {
     log "***** $PACKAGE $(date) *****"
     NAME=$(get_config name)
     PROJECT=$(get_config project app)
-    TARGET=$(get_config target debug)
+    TARGET=$(get_config target release)
     FLAVOR=$(get_config flavor)
     NDK=$(get_config ndk)
     PREBUILD=$(get_config prebuild)
@@ -49,7 +52,7 @@ load_config() {
     GRADLE_VERSION=$(get_config gradle)
     GIT_URL=$(get_config git.url)
     GIT_SHA=$(get_config git.sha)
-    GRADLEPROPS=$(get_config gradle_props)
+    GRADLEPROPS=$(get_config gradle_props "$DEFAULT_GRADLE_PROPS")
     log
 }
 
@@ -72,21 +75,56 @@ build_app() {
 
     setup_gradle_properties
 
+    sed -i 's/.*signingConfig .*//g' $PWD/$PROJECT/build.gradle*
+
     prebuild
 
     build
 
-    find $PROJECT -regex '^.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
+    find $PROJECT -regex '^.*-unsigned.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
 
-    if [ $INSTALL -eq 1 ]; then
-        install_app
+    if [ ! -f $KEYSTORE ]; then
+        puts "Cannot sign APK: $KEYSTORE found"
+        return $INSTALL
     fi
+
+    for apk in $OUT_DIR/*.apk; do
+        sign_and_install $apk
+    done
 }
 
-install_app() {
-    for apk in $OUT_DIR/*.apk; do
-        adb install $apk
-    done
+sign_and_install() {
+    UNSIGNED=$1
+    SIGNED=$(echo $UNSIGNED | sed 's/unsigned/signed/g')
+    ZIPALIGN=$(find $TOOLS -name zipalign | sort -r | head -n 1)
+    APKSIGNER=$(find $TOOLS -name apksigner | sort -r | head -n 1)
+    put "aligning $UNSIGNED..."
+    $ZIPALIGN -f -v -p 4 $UNSIGNED $SIGNED >> $LOG 2>&1
+    if [ $? -ne 0 ]; then
+        puts "FAILED"
+        return 1
+    fi
+    $ZIPALIGN -c -v 4 $SIGNED >> $LOG 2>&1
+    if [ $? -ne 0 ]; then
+        puts "FAILED"
+        return 1
+    fi
+    puts "OK"
+    put "signing $SIGNED..."
+    $APKSIGNER sign --ks $KEYSTORE --ks-pass env:KSPASS $SIGNED >> $LOG 2>&1
+    if [ $? -ne 0 ]; then
+        puts "FAILED"
+        return 1
+    fi
+    $APKSIGNER verify $SIGNED >> $LOG 2>&1
+    if [ $? -ne 0 ]; then
+        puts "FAILED"
+        return 1
+    fi
+    puts "OK"
+    if [ $INSTALL -eq 1 ]; then
+        adb install $SIGNED
+    fi
 }
 
 if [ ! -t 0 ]; then

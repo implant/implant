@@ -2,5 +2,5 @@ name: Tasks
 git:
     url: https://github.com/tasks/tasks
     sha: e92bc29
-flavor: googleplay
+flavor: generic
 gradle_props: tasks_mapbox_key_debug=pk.eyJ1IjoiYmFrZXJiYSIsImEiOiJjazExMXNvcHIwMDExM2NtaXdpYjc5ODJpIn0.fHR4HTUMOg3-k87aDzTLHw

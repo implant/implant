@@ -24,4 +24,4 @@ prebuild: >
     sed -i 's/git am /git apply /g' compile.sh &&
     sed -i 's/\.\/gradlew/$GRADLE/g' compile.sh
 build: >
-    GRADLE="$GRADLE" ANDROID_SDK="$ANDROID_HOME" ANDROID_NDK="$ANDROID_NDK_HOME" ./compile.sh -a armeabi-v7a
+    GRADLE="$GRADLE" ANDROID_SDK="$ANDROID_HOME" ANDROID_NDK="$ANDROID_NDK_HOME" ./compile.sh -a armeabi-v7a --release

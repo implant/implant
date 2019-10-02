@@ -49,6 +49,7 @@ setup_gradle_properties() {
         return 0
     fi
     put "creating gradle.properties..."
+    echo "" >> gradle.properties
     echo $GRADLEPROPS >> gradle.properties
     puts "OK"
 }
