@@ -1,38 +1,45 @@
-#### Implant can build and install open-source Android apps
+#### Build and install open-source Android apps with Implant
 
-:construction: Implant is under construction. Use at your own risk :construction:
+:construction: Under construction. Use at your own risk :construction:
 
 Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker), and it *might* work on other platforms in the future
 
-### List available apps
+`docker run --rm -it bakerba/implant list` to see what apps you can build
 
-```
-docker run --rm -it bakerba/implant list
-```
+### Examples
 
-### Example: Build and Install Firefox, Syncthing, and NewPipe
+First [create an `implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
 
+**Build and Install Firefox, Syncthing, and NewPipe**
 ```
-docker run --rm bakerba/implant \
-    install com.mozilla com.nutomic.syncthing org.schabi.newpipe
+implant install com.mozilla com.nutomic.syncthing org.schabi.newpipe
 ```
+**Read packages from a file**
 
+Maintain a list of apps for easy updates:
+```
+echo org.videolan.vlc | tee -a my_apps.txt | implant install
+```
+When its time to update:
+```
+docker pull bakerba/implant
+implant install < my_apps.txt
+```
+**Install everything!**
+```
+implant list | awk '{print $NF}' | implant install
+```
 ### Commands
 
-* `list` to show available apps
-* `build [package ...]` to build apps
-* `install [package ...]` to build and install apps
+* `implant list` to show available apps
+* `implant build [package ...]` to build apps
+* `implant install [package ...]` to build and install apps
 
 ### Requirements
 
 * Install Docker for [Linux](https://docs.docker.com/v17.12/install/#server), [macOS](https://docs.docker.com/docker-for-mac/install/), or [Windows](https://docs.docker.com/docker-for-windows/install/)
 * [Enable USB debugging](https://developer.android.com/studio/debug/dev-options) on your Android device
 * **macOS/Windows:** Docker can't see your phone, so [start an `adb` server](https://github.com/abaker/implant/wiki/Start-an-adb-server) :sob:
-
-### Recommended setup
-
-* [Generate adb and signing keys](https://github.com/abaker/implant/wiki/Don't-lose-your-keys!)
-* [Create an `implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
 
 ### Please contribute!
 
