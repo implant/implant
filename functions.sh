@@ -106,7 +106,7 @@ install_deps() {
 
 adb() {
     HOST=$(getent hosts host.docker.internal | awk '{ printf $1 }')
-    $ANDROID_HOME/platform-tools/adb -H ${HOST:-localhost} "$@" 1>&2
+    $ADB -H ${HOST:-localhost} "$@" 1>&2
 }
 
 clone_and_cd() {
