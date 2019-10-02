@@ -8,7 +8,7 @@ Implant is designed for use with Docker, but `implant.sh` [*should* work on Debi
 
 ### Examples
 
-First [create an `implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
+First create an [`implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
 
 **Build and Install Firefox, Syncthing, and NewPipe**
 ```
@@ -25,7 +25,7 @@ Later you can update them all:
 docker pull bakerba/implant
 implant install < my_apps.txt
 ```
-**Use your PC as a space heater**
+**Turn your PC into a space heater**
 ```
 implant install org.videolan.vlc
 ```
