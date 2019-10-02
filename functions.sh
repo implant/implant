@@ -104,10 +104,9 @@ install_deps() {
     puts "OK"
 }
 
-install_apk() {
-    APK=$1
+adb() {
     HOST=$(getent hosts host.docker.internal | awk '{ printf $1 }')
-    $ADB -H ${HOST:-localhost} install $APK 1>&2
+    $ANDROID_HOME/platform-tools/adb -H ${HOST:-localhost} "$@" 1>&2
 }
 
 clone_and_cd() {

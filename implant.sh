@@ -3,7 +3,6 @@
 cd "${0%/*}"
 
 export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
-ADB=$ANDROID_HOME/platform-tools/adb
 METADATA=./metadata
 IMPLANT=$HOME/.implant
 TMP=$IMPLANT/tmp
@@ -85,7 +84,7 @@ build_app() {
 
 install_app() {
     for apk in $OUT_DIR/*.apk; do
-        install_apk $apk
+        adb install $apk
     done
 }
 
@@ -107,6 +106,10 @@ type yq >/dev/null 2>&1 || {
 }
 
 case $1 in
+    adb)
+        shift
+        adb "$@"
+        ;;
     i|install)
         shift
         INSTALL=1

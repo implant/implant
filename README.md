@@ -34,6 +34,7 @@ implant list | awk '{print $NF}' | implant install
 * `implant list` to show available apps
 * `implant build [package ...]` to build apps
 * `implant install [package ...]` to build and install apps
+* `implant adb [...]` to use adb
 
 ### Requirements
 
