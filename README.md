@@ -2,9 +2,9 @@
 
 :construction: Under construction. Use at your own risk :construction:
 
-Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker), and it *might* work on other platforms in the future
+Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker)
 
-`docker run --rm -it bakerba/implant list` to see what apps you can build
+`docker run --rm -it bakerba/implant list` to browse available apps
 
 ### Examples
 
@@ -16,14 +16,18 @@ implant install com.mozilla com.nutomic.syncthing org.schabi.newpipe
 ```
 **Read packages from a file**
 
-Maintain a list of apps for easy updates:
+Maintain a list of apps you have installed:
 ```
-echo org.videolan.vlc | tee -a my_apps.txt | implant install
+echo org.thoughtcrime.securesms | tee -a my_apps.txt | implant install
 ```
-When its time to update:
+Later you can update them all:
 ```
 docker pull bakerba/implant
 implant install < my_apps.txt
+```
+**Use your PC as a space heater**
+```
+implant install org.videolan.vlc
 ```
 **Install everything!**
 ```
@@ -34,6 +38,7 @@ implant list | awk '{print $NF}' | implant install
 * `implant list` to show available apps
 * `implant build [package ...]` to build apps
 * `implant install [package ...]` to build and install apps
+* `implant keygen` to create adb, debug, and release keys
 * `implant adb [...]` to use adb
 
 ### Requirements
