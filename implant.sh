@@ -10,6 +10,7 @@ TMP=$IMPLANT/tmp
 DOWNLOADS=$IMPLANT/downloads
 SRC=$IMPLANT/src
 OUT=$IMPLANT/output
+LOG=$IMPLANT/build.log
 
 source ./functions.sh
 
@@ -32,7 +33,6 @@ load_config() {
     fi
 
     OUT_DIR=$OUT/$PACKAGE
-    LOG=$OUT_DIR/build.log
     mkdir -p $OUT_DIR $DOWNLOADS $TMP
 
     log
