@@ -12,7 +12,7 @@ First create an [`implant` alias](https://github.com/abaker/implant/wiki/Create-
 
 **Build and Install Firefox, Syncthing, and NewPipe**
 ```
-implant install com.mozilla com.nutomic.syncthing org.schabi.newpipe
+implant install com.mozilla.firefox com.nutomic.syncthing org.schabi.newpipe
 ```
 **Read packages from a file**
 
