@@ -56,6 +56,16 @@ load_config() {
     log
 }
 
+build_apps() {
+    if [ ! -t 0 ] && [ "$#" -eq 0 ]; then
+        readarray STDIN_ARGS < /dev/stdin
+        set -- $@ ${STDIN_ARGS[@]}
+    fi
+    for PACKAGE in "$@"; do
+        $(build_app)
+    done
+}
+
 build_app() {
     load_config
 
@@ -127,11 +137,6 @@ sign_and_install() {
     fi
 }
 
-if [ ! -t 0 ]; then
-    readarray STDIN_ARGS < /dev/stdin
-    set -- $@ ${STDIN_ARGS[@]}
-fi
-
 if [ "$#" -eq 0 ]; then
     puts "missing arguments"
     # TODO: print usage
@@ -152,15 +157,11 @@ case $1 in
     i|install)
         shift
         INSTALL=1
-        for PACKAGE in "$@"; do
-            $(build_app)
-        done
+        build_apps "$@"
         ;;
     b|build)
         shift
-        for PACKAGE in "$@"; do
-            $(build_app)
-        done
+        build_apps "$@"
         ;;
     l|list)
         apps=()
