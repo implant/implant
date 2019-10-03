@@ -59,7 +59,7 @@ load_config() {
 build_apps() {
     if [ ! -t 0 ] && [ "$#" -eq 0 ]; then
         readarray STDIN_ARGS < /dev/stdin
-        set -- $@ ${STDIN_ARGS[@]}
+        set -- ${STDIN_ARGS[@]}
     fi
     for PACKAGE in "$@"; do
         $(build_app)
