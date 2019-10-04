@@ -1,0 +1,5 @@
+name: AnySoftKeyboard
+git:
+    url: https://github.com/AnySoftKeyboard/AnySoftKeyboard
+    sha: 805764d
+deps: make
