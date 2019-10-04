@@ -1,0 +1,5 @@
+name: Torrent Client
+git:
+    url: https://gitlab.com/axet/android-torrent-client
+    sha: fca9f9db
+gradle: 5.4.1
