@@ -9,7 +9,7 @@ deps: >
     build-essential libtool libtool-bin patch pkg-config ragel rpm2cpio
     libwebkitgtk-1.0-0 yasm ragel g++ protobuf-compiler gettext libgsm1-dev
     expect python3 locales libltdl-dev
-gradle: 4.10.1
+gradle: 5.1.1
 prebuild: >
     echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list &&
     apt-get update && apt-get -y -t stretch-backports install cmake &&
@@ -21,7 +21,8 @@ prebuild: >
     mkdir -p gradle/wrapper &&
     clone https://git.videolan.org/git/vlc/vlc-3.0 vlc dedb3bd &&
     clone http://code.videolan.org/videolan/medialibrary medialibrary/medialibrary d473709 &&
+    sed -i 's/include "x86", "x86_64", "armeabi-v7a", "arm64-v8a"/"armeabi-v7a"/g' vlc-android/build.gradle &&
     sed -i 's/git am /git apply /g' compile.sh &&
     sed -i 's/\.\/gradlew/$GRADLE/g' compile.sh
 build: >
-    GRADLE="$GRADLE" ANDROID_SDK="$ANDROID_HOME" ANDROID_NDK="$ANDROID_NDK_HOME" ./compile.sh -a armeabi-v7a -ml --release
+    GRADLE="$GRADLE" ANDROID_SDK="$ANDROID_HOME" ANDROID_NDK="$ANDROID_NDK_HOME" ./compile.sh -a armeabi-v7a --release
