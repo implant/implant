@@ -105,7 +105,7 @@ build_app() {
 
 sign_and_install() {
     UNSIGNED=$1
-    SIGNED=$(echo $UNSIGNED | sed 's/[-]unsigned//g;s/\.apk/-signed\.apk$/')
+    SIGNED=$(echo $UNSIGNED | sed 's/[-]unsigned//g;s/\.apk$/-signed\.apk/')
     ZIPALIGN=$(find $TOOLS -name zipalign | sort -r | head -n 1)
     APKSIGNER=$(find $TOOLS -name apksigner | sort -r | head -n 1)
     put "aligning $UNSIGNED..."
