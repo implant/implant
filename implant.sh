@@ -91,7 +91,7 @@ build_app() {
 
     build
 
-    find $PROJECT -regex '^.*-unsigned.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
+    find $PROJECT -regex '.*\.apk$' -exec cp -v {} $OUT_DIR \; >> $LOG
 
     if [ ! -f $KEYSTORE ]; then
         puts "Cannot sign APK: $KEYSTORE found"
@@ -105,7 +105,7 @@ build_app() {
 
 sign_and_install() {
     UNSIGNED=$1
-    SIGNED=$(echo $UNSIGNED | sed 's/unsigned/signed/g')
+    SIGNED=$(echo $UNSIGNED | sed 's/[-]unsigned//g;s/\.apk/-signed\.apk$/')
     ZIPALIGN=$(find $TOOLS -name zipalign | sort -r | head -n 1)
     APKSIGNER=$(find $TOOLS -name apksigner | sort -r | head -n 1)
     put "aligning $UNSIGNED..."
