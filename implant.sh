@@ -69,10 +69,6 @@ build_apps() {
 build_app() {
     load_config
 
-    if [ $? -ne 0 ]; then
-        return 1
-    fi
-
     rm -f $OUT_DIR/*.apk
 
     setup_ndk
@@ -172,11 +168,6 @@ case $1 in
         done
         IFS=$'\n' sorted=($(sort -f <<<"${apps[*]}")); unset IFS
         printf "%s\n" "${sorted[@]}" | less
-        ;;
-    init|initialize)
-        puts "not implemented"
-        # TODO: generate keys
-        exit 1
         ;;
     keygen)
         if [ ! -f $OUT/adbkey ] && [ ! -f $OUT/adbkey.pub ]; then
