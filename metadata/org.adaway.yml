@@ -1,0 +1,5 @@
+name: AdAway
+git:
+    url: https://github.com/AdAway/AdAway
+    sha: c017b15
+deps: make
