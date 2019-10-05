@@ -1,0 +1,6 @@
+name: Flym
+git:
+    url: https://github.com/FredJul/Flym
+    sha: 91e4a9b
+prebuild: >
+    sed -i 's/.*local\.properties.*//g' app/build.gradle
