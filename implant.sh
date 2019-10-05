@@ -82,8 +82,8 @@ build_app() {
     download_gradle
 
     setup_gradle_properties
-
-    sed -i 's/.*signingConfig .*//g' "$PWD/$PROJECT/build.gradle*"
+    
+    sed -i 's/.*signingConfig .*//g' "$PWD/$PROJECT"/build.gradle*
 
     prebuild
 
