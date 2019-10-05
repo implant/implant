@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu # unset variables are errors & non-zero return values exit the whole script
+
 cd "${0%/*}"
 
 export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
