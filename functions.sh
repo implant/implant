@@ -118,6 +118,44 @@ clone_and_cd() {
     cd "$2" || exit
 }
 
+zipalign() {
+    UNSIGNED=$1
+    SIGNED=$2
+    ZIPALIGN=$(find "$TOOLS" -name zipalign | sort -r | head -n 1)
+    put "aligning $UNSIGNED..."
+    if ! $ZIPALIGN -f -v -p 4 "$UNSIGNED" "$SIGNED" >> "$LOG" 2>&1; then
+      puts "FAILED"
+      return 1
+    fi
+    if ! $ZIPALIGN -c -v 4 "$SIGNED" >> "$LOG" 2>&1; then
+        puts "FAILED"
+        return 1
+    fi
+    puts "OK"
+}
+
+sign() {
+    SIGNED=$1
+    APKSIGNER=$(find "$TOOLS" -name apksigner | sort -r | head -n 1)
+    put "signing $SIGNED..."
+    if ! $APKSIGNER sign --ks "$KEYSTORE" --ks-pass env:KSPASS "$SIGNED" >> "$LOG" 2>&1; then
+        puts "FAILED"
+        return 1
+    fi
+    if ! $APKSIGNER verify "$SIGNED" >> "$LOG" 2>&1; then
+        puts "FAILED"
+        return 1
+    fi
+    puts "OK"
+}
+
+install_apk() {
+  SIGNED=$1
+  if [ "$INSTALL" -eq 1 ]; then
+    adb install "$SIGNED"
+  fi
+}
+
 clone() {
     URL=$1
     DIR=$2

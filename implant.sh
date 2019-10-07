@@ -104,35 +104,12 @@ build_app() {
 sign_and_install() {
     UNSIGNED=$1
     SIGNED=$(echo "$UNSIGNED" | sed 's/[-]unsigned//g;s/\.apk$/-signed\.apk/')
-    ZIPALIGN=$(find "$TOOLS" -name zipalign | sort -r | head -n 1)
-    APKSIGNER=$(find "$TOOLS" -name apksigner | sort -r | head -n 1)
-    put "aligning $UNSIGNED..."
-    $ZIPALIGN -f -v -p 4 "$UNSIGNED" "$SIGNED" >> "$LOG" 2>&1
-    if [ $? -ne 0 ]; then
-        puts "FAILED"
-        return 1
-    fi
-    $ZIPALIGN -c -v 4 "$SIGNED" >> "$LOG" 2>&1
-    if [ $? -ne 0 ]; then
-        puts "FAILED"
-        return 1
-    fi
-    puts "OK"
-    put "signing $SIGNED..."
-    $APKSIGNER sign --ks "$KEYSTORE" --ks-pass env:KSPASS "$SIGNED" >> "$LOG" 2>&1
-    if [ $? -ne 0 ]; then
-        puts "FAILED"
-        return 1
-    fi
-    $APKSIGNER verify "$SIGNED" >> "$LOG" 2>&1
-    if [ $? -ne 0 ]; then
-        puts "FAILED"
-        return 1
-    fi
-    puts "OK"
-    if [ $INSTALL -eq 1 ]; then
-        adb install "$SIGNED"
-    fi
+
+    zipalign "$UNSIGNED" "$SIGNED"
+
+    sign "$SIGNED"
+
+    install_apk "$SIGNED"
 }
 
 if [ "$#" -eq 0 ]; then
