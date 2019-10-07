@@ -17,8 +17,7 @@ prebuild() {
         return 0
     fi
     put "prebuild..."
-    eval "$PREBUILD" >> "$LOG" 2>&1
-    if [ $? -ne 0 ]; then
+    if ! eval "$PREBUILD" >> "$LOG" 2>&1; then
         puts "FAILED"
         exit 1
     fi
@@ -29,7 +28,7 @@ build() {
     put "building $PACKAGE..."
     if [ -z "$BUILD" ]; then
         TASK=assemble$FLAVOR$TARGET
-        if [ ! -z "$PROJECT" ]; then
+        if [ -n "$PROJECT" ]; then
             TASK=$PROJECT:$TASK
         fi
 
@@ -37,6 +36,7 @@ build() {
     else
         eval "$BUILD" >> "$LOG" 2>&1
     fi
+    # shellcheck disable=SC2181
     if [ $? -ne 0 ]; then
         puts "FAILED"
         exit 1
@@ -63,15 +63,13 @@ setup_ndk() {
     NDK_URL=https://dl.google.com/android/repository/$NDK_ZIP &&
     export ANDROID_NDK_HOME=$TMP/$NDK_DIR
     put "downloading ndk..."
-    wget -o /dev/null -c -O "$DOWNLOADS/$NDK_ZIP" "$NDK_URL"
-    if [ $? -ne 0 ]; then
+    if ! wget --quiet -c -O "$DOWNLOADS/$NDK_ZIP" "$NDK_URL"; then
         puts "FAILED"
         exit 1
     fi
     puts "OK"
     put "unzipping ndk..."
-    unzip -oq "$DOWNLOADS/$NDK_ZIP" -d "$TMP/"
-    if [ $? -ne 0 ]; then
+    if ! unzip -oq "$DOWNLOADS/$NDK_ZIP" -d "$TMP/"; then
         puts "FAILED"
         exit 1
     fi
@@ -96,12 +94,11 @@ install_deps() {
         return 0
     fi
     put "installing dependencies..."
-    # TODO running in container should not need sudo here
+    # running sudo for use outside of a container
     # shellcheck disable=SC2024
     sudo apt-get update >> "$LOG" 2>&1
     # shellcheck disable=SC2024
-    sudo apt-get install --no-install-suggests --no-install-recommends -y "$DEPS" >> "$LOG" 2>&1
-    if [ $? -ne 0 ]; then
+    if ! sudo apt-get install --no-install-suggests --no-install-recommends -y "$DEPS" >> "$LOG" 2>&1; then
         puts "FAILED"
         return 1
     fi
@@ -186,9 +183,7 @@ download_gradle() {
         wget --quiet "$GRADLE_ZIP_URL" -O "$GRADLE_ZIP"
     fi
 
-    sha256sum "$GRADLE_ZIP" | awk '{ printf $1 }' | diff "$GRADLE_SHA" -
-
-    if [ $? != 0 ]; then
+    if ! sha256sum "$GRADLE_ZIP" | awk '{ printf $1 }' | diff "$GRADLE_SHA" -; then
         rm "$GRADLE_ZIP" "$GRADLE_SHA"
         puts "gradle download failed"
         exit 1;

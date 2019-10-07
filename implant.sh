@@ -32,8 +32,7 @@ load_config() {
         return 1
     fi
 
-    yq r "$CONFIG" > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
+    if ! yq r "$CONFIG" > /dev/null 2>&1; then
         puts "Invalid yml file: $CONFIG"
         return 1
     fi
