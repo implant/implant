@@ -15,6 +15,7 @@ DOWNLOADS=$IMPLANT/downloads
 SRC=$IMPLANT/src
 OUT=$IMPLANT/output
 LOG=$IMPLANT/build.log
+VERBOSE=${VERBOSE:-0}
 INSTALL=0
 DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"
 
@@ -37,11 +38,10 @@ load_config() {
         return 1
     fi
 
-    OUT_DIR=$OUT/$PACKAGE
     mkdir -p "$OUT_DIR" "$DOWNLOADS" "$TMP"
 
-    log
-    log "***** $PACKAGE $(date) *****"
+    puts
+    puts "***** $PACKAGE $(date) *****"
     NAME=$(get_config name)
     PROJECT=$(get_config project app)
     TARGET=$(get_config target release)
@@ -54,7 +54,7 @@ load_config() {
     GIT_URL=$(get_config git.url)
     GIT_SHA=$(get_config git.sha)
     GRADLEPROPS=$(get_config gradle_props "$DEFAULT_GRADLE_PROPS")
-    log
+    puts
 }
 
 build_apps() {
@@ -63,16 +63,35 @@ build_apps() {
         set -- "${STDIN_ARGS[@]}"
     fi
     for PACKAGE in "$@"; do
-        (build_app)
+        put "building $PACKAGE..."
+        OUT_DIR=$OUT/$PACKAGE
+        if (build_app); then
+          puts "OK"
+        else
+          puts "FAILED"
+          continue
+        fi
+
+        if [ "$INSTALL" -eq 1 ]; then
+            for apk in "$OUT_DIR"/*.apk; do
+                adb install "$apk"
+            done
+        fi
     done
 }
 
 build_app() {
     set -eu # unset variables are errors & non-zero return values exit the whole script
 
+    if [ "$VERBOSE" -eq 1 ]; then
+        exec > >(tee "$LOG") 2>&1
+    else
+        exec >> "$LOG" 2>&1
+    fi
+
     load_config
 
-    rm -f "$OUT_DIR/*.apk"
+    rm -v "$OUT_DIR"/*.apk
 
     setup_ndk
 
@@ -98,19 +117,14 @@ build_app() {
     fi
 
     for apk in "$OUT_DIR"/*.apk; do
-        sign_and_install "$apk"
+        zipalign_and_sign "$apk"
     done
 }
 
-sign_and_install() {
+zipalign_and_sign() {
     UNSIGNED=$1
     SIGNED=$(echo "$UNSIGNED" | sed 's/[-]unsigned//g;s/\.apk$/-signed\.apk/')
-
-    zipalign "$UNSIGNED" "$SIGNED"
-
-    sign "$SIGNED"
-
-    install_apk "$SIGNED"
+    zipalign "$UNSIGNED" "$SIGNED" && rm -v "$UNSIGNED" && sign "$SIGNED"
 }
 
 if [ "$#" -eq 0 ]; then

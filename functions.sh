@@ -1,57 +1,48 @@
 #!/bin/bash
 
-log() {
-    printf "%s\n" "${1:-}" >> "$LOG"
-}
-
 put() {
     printf "%s" "$1" 1>&2
 }
 
 puts() {
-    printf "%s\n" "$1" 1>&2
+    printf "%s\n" "${1:-}" 1>&2
 }
 
 prebuild() {
     if [ -z "$PREBUILD" ]; then
         return 0
     fi
-    put "prebuild..."
-    if ! eval "$PREBUILD" >> "$LOG" 2>&1; then
-        puts "FAILED"
+    puts "prebuild..."
+    if ! eval "$PREBUILD"; then
         exit 1
     fi
-    puts "OK"
 }
 
 build() {
-    put "building $PACKAGE..."
+    puts "building $PACKAGE..."
     if [ -z "$BUILD" ]; then
         TASK=assemble$FLAVOR$TARGET
         if [ -n "$PROJECT" ]; then
             TASK=$PROJECT:$TASK
         fi
 
-        /bin/bash -c "$GRADLE --stacktrace $TASK" >> "$LOG" 2>&1
+        /bin/bash -c "$GRADLE --stacktrace $TASK"
     else
-        eval "$BUILD" >> "$LOG" 2>&1
+        eval "$BUILD"
     fi
     # shellcheck disable=SC2181
     if [ $? -ne 0 ]; then
-        puts "FAILED"
         exit 1
     fi
-    puts "OK"
 }
 
 setup_gradle_properties() {
     if [ -z "$GRADLEPROPS" ]; then
         return 0
     fi
-    put "creating gradle.properties..."
+    puts "creating gradle.properties..."
     echo "" >> gradle.properties
     echo "$GRADLEPROPS" >> gradle.properties
-    puts "OK"
 }
 
 setup_ndk() {
@@ -63,18 +54,14 @@ setup_ndk() {
     NDK_URL=https://dl.google.com/android/repository/$NDK_FILE
     NDK_ZIP=$DOWNLOADS/$NDK_FILE
     export ANDROID_NDK_HOME=$TMP/$NDK_DIR
-    put "downloading ndk..."
+    puts "downloading $NDK_URL to $NDK_ZIP..."
     if ! wget --quiet -c -O "$NDK_ZIP" "$NDK_URL"; then
-        puts "FAILED"
         exit 1
     fi
-    puts "OK"
-    put "unzipping ndk..."
+    puts "unzipping $NDK_ZIP to $TMP..."
     if ! unzip -oq "$NDK_ZIP" -d "$TMP/"; then
-        puts "FAILED"
         exit 1
     fi
-    puts "OK"
 }
 
 get_config() {
@@ -82,10 +69,10 @@ get_config() {
     DEFAULT=${2:-}
     value=$(yq r "$CONFIG" "$PROP")
     if [ "$value" != null ]; then
-        log "$1=$value"
+        puts "$1=$value"
         echo "$value"
     else
-        log "$1=$DEFAULT [default]"
+        puts "$1=$DEFAULT [default]"
         echo "$DEFAULT"
     fi
 }
@@ -94,16 +81,14 @@ install_deps() {
     if [ -z "$DEPS" ]; then
         return 0
     fi
-    put "installing dependencies..."
+    puts "installing dependencies..."
     # running sudo for use outside of a container
     # shellcheck disable=SC2024
-    sudo apt-get update >> "$LOG" 2>&1
+    sudo apt-get update
     # shellcheck disable=SC2024
-    if ! sudo apt-get install --no-install-suggests --no-install-recommends -y "$DEPS" >> "$LOG" 2>&1; then
-        puts "FAILED"
-        return 1
+    if ! sudo apt-get install --no-install-suggests --no-install-recommends -y "$DEPS"; then
+        exit 1
     fi
-    puts "OK"
 }
 
 adb() {
@@ -120,47 +105,33 @@ zipalign() {
     UNSIGNED=$1
     SIGNED=$2
     ZIPALIGN=$(find "$TOOLS" -name zipalign | sort -r | head -n 1)
-    put "aligning $UNSIGNED..."
-    if ! $ZIPALIGN -f -v -p 4 "$UNSIGNED" "$SIGNED" >> "$LOG" 2>&1; then
-      puts "FAILED"
-      return 1
+    puts "aligning $UNSIGNED..."
+    if ! $ZIPALIGN -f -v -p 4 "$UNSIGNED" "$SIGNED"; then
+        exit 1
     fi
-    if ! $ZIPALIGN -c -v 4 "$SIGNED" >> "$LOG" 2>&1; then
-        puts "FAILED"
-        return 1
+    if ! $ZIPALIGN -c -v 4 "$SIGNED"; then
+        exit 1
     fi
-    puts "OK"
 }
 
 sign() {
     SIGNED=$1
     APKSIGNER=$(find "$TOOLS" -name apksigner | sort -r | head -n 1)
-    put "signing $SIGNED..."
-    if ! $APKSIGNER sign --ks "$KEYSTORE" --ks-pass env:KSPASS "$SIGNED" >> "$LOG" 2>&1; then
-        puts "FAILED"
-        return 1
+    puts "signing $SIGNED..."
+    if ! $APKSIGNER sign --ks "$KEYSTORE" --ks-pass env:KSPASS "$SIGNED"; then
+        exit 1
     fi
-    if ! $APKSIGNER verify "$SIGNED" >> "$LOG" 2>&1; then
-        puts "FAILED"
-        return 1
+    if ! $APKSIGNER verify "$SIGNED"; then
+        exit 1
     fi
-    puts "OK"
-}
-
-install_apk() {
-  SIGNED=$1
-  if [ "$INSTALL" -eq 1 ]; then
-    adb install "$SIGNED"
-  fi
 }
 
 clone() {
     URL=$1
     DIR=$2
     SHA=$3
-    puts "cloning $URL@$SHA"
-    git clone "$URL" "$DIR" >> "$LOG" 2>&1
-    (cd "$DIR" || exit; git checkout "$SHA"; git submodule update --init --recursive) >> "$LOG" 2>&1
+    git clone "$URL" "$DIR"
+    (cd "$DIR" || exit; git checkout "$SHA"; git submodule update --init --recursive)
 }
 
 download_gradle() {
@@ -185,8 +156,7 @@ download_gradle() {
     fi
 
     if ! sha256sum "$GRADLE_ZIP" | awk '{ printf $1 }' | diff "$GRADLE_SHA" -; then
-        rm "$GRADLE_ZIP" "$GRADLE_SHA"
-        puts "gradle download failed"
+        rm -v "$GRADLE_ZIP" "$GRADLE_SHA"
         exit 1;
     fi
 
