@@ -59,17 +59,18 @@ setup_ndk() {
         return 0
     fi
     NDK_DIR=android-ndk-$NDK
-    NDK_ZIP=$NDK_DIR-linux-x86_64.zip
-    NDK_URL=https://dl.google.com/android/repository/$NDK_ZIP &&
+    NDK_FILE=$NDK_DIR-linux-x86_64.zip
+    NDK_URL=https://dl.google.com/android/repository/$NDK_FILE
+    NDK_ZIP=$DOWNLOADS/$NDK_FILE
     export ANDROID_NDK_HOME=$TMP/$NDK_DIR
     put "downloading ndk..."
-    if ! wget --quiet -c -O "$DOWNLOADS/$NDK_ZIP" "$NDK_URL"; then
+    if ! wget --quiet -c -O "$NDK_ZIP" "$NDK_URL"; then
         puts "FAILED"
         exit 1
     fi
     puts "OK"
     put "unzipping ndk..."
-    if ! unzip -oq "$DOWNLOADS/$NDK_ZIP" -d "$TMP/"; then
+    if ! unzip -oq "$NDK_ZIP" -d "$TMP/"; then
         puts "FAILED"
         exit 1
     fi
