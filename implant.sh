@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu # unset variables are errors & non-zero return values exit the whole script
+set -u # unset variables are errors
 
 cd "${0%/*}"
 
@@ -63,11 +63,13 @@ build_apps() {
         set -- "${STDIN_ARGS[@]}"
     fi
     for PACKAGE in "$@"; do
-        build_app
+        (build_app)
     done
 }
 
 build_app() {
+    set -eu # unset variables are errors & non-zero return values exit the whole script
+
     load_config
 
     rm -f "$OUT_DIR/*.apk"
