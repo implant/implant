@@ -10,15 +10,15 @@ Implant is designed for use with Docker, but `implant.sh` [*should* work on Debi
 
 First create an [`implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
 
-**Build and Install Firefox, Syncthing, and NewPipe**
+**Build and Install Signal, Syncthing, and NewPipe**
 ```
-implant install com.mozilla.firefox com.nutomic.syncthing org.schabi.newpipe
+implant install org.thoughtcrime.securesms com.nutomic.syncthing org.schabi.newpipe
 ```
 **Read packages from a file**
 
 Maintain a list of apps you have installed:
 ```
-echo org.thoughtcrime.securesms | tee -a my_apps.txt | implant install
+echo org.mozilla.fenix | tee -a my_apps.txt | implant install
 ```
 Later you can update them all:
 ```
