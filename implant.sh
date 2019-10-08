@@ -109,7 +109,7 @@ build_app() {
 
   build
 
-  find "$PROJECT" -regex '.*\.apk$' -exec cp -v {} "$OUT_DIR" \; >>"$LOG"
+  find "./$PROJECT" -regex '.*\.apk$' -exec cp -v {} "$OUT_DIR" \; >>"$LOG"
 
   if [ ! -f "$KEYSTORE" ]; then
     puts "Cannot sign APK: $KEYSTORE found"
