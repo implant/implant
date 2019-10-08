@@ -131,10 +131,10 @@ clone() {
   URL=$1
   DIR=$2
   SHA=$3
-  git clone "$URL" "$DIR"
+  git clone "$URL" "$DIR" --recurse-submodules
   (
     cd "$DIR" || exit
-    git checkout "$SHA"
+    git reset --hard "$SHA"
     git submodule update --init --recursive
   )
 }
