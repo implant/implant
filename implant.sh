@@ -30,15 +30,13 @@ load_config() {
     CONFIG="$PACKAGE"
   else
     puts "Invalid package: $PACKAGE"
-    return 1
+    exit 1
   fi
 
   if ! yq r "$CONFIG" >/dev/null 2>&1; then
     puts "Invalid yml file: $CONFIG"
-    return 1
+    exit 1
   fi
-
-  mkdir -p "$OUT_DIR" "$DOWNLOADS" "$TMP"
 
   puts
   puts "***** $PACKAGE $(date) *****"
@@ -63,6 +61,7 @@ build_apps() {
     set -- "${STDIN_ARGS[@]}"
   fi
   for PACKAGE in "$@"; do
+    PACKAGE=$(echo "$PACKAGE" | xargs)
     put "building $PACKAGE..."
     OUT_DIR=$OUT/$PACKAGE
     if (build_app); then
@@ -91,6 +90,7 @@ build_app() {
 
   load_config
 
+  mkdir -p "$OUT_DIR" "$DOWNLOADS" "$TMP"
   rm -fv "$OUT_DIR"/*.apk
 
   setup_ndk
@@ -156,7 +156,7 @@ case $1 in
   l | list)
     apps=()
     for PACKAGE in metadata/*.yml; do
-      load_config
+      load_config >>"$LOG" 2>&1
       filename=$(basename "$PACKAGE")
       apps+=("$NAME - ${filename%.*}")
     done
