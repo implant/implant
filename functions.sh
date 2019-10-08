@@ -83,10 +83,9 @@ install_deps() {
     fi
     puts "installing dependencies..."
     # running sudo for use outside of a container
-    # shellcheck disable=SC2024
     sudo apt-get update
-    # shellcheck disable=SC2024
-    if ! sudo apt-get install --no-install-suggests --no-install-recommends -y "$DEPS"; then
+    # shellcheck disable=SC2086
+    if ! sudo apt-get install --no-install-suggests --no-install-recommends -y $DEPS; then
         exit 1
     fi
 }
