@@ -50,18 +50,12 @@ setup_ndk() {
         return 0
     fi
     NDK_DIR=android-ndk-$NDK
-    NDK_FILE=$NDK_DIR-linux-x86_64.zip
-    NDK_URL=https://dl.google.com/android/repository/$NDK_FILE
-    NDK_ZIP=$DOWNLOADS/$NDK_FILE
+    NDK_URL=https://dl.google.com/android/repository/$NDK_DIR-linux-x86_64.zip
     export ANDROID_NDK_HOME=$TMP/$NDK_DIR
-    puts "downloading $NDK_URL to $NDK_ZIP..."
-    if ! wget --quiet -c -O "$NDK_ZIP" "$NDK_URL"; then
-        exit 1
-    fi
-    puts "unzipping $NDK_ZIP to $TMP..."
-    if ! unzip -oq "$NDK_ZIP" -d "$TMP/"; then
-        exit 1
-    fi
+
+    download "$NDK_URL"
+
+    extract "$DEST"
 }
 
 get_config() {
@@ -138,29 +132,40 @@ download_gradle() {
         DISTRIBUTION=$(grep -e "^distributionUrl=https\\\\://services.gradle.org/" gradle/wrapper/gradle-wrapper.properties)
         GRADLE_VERSION=$(echo "$DISTRIBUTION" | grep -o "[0-9]\+\(\.[0-9]\+\)\+")
     fi
-    GRADLE_ZIP=$DOWNLOADS/gradle-$GRADLE_VERSION-bin.zip
-    GRADLE_SHA=$GRADLE_ZIP.sha256
     GRADLE_ZIP_URL=https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
-    GRADLE_SHA_URL=$GRADLE_ZIP_URL.sha256
     GRADLE=$TMP/gradle-$GRADLE_VERSION/bin/gradle
 
-    if [ ! -f "$GRADLE_SHA" ]; then
-        puts "downloading gradle-$GRADLE_VERSION checksum"
-        wget --quiet "$GRADLE_SHA_URL" -O "$GRADLE_SHA"
-    fi
+    download "$GRADLE_ZIP_URL.sha256"
 
-    if [ ! -f "$GRADLE_ZIP" ]; then
-        puts "downloading gradle-$GRADLE_VERSION"
-        wget --quiet "$GRADLE_ZIP_URL" -O "$GRADLE_ZIP"
-    fi
+    download "$GRADLE_ZIP_URL"
 
-    if ! sha256sum "$GRADLE_ZIP" | awk '{ printf $1 }' | diff "$GRADLE_SHA" -; then
-        rm -v "$GRADLE_ZIP" "$GRADLE_SHA"
-        exit 1;
-    fi
+    checksum "$DEST" "$DEST.sha256"
 
-    puts "unzipping gradle-$GRADLE_VERSION"
-
-    unzip -oq "$GRADLE_ZIP" -d "$TMP/"
+    extract "$DEST"
 }
 
+download() {
+    URL=$1
+    FILENAME=$(basename "$URL")
+    DEST=$DOWNLOADS/$FILENAME
+    puts "downloading $URL to $DEST"
+    if ! wget --continue --quiet "$URL" -O "$DEST"; then
+        exit 1
+    fi
+}
+
+extract() {
+    ZIP=$1
+    puts "unzipping $ZIP to $TMP..."
+    unzip -oq "$ZIP" -d "$TMP"
+}
+
+checksum() {
+  FILE=$1
+  CHECKSUM=$2
+  puts "checking $FILE"
+  if ! sha256sum "$FILE" | awk '{ printf $1 }' | diff "$CHECKSUM" -; then
+    rm -v "$FILE" "$CHECKSUM"
+    exit 1
+  fi
+}
