@@ -8,6 +8,14 @@ puts() {
   printf "%s\n" "${1:-}" 1>&2
 }
 
+green() {
+    echo -e "\033[32;1m$1\033[0m"
+}
+
+red() {
+    echo -e "\033[31;1m$1\033[0m"
+}
+
 prebuild() {
   if [ -z "$PREBUILD" ]; then
     return 0

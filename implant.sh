@@ -65,9 +65,9 @@ build_apps() {
     put "building $PACKAGE..."
     OUT_DIR=$OUT/$PACKAGE
     if (build_app); then
-      puts "OK"
+      green "OK"
     else
-      puts "FAILED"
+      red "FAILED"
       continue
     fi
 
