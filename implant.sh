@@ -91,7 +91,7 @@ build_app() {
 
     load_config
 
-    rm -v "$OUT_DIR"/*.apk
+    rm -fv "$OUT_DIR"/*.apk
 
     setup_ndk
 
