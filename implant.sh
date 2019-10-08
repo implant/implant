@@ -17,7 +17,7 @@ OUT=$IMPLANT/output
 LOG=$IMPLANT/build.log
 VERBOSE=${VERBOSE:-0}
 INSTALL=0
-DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx4096m -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"
+DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"
 
 source ./functions.sh
 
