@@ -63,7 +63,6 @@ build_apps() {
   for PACKAGE in "$@"; do
     PACKAGE=$(echo "$PACKAGE" | xargs)
     put "building $PACKAGE..."
-    OUT_DIR=$OUT/$PACKAGE
     if (build_app); then
       green "OK"
     else
@@ -90,6 +89,7 @@ build_app() {
 
   load_config
 
+  OUT_DIR=$OUT/$PACKAGE
   mkdir -p "$OUT_DIR" "$DOWNLOADS" "$TMP"
   rm -fv "$OUT_DIR"/*.apk
 
