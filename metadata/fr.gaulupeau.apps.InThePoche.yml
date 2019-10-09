@@ -1,0 +1,4 @@
+name: Wallabag
+git:
+    url: https://github.com/wallabag/android-app
+    sha: b7ef995
