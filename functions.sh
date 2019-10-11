@@ -16,6 +16,11 @@ red() {
     echo -e "\033[31;1m$1\033[0m"
 }
 
+get_package() {
+  filename=$(basename "$PACKAGE")
+  echo "${filename%.*}"
+}
+
 prebuild() {
   if [ -z "$PREBUILD" ]; then
     return 0

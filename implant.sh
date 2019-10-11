@@ -61,7 +61,7 @@ build_apps() {
     set -- "${STDIN_ARGS[@]}"
   fi
   for PACKAGE in "$@"; do
-    PACKAGE=$(echo "$PACKAGE" | xargs)
+    PACKAGE=$(get_package "$PACKAGE")
     put "building $PACKAGE..."
     OUT_DIR=$OUT/$PACKAGE
     if (build_app); then
@@ -156,9 +156,9 @@ case $1 in
   l | list)
     apps=()
     for PACKAGE in metadata/*.yml; do
+      PACKAGE=$(get_package "$PACKAGE")
       load_config >>"$LOG" 2>&1
-      filename=$(basename "$PACKAGE")
-      apps+=("$NAME - ${filename%.*}")
+      apps+=("$NAME - $PACKAGE")
     done
     IFS=$'\n' sorted=($(sort -f <<<"${apps[*]}"))
     unset IFS
