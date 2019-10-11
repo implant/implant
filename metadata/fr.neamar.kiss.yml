@@ -1,4 +1,4 @@
 name: KISS Launcher
 git:
-    url: https://github.com/Neamar/KISS
-    sha: 278b192
+  url: https://github.com/Neamar/KISS
+  sha: dd24dfc
