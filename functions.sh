@@ -21,6 +21,14 @@ get_package() {
   echo "${filename%.*}"
 }
 
+setup_logging() {
+  if [ "$VERBOSE" -eq 1 ]; then
+    exec > >(tee "$LOG") 2>&1
+  else
+    exec >>"$LOG" 2>&1
+  fi
+}
+
 prebuild() {
   if [ -z "$PREBUILD" ]; then
     return 0

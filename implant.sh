@@ -82,11 +82,7 @@ build_apps() {
 build_app() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
-  if [ "$VERBOSE" -eq 1 ]; then
-    exec > >(tee "$LOG") 2>&1
-  else
-    exec >>"$LOG" 2>&1
-  fi
+  setup_logging
 
   load_config
 
