@@ -18,7 +18,7 @@ red() {
 
 get_package() {
   filename=$(basename "$PACKAGE")
-  echo "${filename%.*}"
+  echo "${filename%.yml*}"
 }
 
 setup_logging() {
