@@ -1,6 +1,6 @@
 name: Hacker's Keyboard
 git:
-    url: https://github.com/klausw/hackerskeyboard
-    sha: 7b50b87
+  url: https://github.com/klausw/hackerskeyboard
+  sha: 0e1a65f
 ndk: r20
 gradle: 4.6
