@@ -18,8 +18,7 @@ red() {
 
 get_latest_tag() {
   if [ -z "$GIT_TAGS" ]; then
-    # shellcheck disable=SC2125
-    GIT_TAGS="[vV]?[0-9]+(\.[0-9]*)*[-[0-9]*]?"
+    GIT_TAGS="[vV]?[0-9.-]+"
   fi
   for tag in $(git tag --sort=-committerdate); do
     if [[ "$tag" =~ ^${GIT_TAGS}$ ]]; then

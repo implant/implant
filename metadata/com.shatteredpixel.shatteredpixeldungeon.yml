@@ -2,4 +2,5 @@ name: Shattered Pixel Dungeon
 git:
   url: https://github.com/00-Evan/shattered-pixel-dungeon
   sha: 9b90a11
+  tags: v[0-9.]+[a-z]?
 project: android

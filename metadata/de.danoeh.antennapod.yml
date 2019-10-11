@@ -2,4 +2,5 @@ name: AntennaPod
 git:
     url: https://github.com/AntennaPod/AntennaPod
     sha: d7f0f95
+    tags: "[0-9.]+[a-z]?"
 flavor: play

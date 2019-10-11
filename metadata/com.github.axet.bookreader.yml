@@ -2,4 +2,5 @@ name: Book Reader
 git:
     url: https://gitlab.com/axet/android-book-reader
     sha: 47e011b1
+    tags: bookreader-[0-9.]+
 gradle: 5.1.1
