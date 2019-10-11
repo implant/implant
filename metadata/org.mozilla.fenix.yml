@@ -1,9 +1,9 @@
 name: Firefox Preview
 git:
-    url: https://github.com/mozilla-mobile/fenix
-    sha: da66c04
+  url: https://github.com/mozilla-mobile/fenix
+  sha: 2132d9a
 flavor: fenix
 target: production
 deps: bzip2
-prebuild: >
-    sed -i 's/"x86", "armeabi-v7a", "arm64-v8a", "x86_64"/"armeabi-v7a"/g' app/build.gradle
+prebuild: |
+  sed -i 's/"x86", "armeabi-v7a", "arm64-v8a", "x86_64"/"armeabi-v7a"/g' app/build.gradle
