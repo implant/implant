@@ -8,7 +8,7 @@ export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 TOOLS=$ANDROID_HOME/build-tools
 ADB=$ANDROID_HOME/platform-tools/adb
 KEYSTORE=$HOME/.android/release.keystore
-METADATA=./metadata
+METADATA=$PWD/metadata
 IMPLANT=$HOME/.implant
 TMP=$IMPLANT/tmp
 DOWNLOADS=$IMPLANT/downloads
@@ -51,8 +51,63 @@ load_config() {
   GRADLE_VERSION=$(get_config gradle)
   GIT_URL=$(get_config git.url)
   GIT_SHA=$(get_config git.sha)
+  GIT_TAGS=$(get_config git.tags)
   GRADLEPROPS=$(get_config gradle_props "$DEFAULT_GRADLE_PROPS")
   puts
+}
+
+update_apps() {
+  if [ ! -t 0 ] && [ "$#" -eq 0 ]; then
+    readarray STDIN_ARGS </dev/stdin
+    set -- "${STDIN_ARGS[@]}"
+  fi
+  for PACKAGE in "$@"; do
+    PACKAGE=$(get_package "$PACKAGE")
+    put "updating $PACKAGE..."
+    if (update_app); then
+      green "OK"
+    else
+      red "ERROR"
+    fi
+  done
+}
+
+update_app() {
+  set -eu # unset variables are errors & non-zero return values exit the whole script
+
+  setup_logging
+
+  load_config
+
+  clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
+
+  TAG=$(get_latest_tag)
+  if [ -z "$TAG" ]; then
+    exit 1
+  fi
+
+  SHA=$(git rev-parse --short=7 "$TAG^{}")
+  if [ "$SHA" == "$GIT_SHA" ]; then
+    puts "up to date ($TAG=$SHA)"
+    return 0
+  fi
+
+  if git merge-base --is-ancestor "$SHA" "$GIT_SHA"; then
+    puts "$TAG is ancestor of $GIT_SHA"
+    return 0
+  fi
+
+  OLD_DATE=$(get_commit_date "$GIT_SHA")
+  NEW_DATE=$(get_commit_date "$SHA")
+  if [ "$NEW_DATE" -lt "$OLD_DATE" ]; then
+    puts "$TAG is older than $GIT_SHA"
+    return 1
+  fi
+
+  puts "updating $PACKAGE to $SHA"
+  yq w -i "$CONFIG" git.sha "\"$SHA\""
+
+  build_apps "$PACKAGE"
 }
 
 build_apps() {
@@ -148,6 +203,10 @@ case $1 in
   b | build)
     shift
     build_apps "$@"
+    ;;
+  u | update)
+    shift
+    update_apps "$@"
     ;;
   l | list)
     apps=()

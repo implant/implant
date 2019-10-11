@@ -9,11 +9,32 @@ puts() {
 }
 
 green() {
-    echo -e "\033[32;1m$1\033[0m"
+  echo -e "\033[32;1m$1\033[0m"
 }
 
 red() {
-    echo -e "\033[31;1m$1\033[0m"
+  echo -e "\033[31;1m$1\033[0m"
+}
+
+get_latest_tag() {
+  if [ -z "$GIT_TAGS" ]; then
+    # shellcheck disable=SC2125
+    GIT_TAGS="[vV]?[0-9]+(\.[0-9]*)*[-[0-9]*]?"
+  fi
+  for tag in $(git tag --sort=-committerdate); do
+    if [[ "$tag" =~ ^${GIT_TAGS}$ ]]; then
+      echo "$tag"
+      return 0
+    else
+      puts "'$tag' does not match"
+    fi
+  done
+  puts "no matching tag"
+  exit 1
+}
+
+get_commit_date() {
+  git show --no-patch --no-notes --pretty='%ct' "$1"
 }
 
 get_package() {
