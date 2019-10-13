@@ -1,11 +1,8 @@
 name: Signal
 git:
-    url: https://github.com/signalapp/Signal-Android
-    sha: 1b48fd0
-project: ''
+  url: https://github.com/signalapp/Signal-Android
+  sha: 37147fb
+project: ""
 flavor: website
-prebuild: >
-    sed -i 's/task.finalizedBy signProductionWebsiteRelease//g' build.gradle &&
-    sed -i 's/universalApk true/universalApk false/g' build.gradle &&
-    sed -i 's/[[:space:]]*abiFilters .*//g' build.gradle &&
-    sed -i "s/include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'/include 'armeabi-v7a'/g" build.gradle
+prebuild: |
+  sed -i 's/task.finalizedBy signProductionWebsiteRelease//g' build.gradle && sed -i 's/universalApk true/universalApk false/g' build.gradle && sed -i 's/[[:space:]]*abiFilters .*//g' build.gradle && sed -i "s/include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'/include 'armeabi-v7a'/g" build.gradle
