@@ -2,4 +2,4 @@ name: Amaze File Manager
 git:
     url: https://github.com/TeamAmaze/AmazeFileManager
     sha: 05f003d
-flavor: play
+flavor: fdroid
