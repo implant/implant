@@ -81,27 +81,10 @@ update_app() {
 
   clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
 
-  TAG=$(get_latest_tag)
-  if [ -z "$TAG" ]; then
-    exit 1
-  fi
-
-  SHA=$(git rev-parse --short=7 "$TAG^{}")
+  SHA=$(get_latest_tag)
   if [ "$SHA" == "$GIT_SHA" ]; then
-    puts "up to date ($TAG=$SHA)"
-    return 0
-  fi
-
-  if git merge-base --is-ancestor "$SHA" "$GIT_SHA"; then
-    puts "$TAG is ancestor of $GIT_SHA"
-    return 0
-  fi
-
-  OLD_DATE=$(get_commit_date "$GIT_SHA")
-  NEW_DATE=$(get_commit_date "$SHA")
-  if [ "$NEW_DATE" -lt "$OLD_DATE" ]; then
-    puts "$TAG is older than $GIT_SHA"
-    return 1
+    puts "up to date [$SHA]"
+    exit 0
   fi
 
   puts "updating $PACKAGE to $SHA"

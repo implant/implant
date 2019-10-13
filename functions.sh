@@ -20,16 +20,27 @@ get_latest_tag() {
   if [ -z "$GIT_TAGS" ]; then
     GIT_TAGS="[vV]?[0-9.-]+"
   fi
+  LATEST_SHA=$GIT_SHA
   for tag in $(git tag --sort=-committerdate); do
-    if [[ "$tag" =~ ^${GIT_TAGS}$ ]]; then
-      echo "$tag"
-      return 0
-    else
-      puts "'$tag' does not match"
+    if ! [[ "$tag" =~ ^${GIT_TAGS}$ ]]; then
+      puts "$tag does not match"
+      continue
     fi
+    SHA=$(git rev-parse --short=7 "$tag^{}")
+    if git merge-base --is-ancestor "$SHA" "$LATEST_SHA"; then
+      puts "$tag ($SHA) is ancestor of $LATEST_SHA"
+      continue
+    fi
+    OLD_DATE=$(get_commit_date "$LATEST_SHA")
+    NEW_DATE=$(get_commit_date "$SHA")
+    if [ "$NEW_DATE" -lt "$OLD_DATE" ]; then
+      puts "$tag ($SHA) is older than $LATEST_SHA"
+      continue
+    fi
+    LATEST_SHA=$SHA
+    puts "found newer tag $tag ($LATEST_SHA)"
   done
-  puts "no matching tag"
-  exit 1
+  echo "$LATEST_SHA"
 }
 
 get_commit_date() {
