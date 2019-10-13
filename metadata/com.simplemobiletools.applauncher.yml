@@ -1,6 +1,6 @@
 name: Simple App Launcher
 git:
-    url: https://github.com/SimpleMobileTools/Simple-App-Launcher
-    sha: 341bec4
-prebuild: >
-    sed -i 's/.*keystoreProperties.*//g' app/build.gradle
+  url: https://github.com/SimpleMobileTools/Simple-App-Launcher
+  sha: 3d7d9e0
+prebuild: |
+  sed -i 's/.*keystoreProperties.*//g' app/build.gradle
