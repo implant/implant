@@ -175,7 +175,14 @@ clone() {
   URL=$1
   DIR=$2
   SHA=$3
-  git clone "$URL" "$DIR" --recurse-submodules
+  if [ -d "$DIR" ]; then
+      (
+        cd "$DIR" || exit
+        git fetch --tags --prune
+      )
+  else
+      git clone "$URL" "$DIR" --recurse-submodules
+  fi
   (
     cd "$DIR" || exit
     git reset --hard "$SHA"
