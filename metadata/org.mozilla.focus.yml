@@ -1,5 +1,6 @@
 name: Firefox Focus
 git:
   url: https://github.com/mozilla-mobile/focus-android
-  sha: 22150b6
+  sha: 0135fe1
 flavor: FocusArm
+version: "332871813"
