@@ -207,10 +207,20 @@ case $1 in
     update_apps "$@"
     ;;
   l | list)
+    shift
     apps=()
-    for PACKAGE in metadata/*.yml; do
+    if [ -z "${1:-}" ]; then
+      PACKAGES=(metadata/*.yml)
+    elif [ "$1" == "--installed" ]; then
+      get_installed_packages
+    else
+      puts "invalid option $1"
+      exit 1
+    fi
+    for PACKAGE in "${PACKAGES[@]}"; do
       PACKAGE=$(get_package "$PACKAGE")
-      load_config >>"$LOG" 2>&1
+      CONFIG="$METADATA/$PACKAGE.yml"
+      NAME=$(get_config name 2>/dev/null)
       apps+=("$NAME - $PACKAGE")
     done
     IFS=$'\n' sorted=($(sort -f <<<"${apps[*]}"))

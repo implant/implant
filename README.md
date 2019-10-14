@@ -1,6 +1,6 @@
 #### Build and install open-source Android apps with Implant
 
-:construction: Under construction. Use at your own risk :construction:
+:construction: Under construction :construction:
 
 Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker)
 
@@ -36,6 +36,7 @@ implant list | awk '{print $NF}' | implant install
 ### Commands
 
 * `implant list` to show available apps
+* `implant list --installed` to show installed apps
 * `implant build [package ...]` to build apps
 * `implant install [package ...]` to build and install apps
 * `implant keygen` to create adb, debug, and release keys

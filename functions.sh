@@ -49,12 +49,21 @@ get_apk_version_code() {
   $AAPT dump badging "$APK" | grep versionCode | awk '{ print $3 }' | grep -o "[0-9]\+"
 }
 
+get_installed_packages() {
+  PACKAGES=()
+  for p in $(adb shell pm list package | awk -F'package:' '{ print $2 }'); do
+    if [ -f "$METADATA/$p.yml" ]; then
+      PACKAGES+=("$p")
+    fi
+  done
+}
+
 get_commit_date() {
   git show --no-patch --no-notes --pretty='%ct' "$1"
 }
 
 get_package() {
-  filename=$(basename "$PACKAGE")
+  filename=$(basename "$1")
   echo "${filename%.yml*}"
 }
 
@@ -144,7 +153,7 @@ install_deps() {
 
 adb() {
   HOST=$(getent hosts host.docker.internal | awk '{ printf $1 }')
-  $ADB -H "${HOST:-localhost}" "$@" 1>&2
+  $ADB -H "${HOST:-localhost}" "$@"
 }
 
 clone_and_cd() {
