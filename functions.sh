@@ -43,6 +43,12 @@ get_latest_tag() {
   echo "$LATEST_SHA"
 }
 
+get_apk_version_code() {
+  APK=$1
+  AAPT=$(find "$TOOLS" -name aapt | sort -r | head -n 1)
+  $AAPT dump badging "$APK" | grep versionCode | awk '{ print $3 }' | grep -o "[0-9]\+"
+}
+
 get_commit_date() {
   git show --no-patch --no-notes --pretty='%ct' "$1"
 }

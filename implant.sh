@@ -52,6 +52,7 @@ load_config() {
   GIT_URL=$(get_config git.url)
   GIT_SHA=$(get_config git.sha)
   GIT_TAGS=$(get_config git.tags)
+  VERSION=$(get_config version)
   GRADLEPROPS=$(get_config gradle_props "$DEFAULT_GRADLE_PROPS")
   puts
 }
@@ -88,9 +89,23 @@ update_app() {
   fi
 
   puts "updating $PACKAGE to $SHA"
-  yq w -i "$CONFIG" git.sha "\"$SHA\""
-
-  build_apps "$PACKAGE"
+  OUT_DIR=$OUT/$PACKAGE
+  if (build_app); then
+    yq w -i "$CONFIG" git.sha "\"$SHA\""
+    for apk in "$OUT_DIR"/*.apk; do
+      APK_VERSION=$(get_apk_version_code "$apk")
+      if [ -z "$APK_VERSION" ]; then
+        puts "Error parsing apk version"
+        exit 1
+      fi
+      if [ "$APK_VERSION" == "1" ]; then
+        APK_VERSION=$(("$VERSION" + 1))
+      fi
+      yq w -i "$CONFIG" version "\"$APK_VERSION\""
+    done
+  else
+    exit 1
+  fi
 }
 
 build_apps() {
