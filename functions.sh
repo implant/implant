@@ -58,6 +58,18 @@ get_installed_packages() {
   done
 }
 
+up_to_date() {
+  PACKAGE=$1
+  CONFIG="$METADATA/$PACKAGE.yml"
+  INSTALLED_VERSION=$(get_installed_version_code "$PACKAGE")
+  LATEST_VERSION=$(get_config version 2>/dev/null)
+  [ -n "$INSTALLED_VERSION" ] && [ "$INSTALLED_VERSION" == "$LATEST_VERSION" ]
+}
+
+get_installed_version_code() {
+  adb shell dumpsys package "$1" | grep versionCode | awk '{ print $1 }' | grep -o "[0-9]\+"
+}
+
 get_commit_date() {
   git show --no-patch --no-notes --pretty='%ct' "$1"
 }

@@ -17,18 +17,16 @@ OUT=$IMPLANT/output
 LOG=$IMPLANT/build.log
 VERBOSE=${VERBOSE:-0}
 INSTALL=0
+REINSTALL=0
 DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"
 
 source ./functions.sh
 
 load_config() {
-  if [ -f "$METADATA/$PACKAGE.yml" ]; then
-    CONFIG="$METADATA/$PACKAGE.yml"
-  elif [ -f "$METADATA/$PACKAGE" ]; then
-    CONFIG="$METADATA/$PACKAGE"
-  elif [ -f "$PACKAGE" ]; then
-    CONFIG="$PACKAGE"
-  else
+  PACKAGE=$(get_package "$PACKAGE")
+  CONFIG="$METADATA/$PACKAGE.yml"
+
+  if [ ! -f "$CONFIG" ]; then
     puts "Invalid package: $PACKAGE"
     exit 1
   fi
@@ -115,8 +113,12 @@ build_apps() {
   fi
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
-    put "building $PACKAGE..."
     OUT_DIR=$OUT/$PACKAGE
+    if [ "$INSTALL" -eq 1 ] && [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE"; then
+      puts "$PACKAGE up to date"
+      continue
+    fi
+    put "building $PACKAGE..."
     if (build_app); then
       green "OK"
     else
@@ -126,7 +128,7 @@ build_apps() {
 
     if [ "$INSTALL" -eq 1 ]; then
       for apk in "$OUT_DIR"/*.apk; do
-        adb install "$apk"
+        adb install "$apk" 1>&2
       done
     fi
   done
@@ -196,6 +198,10 @@ case $1 in
   i | install)
     shift
     INSTALL=1
+    if [ "${1:-}" == "--reinstall" ]; then
+      shift
+      REINSTALL=1
+    fi
     build_apps "$@"
     ;;
   b | build)
