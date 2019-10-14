@@ -210,7 +210,9 @@ case $1 in
     ;;
   u | update)
     shift
-    update_apps "$@"
+    INSTALL=1
+    get_installed_packages
+    build_apps "${PACKAGES[@]}"
     ;;
   l | list)
     shift
@@ -247,6 +249,10 @@ case $1 in
       puts "Generating $OUT/release.keystore (requires 'docker run --interactive --tty')"
       keytool -genkey -v -keystore "$OUT/release.keystore" -alias implant -keyalg RSA -keysize 2048 -validity 10000
     fi
+    ;;
+  update_apps)
+    shift
+    update_apps "$@"
     ;;
   -h | --help | h | help)
     puts "not implemented"

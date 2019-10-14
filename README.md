@@ -39,6 +39,7 @@ implant list | awk '{print $NF}' | implant install
 * `implant list --installed` to show installed apps
 * `implant build [package ...]` to build apps
 * `implant install [package ...]` to build and install apps
+* `implant update` to update installed apps
 * `implant keygen` to create adb, debug, and release keys
 * `implant adb [...]` to use adb
 
