@@ -14,16 +14,10 @@ First create an [`implant` alias](https://github.com/abaker/implant/wiki/Create-
 ```
 implant install org.thoughtcrime.securesms com.nutomic.syncthing org.schabi.newpipe
 ```
-**Read packages from a file**
-
-Maintain a list of apps you have installed:
-```
-echo org.mozilla.fenix | tee -a my_apps.txt | implant install
-```
-Later you can update them all:
+**Update Installed Apps**
 ```
 docker pull bakerba/implant
-implant install < my_apps.txt
+implant update
 ```
 **Turn your PC into a space heater**
 ```
@@ -35,13 +29,13 @@ implant list | awk '{print $NF}' | implant install
 ```
 ### Commands
 
-* `implant list` to show available apps
-* `implant list --installed` to show installed apps
-* `implant build [package ...]` to build apps
-* `implant install [package ...]` to build and install apps
-* `implant update` to update installed apps
-* `implant keygen` to create adb and release keys
-* `implant adb [...]` to use adb
+* `list` to show available apps
+* `list --installed` to show installed apps
+* `build [package ...]` to build apps
+* `install [package ...]` to build and install apps
+* `update` to update installed apps
+* `keygen` to create adb and release keys
+* `adb [...]` to use adb
 
 ### Requirements
 
