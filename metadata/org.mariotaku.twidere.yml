@@ -4,5 +4,3 @@ git:
     sha: 2903509
 project: twidere
 flavor: fdroid
-prebuild: >
-    sed -i "s/apply plugin: 'com.google.gms.google-services'//g" twidere/build.gradle
