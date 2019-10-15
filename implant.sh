@@ -150,6 +150,8 @@ build_app() {
 
   clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
 
+  find "./$PROJECT" -regex '.*\.apk$' -exec rm -v {} \;
+
   download_gradle
 
   setup_gradle_properties
