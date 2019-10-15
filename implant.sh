@@ -56,9 +56,9 @@ load_config() {
 }
 
 update_apps() {
-  if [ ! -t 0 ] && [ "$#" -eq 0 ]; then
-    readarray STDIN_ARGS </dev/stdin
-    set -- "${STDIN_ARGS[@]}"
+  if [ "$#" -eq 0 ]; then
+    APPS=(metadata/*.yml)
+    set -- "${APPS[@]}"
   fi
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
