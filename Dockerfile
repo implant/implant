@@ -18,6 +18,7 @@ RUN apt-get update && \
     mkdir -p $ANDROID_HOME && \
     unzip sdk.zip -d $ANDROID_HOME && \
     rm sdk.zip && \
+    mkdir -p /root/.android/ && touch /root/.android/repositories.cfg && \
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && \
     $ANDROID_HOME/tools/bin/sdkmanager "platform-tools"
 
