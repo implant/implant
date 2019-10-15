@@ -48,7 +48,11 @@ load_config() {
   DEPS=$(get_config deps)
   GRADLE_VERSION=$(get_config gradle)
   GIT_URL=$(get_config git.url)
-  GIT_SHA=$(get_config git.sha)
+  if [ -z "${GIT_SHA:-}" ]; then
+    GIT_SHA=$(get_config git.sha)
+  else
+    puts "git.sha=$GIT_SHA [override]"
+  fi
   GIT_TAGS=$(get_config git.tags)
   VERSION=$(get_config version)
   GRADLEPROPS=$(get_config gradle_props "$DEFAULT_GRADLE_PROPS")
@@ -80,16 +84,17 @@ update_app() {
 
   clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
 
-  SHA=$(get_latest_tag)
-  if [ "$SHA" == "$GIT_SHA" ]; then
-    puts "up to date [$SHA]"
+  UPDATE_SHA=$(get_latest_tag)
+  if [ "$UPDATE_SHA" == "$GIT_SHA" ]; then
+    puts "up to date [$GIT_SHA]"
     exit 0
   fi
 
-  puts "updating $PACKAGE to $SHA"
+  GIT_SHA=$UPDATE_SHA
+  puts "updating $PACKAGE to $GIT_SHA"
   OUT_DIR=$OUT/$PACKAGE
   if (build_app); then
-    yq w -i "$CONFIG" git.sha "\"$SHA\""
+    yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
     for apk in "$OUT_DIR"/*.apk; do
       APK_VERSION=$(get_apk_version_code "$apk")
       if [ -z "$APK_VERSION" ]; then
