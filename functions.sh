@@ -51,7 +51,7 @@ get_apk_version_code() {
 
 get_installed_packages() {
   PACKAGES=()
-  for p in $(adb shell pm list package | awk -F'package:' '{ print $2 }'); do
+  for p in $(adb shell pm list package | awk -F'package:' '{ print $2 }' | sort); do
     if [ -f "$METADATA/$p.yml" ]; then
       PACKAGES+=("$p")
     fi
