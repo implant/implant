@@ -252,10 +252,6 @@ case $1 in
       $ADB start-server >>"$LOG" 2>&1
       cp -v "$HOME/.android/adbkey" "$HOME/.android/adbkey.pub" "$OUT"
     fi
-    if [ ! -f "$OUT/debug.keystore" ]; then
-      puts "Generating $OUT/debug.keystore"
-      keytool -genkey -v -keystore "$OUT/debug.keystore" -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Android Debug" >>"$LOG" 2>&1
-    fi
     if [ ! -f "$OUT/release.keystore" ]; then
       puts "Generating $OUT/release.keystore (requires 'docker run --interactive --tty')"
       keytool -genkey -v -keystore "$OUT/release.keystore" -alias implant -keyalg RSA -keysize 2048 -validity 10000
