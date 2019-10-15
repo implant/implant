@@ -1,6 +1,7 @@
 name: AnySoftKeyboard
 git:
-    url: https://github.com/AnySoftKeyboard/AnySoftKeyboard
-    sha: 805764d
-    tags: "[0-9.]+-r[0-9.]+"
+  url: https://github.com/AnySoftKeyboard/AnySoftKeyboard
+  sha: 805764d
+  tags: '[0-9.]+-r[0-9.]+'
 deps: make
+version: "1"

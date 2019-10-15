@@ -2,3 +2,4 @@ name: Open Sudoku
 git:
   url: https://github.com/ogarcia/opensudoku
   sha: 7002c01
+version: "20191010"

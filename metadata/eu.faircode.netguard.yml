@@ -4,3 +4,4 @@ git:
   sha: 9984fd4
 prebuild: |
   sed -i 's/.*keystoreProperties.*//g' app/build.gradle
+version: "2019101301"

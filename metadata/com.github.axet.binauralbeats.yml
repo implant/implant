@@ -1,8 +1,9 @@
 name: Binaural Beats
 git:
-    url: https://gitlab.com/axet/android-binaural-beats
-    sha: 8a625701
-    tags: binauralbeats-[0-9.]+
+  url: https://gitlab.com/axet/android-binaural-beats
+  sha: 8a625701
+  tags: binauralbeats-[0-9.]+
 gradle: 4.6
-prebuild: >
-    sed -i 's/.*RELEASE_.*//g' app/build.gradle
+prebuild: |
+  sed -i 's/.*RELEASE_.*//g' app/build.gradle
+version: "156"

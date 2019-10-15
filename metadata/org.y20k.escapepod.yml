@@ -2,3 +2,4 @@ name: Escapepod
 git:
   url: https://github.com/y20k/escapepod
   sha: 5c2766a
+version: "9"

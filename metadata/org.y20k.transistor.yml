@@ -1,4 +1,5 @@
 name: Transistor
 git:
-    url: https://github.com/y20k/transistor
-    sha: e88ab45
+  url: https://github.com/y20k/transistor
+  sha: e88ab45
+version: "68"

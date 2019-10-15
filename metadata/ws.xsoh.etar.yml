@@ -3,4 +3,5 @@ git:
   url: https://github.com/Etar-Group/Etar-Calendar
   sha: 7c4cac2
 project: ""
-gradle: 5.1.1
+gradle: 5.4.1
+version: "20"

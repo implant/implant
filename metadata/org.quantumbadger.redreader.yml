@@ -1,5 +1,6 @@
 name: RedReader
 git:
-    url: https://github.com/QuantumBadger/RedReader
-    sha: 8961728
-project: ''
+  url: https://github.com/QuantumBadger/RedReader
+  sha: "8961728"
+project: ""
+version: "87"

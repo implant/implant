@@ -6,3 +6,4 @@ project: ""
 flavor: website
 prebuild: |
   sed -i 's/task.finalizedBy signProductionWebsiteRelease//g' build.gradle && sed -i 's/universalApk true/universalApk false/g' build.gradle && sed -i 's/[[:space:]]*abiFilters .*//g' build.gradle && sed -i "s/include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'/include 'armeabi-v7a'/g" build.gradle
+version: "5451"

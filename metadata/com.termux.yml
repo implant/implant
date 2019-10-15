@@ -1,5 +1,6 @@
 name: Termux
 git:
-    url: https://github.com/termux/termux-app
-    sha: e206121
+  url: https://github.com/termux/termux-app
+  sha: e206121
 deps: make
+version: "75"

@@ -4,3 +4,4 @@ git:
   sha: 25eb7bf
 prebuild: |
   sed -i 's/.*keystoreProperties.*//g' app/build.gradle
+version: "161"

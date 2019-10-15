@@ -3,3 +3,4 @@ git:
   url: https://github.com/nutritionfactsorg/daily-dozen-android
   sha: 6ba709c
 flavor: fdroid
+version: "44"

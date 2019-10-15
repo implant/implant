@@ -1,6 +1,7 @@
 name: Simple Solitaire Collection
 git:
-    url: https://github.com/TobiasBielefeld/Simple-Solitaire
-    sha: c0b807a
-prebuild: >
-    rm -rf app/release
+  url: https://github.com/TobiasBielefeld/Simple-Solitaire
+  sha: c0b807a
+prebuild: |
+  rm -rf app/release
+version: "71"

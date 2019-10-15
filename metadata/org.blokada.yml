@@ -5,3 +5,4 @@ git:
 flavor: full
 prebuild: |
   sed -i 's/.*BLOKADA_.*//g' app/build.gradle
+version: "403000006"

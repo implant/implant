@@ -1,5 +1,6 @@
 name: Voice
 git:
-    url: https://github.com/PaulWoitaschek/Voice
-    sha: 21480cb
+  url: https://github.com/PaulWoitaschek/Voice
+  sha: 21480cb
 flavor: opensource
+version: "3060327"

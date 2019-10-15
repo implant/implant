@@ -4,3 +4,4 @@ git:
   sha: dc07308
   tags: '[0-9.]+[a-z]?'
 flavor: free
+version: "1070397"

@@ -4,3 +4,4 @@ git:
   sha: 19b7042
 flavor: generic
 gradle_props: tasks_mapbox_key_debug=pk.eyJ1IjoiYmFrZXJiYSIsImEiOiJjazExMXNvcHIwMDExM2NtaXdpYjc5ODJpIn0.fHR4HTUMOg3-k87aDzTLHw
+version: "614"

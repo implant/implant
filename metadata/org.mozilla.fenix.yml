@@ -7,3 +7,4 @@ target: production
 deps: bzip2
 prebuild: |
   sed -i 's/"x86", "armeabi-v7a", "arm64-v8a", "x86_64"/"armeabi-v7a"/g' app/build.gradle
+version: "12872316"
