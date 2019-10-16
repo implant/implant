@@ -92,20 +92,18 @@ update_app() {
 
   GIT_SHA=$UPDATE_SHA
   puts "updating $PACKAGE to $GIT_SHA"
-  OUT_DIR=$OUT/$PACKAGE
   if (build_app); then
     yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
-    for apk in "$OUT_DIR"/*.apk; do
-      APK_VERSION=$(get_apk_version_code "$apk")
-      if [ -z "$APK_VERSION" ]; then
-        puts "Error parsing apk version"
-        exit 1
-      fi
-      if [ "$APK_VERSION" == "1" ]; then
-        APK_VERSION=$(("$VERSION" + 1))
-      fi
-      yq w -i "$CONFIG" version "\"$APK_VERSION\""
-    done
+    apk="$OUT/$PACKAGE.apk"
+    APK_VERSION=$(get_apk_version_code "$apk")
+    if [ -z "$APK_VERSION" ]; then
+      puts "Error parsing apk version"
+      exit 1
+    fi
+    if [ "$APK_VERSION" == "1" ]; then
+      APK_VERSION=$(("$VERSION" + 1))
+    fi
+    yq w -i "$CONFIG" version "\"$APK_VERSION\""
   else
     exit 1
   fi
@@ -118,7 +116,6 @@ build_apps() {
   fi
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
-    OUT_DIR=$OUT/$PACKAGE
     if [ "$INSTALL" -eq 1 ] && [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE"; then
       puts "$PACKAGE up to date"
       continue
@@ -132,9 +129,7 @@ build_apps() {
     fi
 
     if [ "$INSTALL" -eq 1 ]; then
-      for apk in "$OUT_DIR"/*.apk; do
-        adb install "$apk" 1>&2
-      done
+      adb install "$OUT/$PACKAGE.apk" 1>&2
     fi
   done
 }
@@ -146,8 +141,7 @@ build_app() {
 
   load_config
 
-  mkdir -p "$OUT_DIR" "$DOWNLOADS" "$TMP"
-  rm -fv "$OUT_DIR"/*.apk
+  mkdir -p "$DOWNLOADS" "$TMP"
 
   setup_ndk
 
@@ -171,22 +165,23 @@ build_app() {
 
   build
 
-  find "./$PROJECT" -regex '.*\.apk$' -exec cp -v {} "$OUT_DIR" \; >>"$LOG"
+  readarray -t apks < <(find "./$PROJECT" -regex '.*\.apk$')
+  num_apks="${#apks[@]}"
+  if [ ! "$num_apks" -eq 1 ]; then
+    puts "wanted 1 apk, found $num_apks"
+    exit 1
+  fi
 
   if [ ! -f "$KEYSTORE" ]; then
     puts "Cannot sign APK: $KEYSTORE found"
     return "$INSTALL"
   fi
 
-  for apk in "$OUT_DIR"/*.apk; do
-    zipalign_and_sign "$apk"
-  done
-}
+  rm -fv "$OUT/$PACKAGE.apk"
 
-zipalign_and_sign() {
-  UNSIGNED=$1
-  SIGNED=$(echo "$UNSIGNED" | sed 's/[-]unsigned//g;s/\.apk$/-signed\.apk/')
-  zipalign "$UNSIGNED" "$SIGNED" && rm -v "$UNSIGNED" && sign "$SIGNED"
+  apk="${apks[0]}"
+  target="$OUT/$PACKAGE.apk"
+  zipalign "$apk" "$target" && sign "$target"
 }
 
 if [ "$#" -eq 0 ]; then
