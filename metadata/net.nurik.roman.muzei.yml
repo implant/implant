@@ -3,6 +3,5 @@ git:
   url: https://github.com/romannurik/muzei
   sha: fda2ebb
 project: main
-prebuild: |
-  sed -i 's/.*local\.properties.*//g' **/*.gradle
+prebuild: sed -i '/local\.properties/d' **/*.gradle
 version: "320008"

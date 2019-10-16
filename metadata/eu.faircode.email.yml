@@ -3,6 +3,5 @@ git:
   url: https://github.com/M66B/FairEmail
   sha: e4632f3
 flavor: full
-prebuild: |
-  sed -i 's/.*keystoreProperties.*//g' app/build.gradle
+prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
 version: "775"

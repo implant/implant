@@ -4,6 +4,5 @@ git:
   sha: 805764d
   tags: '[0-9.]+-r[0-9.]+'
 deps: make
-prebuild: |
-  if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/StaticVersionGenerator()/StaticVersionGenerator($VERSION)/" "$PWD/$PROJECT"/build.gradle; fi
+prebuild: if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/StaticVersionGenerator()/StaticVersionGenerator($VERSION)/" "$PROJECT"/build.gradle; fi
 version: "1"

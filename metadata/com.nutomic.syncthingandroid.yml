@@ -5,5 +5,8 @@ git:
 deps: python libncurses5
 ndk: r15c
 prebuild: |
-  GO_URL=https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz && mkdir -p $TMP/go1.13.1 && wget -o /dev/null -c -O- $GO_URL | tar xzf - -C $TMP/go1.13.1 && PATH=$PATH:$TMP/go1.13.1/go/bin $GRADLE buildNative
+  GO_URL=https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz
+  mkdir -p $TMP/go1.13.1
+  wget -o /dev/null -c -O- $GO_URL | tar xzf - -C $TMP/go1.13.1
+  PATH=$PATH:$TMP/go1.13.1/go/bin $GRADLE buildNative
 version: "4197"

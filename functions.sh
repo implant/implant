@@ -92,9 +92,22 @@ prebuild() {
     return 0
   fi
   puts "prebuild..."
-  if ! eval "$PREBUILD"; then
-    exit 1
-  fi
+  to_array "$PREBUILD"
+  for step in "${array[@]}"; do
+    puts "prebuild step: $step"
+    if ! eval "$step"; then
+      exit 1
+    fi
+  done
+}
+
+to_array() {
+  IFS=$'\n'
+  array=()
+  for entry in $1; do
+    entry=${entry#*- }
+    array+=("$entry")
+  done
 }
 
 build() {

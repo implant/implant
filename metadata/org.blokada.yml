@@ -3,6 +3,5 @@ git:
   url: https://github.com/blokadaorg/blokada
   sha: 36d36fa
 flavor: full
-prebuild: |
-  sed -i 's/.*BLOKADA_.*//g' app/build.gradle
+prebuild: sed -i '/BLOKADA_/d' "$PROJECT"/build.gradle
 version: "403000006"

@@ -4,6 +4,5 @@ git:
   sha: 948079a
 project: ""
 flavor: website
-prebuild: |
-  sed -i -e 's/task.finalizedBy signProductionWebsiteRelease//g' -e 's/universalApk true/universalApk false/g' -e 's/[[:space:]]*abiFilters .*//g' -e "s/include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'/include 'armeabi-v7a'/g" build.gradle
+prebuild: sed -i -e 's/task.finalizedBy signProductionWebsiteRelease//g' -e 's/universalApk true/universalApk false/g' -e 's/[[:space:]]*abiFilters .*//g' -e "s/include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'/include 'armeabi-v7a'/g" build.gradle
 version: "5461"
