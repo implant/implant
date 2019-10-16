@@ -85,7 +85,7 @@ update_app() {
   clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
 
   UPDATE_SHA=$(get_latest_tag)
-  if [ "$UPDATE_SHA" == "$GIT_SHA" ]; then
+  if [ -n "$VERSION" ] && [ "$UPDATE_SHA" == "$GIT_SHA" ]; then
     puts "up to date [$GIT_SHA]"
     exit 0
   fi
