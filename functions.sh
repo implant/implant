@@ -61,9 +61,15 @@ get_installed_packages() {
 up_to_date() {
   PACKAGE=$1
   CONFIG="$METADATA/$PACKAGE.yml"
-  INSTALLED_VERSION=$(get_installed_version_code "$PACKAGE")
+  if [ "$INSTALL" -eq 0 ]; then
+    if [ -f "$OUT/$PACKAGE-${VERSION:-}.apk" ]; then
+      return 0
+    fi
+  else
+    INSTALLED_VERSION=$(get_installed_version_code "$PACKAGE")
+  fi
   LATEST_VERSION=$(get_config version 2>/dev/null)
-  [ -n "$INSTALLED_VERSION" ] && [ "$INSTALLED_VERSION" == "$LATEST_VERSION" ]
+  [ -n "${INSTALLED_VERSION:-}" ] && [ "$INSTALLED_VERSION" == "$LATEST_VERSION" ]
 }
 
 get_installed_version_code() {

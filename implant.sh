@@ -94,7 +94,7 @@ update_app() {
   puts "updating $PACKAGE to $GIT_SHA"
   if (build_app); then
     yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
-    apk="$OUT/$PACKAGE.apk"
+    apk="$OUT/$PACKAGE-$VERSION.apk"
     APK_VERSION=$(get_apk_version_code "$apk")
     if [ -z "$APK_VERSION" ]; then
       puts "Error parsing apk version"
@@ -116,7 +116,9 @@ build_apps() {
   fi
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
-    if [ "$INSTALL" -eq 1 ] && [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE"; then
+    CONFIG="$METADATA/$PACKAGE.yml"
+    VERSION=$(get_config version 2>/dev/null)
+    if [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE"; then
       puts "$PACKAGE up to date"
       continue
     fi
@@ -129,7 +131,7 @@ build_apps() {
     fi
 
     if [ "$INSTALL" -eq 1 ]; then
-      adb install "$OUT/$PACKAGE.apk" 1>&2
+      adb install "$OUT/$PACKAGE-$VERSION.apk" 1>&2
     fi
   done
 }
@@ -177,10 +179,11 @@ build_app() {
     return "$INSTALL"
   fi
 
-  rm -fv "$OUT/$PACKAGE.apk"
+  rm -fv "$OUT/$PACKAGE-*.apk"
 
   apk="${apks[0]}"
-  target="$OUT/$PACKAGE.apk"
+  VERSION=$(get_apk_version_code "$apk")
+  target="$OUT/$PACKAGE-$VERSION.apk"
   zipalign "$apk" "$target" && sign "$target"
 }
 
