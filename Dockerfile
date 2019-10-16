@@ -1,4 +1,7 @@
-FROM openjdk:8u222-stretch
+FROM openjdk:8u222-slim-buster
+
+# TODO this makes yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses &&     $ANDROID_HOME/tools/bin/sdkmanager "platform-tools fail
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
     YQ=https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 \
@@ -7,7 +10,7 @@ ENV SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
     ANDROID_HOME=/root/Android/Sdk
 
 RUN apt-get update && \
-    apt-get install --no-install-suggests --no-install-recommends -y sudo less && \
+    apt-get install --no-install-suggests --no-install-recommends -y git sudo less unzip wget && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
     wget $YQ -O /usr/local/bin/yq -o /dev/null && \
     chmod +x /usr/local/bin/yq && \
@@ -15,6 +18,7 @@ RUN apt-get update && \
     mkdir -p $ANDROID_HOME && \
     unzip sdk.zip -d $ANDROID_HOME && \
     rm sdk.zip && \
+    mkdir -p /root/.android/ && touch /root/.android/repositories.cfg && \
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && \
     $ANDROID_HOME/tools/bin/sdkmanager "platform-tools"
 
