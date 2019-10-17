@@ -18,6 +18,7 @@ OUT=$IMPLANT/output
 LOG=$IMPLANT/build.log
 VERBOSE=${VERBOSE:-0}
 INSTALL=0
+SERVE=0
 REINSTALL=0
 DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"
 
@@ -221,6 +222,31 @@ case $1 in
   b | build)
     shift
     build_apps "$@"
+    ;;
+  fdroid)
+    shift
+    if [ "${1:-}" == "--serve" ]; then
+      shift
+      SERVE=1
+    fi
+    if [ "$#" -eq 0 ]; then
+      APPS=(metadata/*.yml)
+      set -- "${APPS[@]}"
+    fi
+    build_apps "$@"
+    put "generating fdroid index..."
+    if (make_repo); then
+      green "OK"
+    else
+      red "FAILED"
+      exit 1
+    fi
+    if [ "$SERVE" -eq 1 ]; then
+      puts "starting web server"
+      setup_logging
+      cd "$OUT"
+      python -m SimpleHTTPServer 80
+    fi
     ;;
   u | update)
     shift
