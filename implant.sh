@@ -75,6 +75,16 @@ update_apps() {
   done
 }
 
+find_apk() {
+  readarray -t apks < <(find "$1" -name "$2")
+  num_apks="${#apks[@]}"
+  if [ ! "$num_apks" -eq 1 ]; then
+    puts "wanted 1 apk, found $num_apks"
+    exit 1
+  fi
+  apk="${apks[0]}"
+}
+
 update_app() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
@@ -94,7 +104,7 @@ update_app() {
   puts "updating $PACKAGE to $GIT_SHA"
   if (build_app); then
     yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
-    apk="$OUT/$PACKAGE-$VERSION.apk"
+    find_apk "$OUT" "$PACKAGE-*.apk"
     APK_VERSION=$(get_apk_version_code "$apk")
     if [ -z "$APK_VERSION" ]; then
       puts "Error parsing apk version"
@@ -167,21 +177,15 @@ build_app() {
 
   build
 
-  readarray -t apks < <(find "./$PROJECT" -regex '.*\.apk$')
-  num_apks="${#apks[@]}"
-  if [ ! "$num_apks" -eq 1 ]; then
-    puts "wanted 1 apk, found $num_apks"
-    exit 1
-  fi
+  find_apk "./$PROJECT" "*.apk"
 
   if [ ! -f "$KEYSTORE" ]; then
     puts "Cannot sign APK: $KEYSTORE found"
     return "$INSTALL"
   fi
 
-  rm -fv "$OUT/$PACKAGE-*.apk"
+  rm -fv "$OUT/$PACKAGE-"*.apk
 
-  apk="${apks[0]}"
   VERSION=$(get_apk_version_code "$apk")
   target="$OUT/$PACKAGE-$VERSION.apk"
   zipalign "$apk" "$target" && sign "$target"
