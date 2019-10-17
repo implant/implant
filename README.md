@@ -1,8 +1,10 @@
 #### Build and install open-source Android apps with Implant
 
-:construction: Under construction :construction:
+Implant can build 90+ open-source Android apps, install them on
+your phone over USB, or generate an F-Droid repository so you can 
+install them with the F-Droid client
 
-Implant is designed for use with Docker, but `implant.sh` [*should* work on Debian-based distros](https://github.com/abaker/implant/wiki/Use-implant-without-Docker)
+Implant is designed for use with Docker, but *might* work on a Debian-based distro
 
 `docker run --rm -it bakerba/implant list` to browse available apps
 
@@ -10,18 +12,18 @@ Implant is designed for use with Docker, but `implant.sh` [*should* work on Debi
 
 First create an [`implant` alias](https://github.com/abaker/implant/wiki/Create-an-implant-alias)
 
-**Build and Install Signal, Syncthing, and NewPipe**
+**Build and serve all apps as an F-Droid Repository**
+```
+implant fdroid --serve
+```
+**Build and Install Signal, Syncthing, and NewPipe over USB**
 ```
 implant install org.thoughtcrime.securesms com.nutomic.syncthing org.schabi.newpipe
 ```
-**Update Installed Apps**
+**Update Installed Apps Over USB**
 ```
 docker pull bakerba/implant
 implant update
-```
-**Turn your PC into a space heater**
-```
-implant install org.videolan.vlc
 ```
 **Install everything!**
 ```
@@ -29,13 +31,13 @@ implant list | awk '{print $NF}' | implant install
 ```
 ### Commands
 
-* `list` to show available apps
-* `list --installed` to show installed apps
-* `build [package ...]` to build apps
-* `install [package ...]` to build and install apps
-* `update` to update installed apps
-* `keygen` to create adb and release keys
-* `adb [...]` to use adb
+* `list [--installed]` show available apps
+* `fdroid [--serve] [package ...]` build apps, generate an F-Droid index, and start a web server
+* `install [package ...]` build and install apps over USB
+* `build [package ...]` build apps
+* `update` update installed apps over USB
+* `keygen` create adb and release keys
+* `adb [...]` execute adb commands
 
 ### Requirements
 
