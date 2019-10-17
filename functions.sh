@@ -111,7 +111,6 @@ to_array() {
   IFS=$'\n'
   array=()
   for entry in $1; do
-    entry=${entry#*- }
     array+=("$entry")
   done
 }
