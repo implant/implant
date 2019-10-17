@@ -169,10 +169,10 @@ build_app() {
   setup_gradle_properties
 
   sed -i \
-      -e "s/.*signingConfig .*//g" \
-      -e "s/apply plugin: 'com.google.gms.google-services'//g" \
-      -e "s/apply plugin: 'io.fabric'//g" \
-      "$PWD/$PROJECT"/build.gradle*
+    -e "s/.*signingConfig .*//g" \
+    -e "s/apply plugin: 'com.google.gms.google-services'//g" \
+    -e "s/apply plugin: 'io.fabric'//g" \
+    "$PWD/$PROJECT"/build.gradle*
 
   prebuild
 

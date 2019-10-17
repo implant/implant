@@ -193,7 +193,7 @@ zipalign() {
   UNSIGNED=$1
   SIGNED=$2
   ZIPALIGN=$(find "$TOOLS" -name zipalign | sort -r | head -n 1)
-  puts "aligning $UNSIGNED..."
+  puts "aligning $UNSIGNED to $SIGNED..."
   if ! $ZIPALIGN -f -v -p 4 "$UNSIGNED" "$SIGNED"; then
     exit 1
   fi
@@ -219,12 +219,12 @@ clone() {
   DIR=$2
   SHA=$3
   if [ -d "$DIR" ]; then
-      (
-        cd "$DIR" || exit
-        git fetch --tags --prune
-      )
+    (
+      cd "$DIR" || exit
+      git fetch --tags --prune
+    )
   else
-      git clone "$URL" "$DIR" --recurse-submodules
+    git clone "$URL" "$DIR" --recurse-submodules
   fi
   (
     cd "$DIR" || exit
