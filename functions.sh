@@ -272,8 +272,12 @@ checksum() {
   FILE=$1
   CHECKSUM=$2
   puts "checking $FILE"
-  if ! sha256sum "$FILE" | awk '{ printf $1 }' | diff "$CHECKSUM" -; then
+  if ! sha256 "$FILE" | diff "$CHECKSUM" -; then
     rm -v "$FILE" "$CHECKSUM"
     exit 1
   fi
+}
+
+sha256() {
+  sha256sum "$1" | awk '{ printf $1 }'
 }
