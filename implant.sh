@@ -6,6 +6,7 @@ cd "${0%/*}"
 
 export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 TOOLS=$ANDROID_HOME/build-tools
+APKANALYZER=$ANDROID_HOME/tools/bin/apkanalyzer
 ADB=$ANDROID_HOME/platform-tools/adb
 KEYSTORE=$HOME/.android/release.keystore
 METADATA=$PWD/metadata

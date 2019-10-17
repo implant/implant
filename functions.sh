@@ -44,9 +44,7 @@ get_latest_tag() {
 }
 
 get_apk_version_code() {
-  APK=$1
-  AAPT=$(find "$TOOLS" -name aapt | sort -r | head -n 1)
-  $AAPT dump badging "$APK" | grep versionCode | awk '{ print $3 }' | grep -o "[0-9]\+"
+  $APKANALYZER manifest version-code "$1"
 }
 
 get_installed_packages() {
