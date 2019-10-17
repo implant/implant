@@ -47,6 +47,10 @@ get_apk_version_code() {
   $APKANALYZER manifest version-code "$1"
 }
 
+find_build_tool() {
+  find "$TOOLS" -name "$1" | sort | tail -n 1
+}
+
 get_installed_packages() {
   PACKAGES=()
   for p in $(adb shell pm list package | awk -F'package:' '{ print $2 }' | sort); do
@@ -190,26 +194,25 @@ clone_and_cd() {
 }
 
 zipalign() {
-  UNSIGNED=$1
-  SIGNED=$2
-  ZIPALIGN=$(find "$TOOLS" -name zipalign | sort -r | head -n 1)
-  puts "aligning $UNSIGNED to $SIGNED..."
-  if ! $ZIPALIGN -f -v -p 4 "$UNSIGNED" "$SIGNED"; then
+  zipalign=$(find_build_tool zipalign)
+  puts "aligning $1 to $2..."
+  if ! $zipalign -f -v -p 4 "$1" "$2"; then
     exit 1
   fi
-  if ! $ZIPALIGN -c -v 4 "$SIGNED"; then
+  puts "verifying alignment for $2"
+  if ! $zipalign -c -v 4 "$2"; then
     exit 1
   fi
 }
 
 sign() {
-  SIGNED=$1
-  APKSIGNER=$(find "$TOOLS" -name apksigner | sort -r | head -n 1)
-  puts "signing $SIGNED..."
-  if ! $APKSIGNER sign --ks "$KEYSTORE" --ks-pass env:KSPASS "$SIGNED"; then
+  apksigner=$(find_build_tool apksigner)
+  puts "signing $1..."
+  if ! $apksigner sign --ks "$KEYSTORE" --ks-pass env:KSPASS "$1"; then
     exit 1
   fi
-  if ! $APKSIGNER verify "$SIGNED"; then
+  puts "verifying signature for $1"
+  if ! $apksigner verify "$1"; then
     exit 1
   fi
 }
