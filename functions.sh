@@ -28,13 +28,13 @@ check_key() {
   fi
   if [ ! -f "$KEYSTORE" ]; then
     puts "generating $KEYSTORE"
-    keytool -genkey -v -keystore "$KEYSTORE" -storepass "$KSPASS" -keypass "$KSPASS" -alias implant -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Implant" >"$LOG" 2>&1
+    keytool -genkey -v -keystore "$KEYSTORE" -storepass "$KSPASS" -keypass "$KSPASS" -alias implant -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Implant" >>"$LOG" 2>&1
   fi
-  if ! keytool -list -keystore "$KEYSTORE" -storepass "$KSPASS" >"$LOG" 2>&1; then
+  if ! keytool -list -keystore "$KEYSTORE" -storepass "$KSPASS" >>"$LOG" 2>&1; then
     puts "invalid password for $KEYSTORE"
     exit 1
   fi
-  if ! keytool -list -keystore "$KEYSTORE" -storepass "$KSPASS" -alias implant >"$LOG" 2>&1; then
+  if ! keytool -list -keystore "$KEYSTORE" -storepass "$KSPASS" -alias implant >>"$LOG" 2>&1; then
     puts "missing implant alias in $KEYSTORE"
     exit 1
   fi
@@ -63,11 +63,11 @@ passwd() {
     puts "passwords do not match"
     exit 1
   fi
-  if ! keytool -keypasswd -new "$password" -storepass "$KSPASS" -keystore "$KEYSTORE" -alias implant >"$LOG" 2>&1; then
+  if ! keytool -keypasswd -new "$password" -storepass "$KSPASS" -keystore "$KEYSTORE" -alias implant >>"$LOG" 2>&1; then
     puts "failed to change key password"
     exit 1
   fi
-  if ! keytool -storepasswd -new "$password" -storepass "$KSPASS" -keystore "$KEYSTORE" >"$LOG" 2>&1; then
+  if ! keytool -storepasswd -new "$password" -storepass "$KSPASS" -keystore "$KEYSTORE" >>"$LOG" 2>&1; then
     puts "failed to change keystore password"
     exit 1
   fi
