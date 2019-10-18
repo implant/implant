@@ -20,6 +20,26 @@ yellow() {
   echo -e "\033[93;1m$1\033[0m"
 }
 
+check_key() {
+  if [ ! -f "$OUT/adbkey" ]; then
+    puts "generating $OUT/adbkey"
+    $ADB start-server >>"$LOG" 2>&1
+    cp "$HOME/.android/adbkey" "$HOME/.android/adbkey.pub" "$OUT"
+  fi
+  if [ ! -f "$KEYSTORE" ]; then
+    puts "generating $KEYSTORE"
+    keytool -genkey -v -keystore "$KEYSTORE" -storepass "$KSPASS" -keypass "$KSPASS" -alias implant -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Implant" >"$LOG" 2>&1
+  fi
+  if ! keytool -list -keystore "$KEYSTORE" -storepass "$KSPASS" >"$LOG" 2>&1; then
+    puts "invalid password for $KEYSTORE"
+    exit 1
+  fi
+  if ! keytool -list -keystore "$KEYSTORE" -storepass "$KSPASS" -alias implant >"$LOG" 2>&1; then
+    puts "missing implant alias in $KEYSTORE"
+    exit 1
+  fi
+}
+
 make_repo() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 

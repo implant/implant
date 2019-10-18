@@ -8,7 +8,6 @@ export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 TOOLS=$ANDROID_HOME/build-tools
 APKANALYZER=$ANDROID_HOME/tools/bin/apkanalyzer
 ADB=$ANDROID_HOME/platform-tools/adb
-KEYSTORE=$HOME/.android/release.keystore
 METADATA=$PWD/metadata
 IMPLANT=$HOME/.implant
 TMP=$IMPLANT/tmp
@@ -16,6 +15,8 @@ DOWNLOADS=$IMPLANT/downloads
 SRC=$IMPLANT/src
 OUT=$IMPLANT/output
 APKS=$OUT/apks
+KEYSTORE=$OUT/implant.keystore
+KSPASS=${KSPASS:-implant}
 LOG=$IMPLANT/build.log
 VERBOSE=${VERBOSE:-0}
 INSTALL=0
@@ -187,11 +188,6 @@ build_app() {
     exit 1
   fi
 
-  if [ ! -f "$KEYSTORE" ]; then
-    puts "Cannot sign APK: $KEYSTORE found"
-    return "$INSTALL"
-  fi
-
   rm -fv "$APKS/$PACKAGE-"*.apk
 
   VERSION=$(get_apk_version_code "$apk")
@@ -214,6 +210,10 @@ type yq >/dev/null 2>&1 || {
 if [ ! -d "$OUT" ]; then
   yellow "WARNING: $OUT not mounted, see https://github.com/abaker/implant/wiki/Create-an-implant-alias"
   mkdir -p "$OUT"
+fi
+
+if ! check_key; then
+  exit 1
 fi
 
 case $1 in
@@ -286,16 +286,6 @@ case $1 in
     unset IFS
     printf "%s\n" "${sorted[@]}" | less
     ;;
-  keygen)
-    if [ ! -f "$OUT/adbkey" ] && [ ! -f "$OUT/adbkey.pub" ]; then
-      puts "Generating adbkey and adbkey.pub"
-      $ADB start-server >>"$LOG" 2>&1
-      cp -v "$HOME/.android/adbkey" "$HOME/.android/adbkey.pub" "$OUT"
-    fi
-    if [ ! -f "$OUT/release.keystore" ]; then
-      puts "Generating $OUT/release.keystore (requires 'docker run --interactive --tty')"
-      keytool -genkey -v -keystore "$OUT/release.keystore" -alias implant -keyalg RSA -keysize 2048 -validity 10000
-    fi
     ;;
   update_apps)
     shift
