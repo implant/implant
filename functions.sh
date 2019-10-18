@@ -80,7 +80,7 @@ make_repo() {
   setup_logging
 
   if [ ! -d "$TOOLS" ]; then
-    $SDK_MANAGER "build-tools;29.0.2"
+    "$ANDROID_HOME/tools/bin/sdkmanager" "build-tools;29.0.2"
   fi
   puts "generating fdroid repo"
   url="http://localhost"
