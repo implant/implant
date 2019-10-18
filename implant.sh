@@ -181,6 +181,11 @@ build_app() {
 
   find_apk "./$PROJECT" "*.apk"
 
+  if [ -z "$(get_version_name "$apk")" ]; then
+    puts "Missing version name"
+    exit 1
+  fi
+
   if [ ! -f "$KEYSTORE" ]; then
     puts "Cannot sign APK: $KEYSTORE found"
     return "$INSTALL"
