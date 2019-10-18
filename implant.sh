@@ -15,6 +15,7 @@ TMP=$IMPLANT/tmp
 DOWNLOADS=$IMPLANT/downloads
 SRC=$IMPLANT/src
 OUT=$IMPLANT/output
+APKS=$OUT/apks
 LOG=$IMPLANT/build.log
 VERBOSE=${VERBOSE:-0}
 INSTALL=0
@@ -106,7 +107,7 @@ update_app() {
   puts "updating $PACKAGE to $GIT_SHA"
   if (build_app); then
     yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
-    find_apk "$OUT" "$PACKAGE-*.apk"
+    find_apk "$APKS" "$PACKAGE-*.apk"
     APK_VERSION=$(get_apk_version_code "$apk")
     if [ -z "$APK_VERSION" ]; then
       puts "Error parsing apk version"
@@ -143,7 +144,7 @@ build_apps() {
     fi
 
     if [ "$INSTALL" -eq 1 ]; then
-      adb install "$OUT/$PACKAGE-$VERSION.apk" 1>&2
+      adb install "$APKS/$PACKAGE-$VERSION.apk" 1>&2
     fi
   done
 }
@@ -191,10 +192,10 @@ build_app() {
     return "$INSTALL"
   fi
 
-  rm -fv "$OUT/$PACKAGE-"*.apk
+  rm -fv "$APKS/$PACKAGE-"*.apk
 
   VERSION=$(get_apk_version_code "$apk")
-  target="$OUT/$PACKAGE-$VERSION.apk"
+  target="$APKS/$PACKAGE-$VERSION.apk"
   zipalign "$apk" "$target" && sign "$target"
 }
 
@@ -249,7 +250,7 @@ case $1 in
     if [ "$SERVE" -eq 1 ]; then
       puts "starting web server"
       setup_logging
-      cd "$OUT"
+      cd "$APKS"
       python -m SimpleHTTPServer 80
     fi
     ;;

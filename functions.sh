@@ -26,9 +26,9 @@ make_repo() {
   fi
   puts "generating fdroid repo"
   url="http://localhost"
-  yml="$OUT/index-v1.yml"
-  json="$OUT/index-v1.json"
-  jar="$OUT/index-v1.jar"
+  yml="$APKS/index-v1.yml"
+  json="$APKS/index-v1.json"
+  jar="$APKS/index-v1.jar"
   now="$(date --utc +%s)000"
   yq n repo.name "Implant" >"$yml"
   write repo.timestamp "$now"
@@ -39,7 +39,7 @@ make_repo() {
   write repo.description "Implant"
   write requests.install "[]"
   write requests.uninstall "[]"
-  readarray -t apks < <(ls "$OUT/"*.apk)
+  readarray -t apks < <(ls "$APKS/"*.apk)
   num_apks="${#apks[@]}"
   for i in "${!apks[@]}"; do
     apk="${apks[$i]}"
@@ -159,7 +159,7 @@ up_to_date() {
   PACKAGE=$1
   CONFIG="$METADATA/$PACKAGE.yml"
   if [ "$INSTALL" -eq 0 ]; then
-    if [ -f "$OUT/$PACKAGE-${VERSION:-}.apk" ]; then
+    if [ -f "$APKS/$PACKAGE-${VERSION:-}.apk" ]; then
       return 0
     fi
   else
