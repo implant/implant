@@ -5,18 +5,13 @@ git:
 project: vlc-android
 ndk: r18b
 deps: >
-    openjdk-8-jdk-headless autoconf m4 automake ant autopoint bison flex
+    autoconf m4 automake ant autopoint bison flex
     build-essential libtool libtool-bin patch pkg-config ragel rpm2cpio
-    libwebkitgtk-1.0-0 yasm ragel g++ protobuf-compiler gettext libgsm1-dev
+    yasm ragel g++ protobuf-compiler gettext libgsm1-dev
     expect python3 locales libltdl-dev
 gradle: 5.1.1
 prebuild: >
-    echo "deb http://ftp.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list &&
-    apt-get update && apt-get -y -t stretch-backports install cmake &&
-    rm -f /etc/apt/sources.list.d/stretch-backports.list &&
-    echo "deb http://deb.debian.org/debian testing main" > /etc/apt/sources.list.d/testing.list &&
-    apt-get update && apt-get -y -t testing --no-install-suggests --no-install-recommends install automake &&
-    rm -f /etc/apt/sources.list.d/testing.list &&
+    apt-get update && apt-get -y --no-install-suggests --no-install-recommends install cmake automake &&
     localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 &&
     mkdir -p gradle/wrapper &&
     clone https://git.videolan.org/git/vlc/vlc-3.0 vlc dedb3bd &&
