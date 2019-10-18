@@ -211,6 +211,11 @@ type yq >/dev/null 2>&1 || {
   exit 1
 }
 
+if [ ! -d "$OUT" ]; then
+  yellow "WARNING: $OUT not mounted, see https://github.com/abaker/implant/wiki/Create-an-implant-alias"
+  mkdir -p "$OUT"
+fi
+
 case $1 in
   adb)
     shift

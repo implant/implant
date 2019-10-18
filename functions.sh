@@ -16,6 +16,10 @@ red() {
   echo -e "\033[91;1m$1\033[0m"
 }
 
+yellow() {
+  echo -e "\033[93;1m$1\033[0m"
+}
+
 make_repo() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
