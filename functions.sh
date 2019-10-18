@@ -88,6 +88,7 @@ make_repo() {
   json="$APKS/index-v1.json"
   jar="$APKS/index-v1.jar"
   now="$(date --utc +%s)000"
+  sig="$(get_fdroid_sig)"
   yq n repo.name "Implant" >"$yml"
   write repo.timestamp "$now"
   write repo.version 18
@@ -121,14 +122,14 @@ make_repo() {
     write_package hash "$(sha256 "$apk")"
     write_package hashType "sha256"
     write_package added "$now"
-    write_package sig "$(get_apk_sig "$apk")"
+    write_package sig "$sig"
     write_package size "$(get_size "$apk")"
     # nativecode
     # uses-permission
     # uses-permission-sdk-23
   done
   yq r -j "$yml" >"$json"
-  rm "$jar"
+  rm -fv "$jar"
   zip -j "$jar" "$json"
   jarsigner -keystore "$KEYSTORE" -storepass:env KSPASS -digestalg SHA1 -sigalg SHA1withRSA "$jar" implant
 }
@@ -161,8 +162,8 @@ get_version_name() {
   $(find_build_tool aapt) dump badging "$1" | grep versionName | awk '{ print $4 }' | cut -d"'" -f2
 }
 
-get_apk_sig() {
-  $(find_build_tool apksigner) verify --print-certs "$1" | grep SHA-256 | awk '{ print $NF }'
+get_fdroid_sig() {
+  keytool -export -keystore "$KEYSTORE" -alias implant -storepass "$KSPASS" 2>/dev/null | xxd -p | tr -d '\n' | md5sum | awk '{ print $1 }'
 }
 
 get_apk_package() {
