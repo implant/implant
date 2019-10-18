@@ -286,6 +286,8 @@ case $1 in
     unset IFS
     printf "%s\n" "${sorted[@]}" | less
     ;;
+  passwd)
+    passwd
     ;;
   update_apps)
     shift

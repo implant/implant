@@ -40,6 +40,40 @@ check_key() {
   fi
 }
 
+passwd() {
+  if tty -s; then
+    yellow "passwd requires 'docker run --interactive ...' (do not use -t/--tty flag)"
+    exit 1
+  fi
+  IFS=""
+  echo -n Enter new password:
+  read -rs password
+  if [ -z "$password" ]; then
+    echo
+    yellow "passwd requires 'docker run --interactive ...' (do not use -t/--tty flag)"
+    exit 1
+  fi
+  if [ "${#password}" -lt 6 ]; then
+    yellow "password must be at least six characters"
+    exit 1
+  fi
+  echo -n Re-enter new password:
+  read -rs verify
+  if [ "$password" != "$verify" ]; then
+    puts "passwords do not match"
+    exit 1
+  fi
+  if ! keytool -keypasswd -new "$password" -storepass "$KSPASS" -keystore "$KEYSTORE" -alias implant >"$LOG" 2>&1; then
+    puts "failed to change key password"
+    exit 1
+  fi
+  if ! keytool -storepasswd -new "$password" -storepass "$KSPASS" -keystore "$KEYSTORE" >"$LOG" 2>&1; then
+    puts "failed to change keystore password"
+    exit 1
+  fi
+  puts "password changed successfully"
+}
+
 make_repo() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
