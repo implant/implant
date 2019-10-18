@@ -124,6 +124,15 @@ update_app() {
 }
 
 build_apps() {
+  if [ ! -d "$OUT" ]; then
+    yellow "WARNING: $OUT not mounted, see https://github.com/abaker/implant/wiki/Create-an-implant-alias"
+    mkdir -p "$OUT"
+  fi
+
+  if ! check_key; then
+    exit 1
+  fi
+
   if [ ! -t 0 ] && [ "$#" -eq 0 ]; then
     readarray STDIN_ARGS </dev/stdin
     set -- "${STDIN_ARGS[@]}"
@@ -206,15 +215,6 @@ type yq >/dev/null 2>&1 || {
   echo >&2 "yq must be in your PATH, please download from https://github.com/mikefarah/yq/releases"
   exit 1
 }
-
-if [ ! -d "$OUT" ]; then
-  yellow "WARNING: $OUT not mounted, see https://github.com/abaker/implant/wiki/Create-an-implant-alias"
-  mkdir -p "$OUT"
-fi
-
-if ! check_key; then
-  exit 1
-fi
 
 case $1 in
   adb)
