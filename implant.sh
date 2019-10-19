@@ -126,7 +126,7 @@ update_app() {
 build_apps() {
   if [ ! -d "$OUT" ]; then
     yellow "WARNING: $OUT not mounted, see https://github.com/abaker/implant/wiki/Create-an-implant-alias"
-    mkdir -p "$OUT"
+    mkdir -p "$APKS"
   fi
 
   if ! check_key; then
