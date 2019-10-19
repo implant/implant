@@ -83,7 +83,8 @@ find_apk() {
   readarray -t apks < <(find "$1" -name "$2")
   num_apks="${#apks[@]}"
   if [ ! "$num_apks" -eq 1 ]; then
-    puts "wanted 1 apk, found $num_apks"
+    puts "wanted 1 apk, found $num_apks:"
+    printf "%s\n" "${apks[@]}"
     exit 1
   fi
   apk="${apks[0]}"
