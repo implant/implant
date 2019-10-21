@@ -28,6 +28,7 @@ validate_config() {
 }
 
 check_key() {
+  mkdir -p "$OUT"
   if [ ! -f "$OUT/adbkey" ]; then
     puts "generating $OUT/adbkey"
     $ADB start-server >>"$LOG" 2>&1
