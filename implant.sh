@@ -35,10 +35,7 @@ load_config() {
     exit 1
   fi
 
-  if ! yq r "$CONFIG" >/dev/null 2>&1; then
-    puts "Invalid yml file: $CONFIG"
-    exit 1
-  fi
+  validate_config "$CONFIG"
 
   puts
   puts "***** $PACKAGE $(date) *****"
@@ -119,6 +116,8 @@ update_app() {
       APK_VERSION=$(("$VERSION" + 1))
     fi
     yq w -i "$CONFIG" version "\"$APK_VERSION\""
+
+    validate_config "$CONFIG"
   else
     exit 1
   fi

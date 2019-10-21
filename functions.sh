@@ -20,6 +20,13 @@ yellow() {
   echo -e "\033[93;1m$1\033[0m"
 }
 
+validate_config() {
+  if ! yq r "$1" >/dev/null 2>&1; then
+    puts "Invalid yml file: $1"
+    exit 1
+  fi
+}
+
 check_key() {
   if [ ! -f "$OUT/adbkey" ]; then
     puts "generating $OUT/adbkey"
