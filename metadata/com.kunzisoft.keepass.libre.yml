@@ -1,0 +1,7 @@
+name: Keepass DX
+git:
+  url: https://github.com/Kunzisoft/KeePassDX
+  sha: 9700dbc
+  tags: '[0-9.]beta[0-9]+'
+flavor: libre
+version: "23"
