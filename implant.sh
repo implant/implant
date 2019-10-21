@@ -2,7 +2,7 @@
 
 set -u # unset variables are errors
 
-cd "${0%/*}"
+cd_implant
 
 export ANDROID_HOME=${ANDROID_HOME:-$HOME/Android/Sdk}
 TOOLS=$ANDROID_HOME/build-tools
@@ -25,6 +25,10 @@ REINSTALL=0
 DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"
 
 source ./functions.sh
+
+cd_implant() {
+  cd "${0%/*}"
+}
 
 load_config() {
   PACKAGE=$(get_package "$PACKAGE")
