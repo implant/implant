@@ -126,11 +126,6 @@ update_app() {
 build_apps() {
   if [ ! -d "$OUT" ]; then
     yellow "WARNING: $OUT not mounted, see https://github.com/abaker/implant/wiki/Create-an-implant-alias"
-    mkdir -p "$APKS"
-  fi
-
-  if ! check_key; then
-    exit 1
   fi
 
   if [ ! -t 0 ] && [ "$#" -eq 0 ]; then
@@ -162,11 +157,15 @@ build_apps() {
 build_app() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
+  if ! check_key; then
+    exit 1
+  fi
+
   setup_logging
 
   load_config
 
-  mkdir -p "$DOWNLOADS" "$TMP"
+  mkdir -p "$APKS" "$DOWNLOADS" "$TMP"
 
   setup_ndk
 
