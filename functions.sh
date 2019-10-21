@@ -250,6 +250,8 @@ get_package() {
 }
 
 setup_logging() {
+  mkdir -p "$IMPLANT"
+  touch "$LOG"
   if [ "$VERBOSE" -eq 1 ]; then
     exec > >(tee "$LOG") 2>&1
   else
