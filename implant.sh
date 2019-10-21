@@ -94,6 +94,10 @@ find_apk() {
   apk="${apks[0]}"
 }
 
+url_encode() {
+  echo "$1" | tr -d \\n | jq -sRr @uri
+}
+
 update_app() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
@@ -134,7 +138,7 @@ update_app() {
     git -c "user.name=$GIT_USER" -c "user.email=$GIT_EMAIL" commit -m "$NAME ${TAG:-$APK_VERSION}"
     git pull --rebase https://github.com/abaker/implant.git master
     if [ "$GIT_PUSH" -eq 1 ]; then
-      git push "https://$GIT_USER:$GIT_PASS@github.com/abaker/implant.git"
+      git push "https://$(url_encode "$GIT_USER"):$(url_encode "$GIT_PASS")@github.com/abaker/implant.git"
     fi
   else
     exit 1
