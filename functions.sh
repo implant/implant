@@ -389,6 +389,7 @@ clone() {
       git fetch --tags --prune
     )
   else
+    mkdir -p "$DIR"
     git clone "$URL" "$DIR" --recurse-submodules
   fi
   (
