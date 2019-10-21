@@ -26,6 +26,9 @@ VERBOSE=${VERBOSE:-0}
 INSTALL=0
 SERVE=0
 REINSTALL=0
+GIT_PUSH=0
+GIT_USER=implant-bot
+GIT_EMAIL=implant-bot@tasks.org
 DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"
 
 source ./functions.sh
@@ -109,7 +112,6 @@ update_app() {
   GIT_SHA=$UPDATE_SHA
   puts "updating $PACKAGE to $GIT_SHA"
   if (build_app); then
-    yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
     find_apk "$APKS" "$PACKAGE-*.apk"
     APK_VERSION=$(get_apk_version_code "$apk")
     if [ -z "$APK_VERSION" ]; then
@@ -119,9 +121,21 @@ update_app() {
     if [ "$APK_VERSION" == "1" ]; then
       APK_VERSION=$(("$VERSION" + 1))
     fi
+
+    yq w -i "$CONFIG" git.sha "\"$GIT_SHA\""
     yq w -i "$CONFIG" version "\"$APK_VERSION\""
 
     validate_config "$CONFIG"
+
+    cd_implant
+    git add "$CONFIG"
+    TAG=$(cd "$SRC/$PACKAGE" && git describe --contains "$GIT_SHA")
+    TAG=${TAG%^0}
+    git -c "user.name=$GIT_USER" -c "user.email=$GIT_EMAIL" commit -m "$NAME ${TAG:-$APK_VERSION}"
+    git pull --rebase https://github.com/abaker/implant.git master
+    if [ "$GIT_PUSH" -eq 1 ]; then
+      git push "https://$GIT_USER:$GIT_PASS@github.com/abaker/implant.git"
+    fi
   else
     exit 1
   fi
@@ -294,6 +308,14 @@ case $1 in
     ;;
   update_apps)
     shift
+    if [ "${1:-}" == "--push" ]; then
+      if [ -z "${GIT_PASS:-}" ]; then
+        puts "Must provide GIT_PASS"
+        exit 1
+      fi
+      shift
+      GIT_PUSH=1
+    fi
     update_apps "$@"
     ;;
   -h | --help | h | help)
