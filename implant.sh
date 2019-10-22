@@ -32,6 +32,7 @@ GIT_EMAIL=implant-bot@tasks.org
 DEFAULT_GRADLE_PROPS="org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=2048m -XX:+HeapDumpOnOutOfMemoryError"
 
 source ./functions.sh
+source ./fdroid.sh
 
 load_config() {
   PACKAGE=$(get_package "$PACKAGE")
