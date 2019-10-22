@@ -94,10 +94,6 @@ find_apk() {
   apk="${apks[0]}"
 }
 
-url_encode() {
-  echo "$1" | tr -d \\n | jq -sRr @uri
-}
-
 update_app() {
   set -eu # unset variables are errors & non-zero return values exit the whole script
 
@@ -321,6 +317,9 @@ case $1 in
       GIT_PUSH=1
     fi
     update_apps "$@"
+    ;;
+  test)
+    ./test_functions.sh
     ;;
   -h | --help | h | help)
     puts "not implemented"

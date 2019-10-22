@@ -20,6 +20,10 @@ yellow() {
   echo -e "\033[93;1m$1\033[0m"
 }
 
+url_encode() {
+  echo "$1" | tr -d \\n | jq -sRr @uri
+}
+
 validate_config() {
   if ! yq r "$1" >/dev/null 2>&1; then
     puts "Invalid yml file: $1"
