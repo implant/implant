@@ -31,8 +31,7 @@ make_repo() {
     puts "adding ($((i + 1))/$num_apks) $apk"
     package=$(get_apk_package "$apk")
     version=$(get_apk_version_code "$apk")
-    CONFIG="$METADATA/$package.yml"
-    write "apps[+].name" "$(get_config name 2>/dev/null)"
+    write "apps[+].name" "$(get_config name "" "$METADATA/$package.yml" 2>/dev/null)"
     write_app suggestedVersionCode "$version"
     write_app license Unknown
     write_app packageName "$package"

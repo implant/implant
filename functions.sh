@@ -230,7 +230,8 @@ setup_ndk() {
 get_config() {
   PROP=$1
   DEFAULT=${2:-}
-  value=$(yq r "$CONFIG" "$PROP")
+  FILE=${3:-$CONFIG}
+  value=$(yq r "$FILE" "$PROP")
   if [ "$value" != null ]; then
     puts "$1=$value"
     echo "$value"

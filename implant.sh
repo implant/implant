@@ -153,8 +153,7 @@ build_apps() {
   fi
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
-    CONFIG="$METADATA/$PACKAGE.yml"
-    VERSION=$(get_config version 2>/dev/null)
+    VERSION=$(get_config version "" "$METADATA/$PACKAGE.yml" 2>/dev/null)
     if [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE" "$VERSION"; then
       puts "$PACKAGE up to date"
       continue
@@ -296,8 +295,7 @@ case $1 in
     fi
     for PACKAGE in "${PACKAGES[@]}"; do
       PACKAGE=$(get_package "$PACKAGE")
-      CONFIG="$METADATA/$PACKAGE.yml"
-      NAME=$(get_config name 2>/dev/null)
+      NAME=$(get_config name "" "$METADATA/$PACKAGE.yml" 2>/dev/null)
       apps+=("$NAME - $PACKAGE")
     done
     IFS=$'\n' sorted=($(sort -f <<<"${apps[*]}"))
