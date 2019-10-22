@@ -1,0 +1,6 @@
+name: Calendar Import-Export
+git:
+  url: https://github.com/SufficientlySecure/calendar-import-export
+  sha: 185af64
+project: CalendarImportExport
+version: "57"
