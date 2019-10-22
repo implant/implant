@@ -155,7 +155,7 @@ build_apps() {
     PACKAGE=$(get_package "$PACKAGE")
     CONFIG="$METADATA/$PACKAGE.yml"
     VERSION=$(get_config version 2>/dev/null)
-    if [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE"; then
+    if [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE" "$VERSION"; then
       puts "$PACKAGE up to date"
       continue
     fi
