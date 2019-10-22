@@ -31,13 +31,14 @@ make_repo() {
     puts "adding ($((i + 1))/$num_apks) $apk"
     package=$(get_apk_package "$apk")
     version=$(get_apk_version_code "$apk")
+    updated=$(get_updated_time "$package")
     write "apps[+].name" "$(get_config name "" "$METADATA/$package.yml" 2>/dev/null)"
     write_app suggestedVersionCode "$version"
     write_app license Unknown
     write_app packageName "$package"
     write_app icon ""
-    write_app added "$now"
-    write_app lastUpdated "$now"
+    write_app added "$(get_added_time "$package")"
+    write_app lastUpdated "$updated"
     write "packages.[$package].[+].apkName" "$(basename "$apk")"
     write_package packageName "$package"
     write_package versionCode "$version"
@@ -46,7 +47,7 @@ make_repo() {
     write_package targetSdkVersion "$(get_target_sdk "$apk")"
     write_package hash "$(sha256 "$apk")"
     write_package hashType "sha256"
-    write_package added "$now"
+    write_package added "$updated"
     write_package sig "$sig"
     write_package size "$(get_size "$apk")"
     # nativecode
@@ -93,4 +94,12 @@ get_fdroid_sig() {
 
 get_apk_package() {
   $APKANALYZER manifest application-id "$1"
+}
+
+get_added_time() {
+  git log --pretty="%ct000" "$METADATA/$1.yml" | tail -n 1
+}
+
+get_updated_time() {
+  git log -1 --pretty="%ct000" "$METADATA/$1.yml"
 }
