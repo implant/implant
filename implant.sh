@@ -27,7 +27,6 @@ load_config() {
   puts "***** $PACKAGE $(date) *****"
   NAME=$(get_config name)
   PROJECT=$(get_config project app)
-  TARGET=$(get_config target release)
   FLAVOR=$(get_config flavor)
   NDK=$(get_config ndk)
   PREBUILD=$(get_config prebuild)

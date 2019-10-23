@@ -190,7 +190,7 @@ to_array() {
 build() {
   puts "building $PACKAGE..."
   if [ -z "$BUILD" ]; then
-    TASK=assemble$FLAVOR$TARGET
+    TASK=assemble${FLAVOR}Release
     if [ -n "$PROJECT" ]; then
       TASK=$PROJECT:$TASK
     fi
