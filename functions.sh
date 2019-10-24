@@ -288,6 +288,10 @@ sign() {
   fi
 }
 
+has_commit() {
+  git cat-file -e "$1"
+}
+
 clone() {
   URL=$1
   DIR=$2
@@ -296,14 +300,20 @@ clone() {
   if [ -d "$DIR" ]; then
     (
       cd "$DIR" || exit
-      git fetch --tags --prune
+      git fetch --all --prune
     )
   else
     mkdir -p "$DIR"
-    git clone "$URL" "$DIR" --recurse-submodules
+    git clone --depth=50 "$URL" "$DIR"
   fi
   (
     cd "$DIR" || exit
+    if ! has_commit "$SHA"; then
+      git fetch --tags --prune --depth=1
+    fi
+    if ! has_commit "$SHA"; then
+      exit 1
+    fi
     git reset --hard "$SHA"
     if [ "$SUBMODULES" -eq 0 ] && ! git submodule update --init --recursive; then
       exit 1
