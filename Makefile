@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	docker build --no-cache -t bakerba/implant .
+	docker build -t bakerba/implant .
 
 lint:
 	grep -rIl '^#![[:blank:]]*/bin/\(bash\|sh\|zsh\)' \

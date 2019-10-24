@@ -18,10 +18,8 @@ RUN apt-get update && \
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && \
     $ANDROID_HOME/tools/bin/sdkmanager "platform-tools"
 
-RUN git clone --depth=50 https://github.com/abaker/implant $IMPLANT && \
-    cd $IMPLANT && \
-    git reset --hard ${SOURCE_COMMIT:-HEAD}
-
 WORKDIR $IMPLANT
+
+COPY . $IMPLANT/
 
 ENTRYPOINT ["/root/implant/implant.sh"]
