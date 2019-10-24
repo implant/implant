@@ -79,7 +79,7 @@ update_app() {
 
   load_config
 
-  clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
+  clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA" 1
 
   UPDATE_SHA=$(get_latest_tag)
   if [ -n "$VERSION" ] && [ "$UPDATE_SHA" == "$GIT_SHA" ]; then

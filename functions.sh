@@ -260,7 +260,7 @@ adb() {
 }
 
 clone_and_cd() {
-  clone "$1" "$2" "$3"
+  clone "$1" "$2" "$3" "${4:-0}"
   cd "$2" || exit
 }
 
@@ -292,6 +292,7 @@ clone() {
   URL=$1
   DIR=$2
   SHA=$3
+  SUBMODULES=${4:-0}
   if [ -d "$DIR" ]; then
     (
       cd "$DIR" || exit
@@ -304,7 +305,9 @@ clone() {
   (
     cd "$DIR" || exit
     git reset --hard "$SHA"
-    git submodule update --init --recursive
+    if [ "$SUBMODULES" -eq 0 ] && ! git submodule update --init --recursive; then
+      exit 1
+    fi
   )
 }
 
