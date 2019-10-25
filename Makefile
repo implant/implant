@@ -14,4 +14,4 @@ format:
 	shfmt -f . | grep -v shunit2 | xargs shfmt -i 2 -ci -w
 
 test:
-	docker run -t -v $(shell pwd):/root/implant bakerba/implant test
+	docker run -t -v $(shell pwd):/root/implant:delegated bakerba/implant test

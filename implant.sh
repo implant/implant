@@ -295,7 +295,7 @@ case $1 in
     update_apps "$@"
     ;;
   test)
-    ./test_functions.sh
+    ./test_functions.sh && ./test_fdroid.sh
     ;;
   -h | --help | h | help)
     puts "not implemented"
