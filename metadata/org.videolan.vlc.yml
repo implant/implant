@@ -6,7 +6,7 @@ project: vlc-android
 ndk: r18b
 deps: |
   openjdk-8-jdk-headless autoconf m4 automake ant autopoint bison flex build-essential libtool libtool-bin
-  patch pkg-config ragel rpm2cpio libwebkitgtk-1.0-0 yasm ragel g++ protobuf-compiler gettext libgsm1-dev expect
+  patch pkg-config ragel rpm2cpio libwebkitgtk-1.0-0 yasm g++ protobuf-compiler gettext libgsm1-dev expect
   python3 locales libltdl-dev
 gradle: 5.1.1
 prebuild: |

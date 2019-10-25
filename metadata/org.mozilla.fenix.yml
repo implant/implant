@@ -4,7 +4,6 @@ git:
   sha: 447592b
 flavor: fenix
 target: production
-deps: bzip2
 prebuild: |
   sed -i -e "s/Config.releaseVersionName(project)/\"$(git describe --contains "$GIT_SHA")\"/" -e 's/"x86", "armeabi-v7a", "arm64-v8a", "x86_64"/"armeabi-v7a"/g' "$PROJECT"/build.gradle
   if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/generatedVersionCode = .*/generatedVersionCode = $VERSION as int/" automation/gradle/versionCode.gradle; fi
