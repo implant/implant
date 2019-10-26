@@ -1,0 +1,6 @@
+name: Light Launcher
+git:
+  url: https://github.com/light-launcher/Light-Android-Launcher
+  sha: 0b17f86
+project: LaLauncher
+version: "1.7.1"
