@@ -1,6 +1,6 @@
 name: Simple Draw
 git:
   url: https://github.com/SimpleMobileTools/Simple-Draw
-  sha: 8b700a4
+  sha: 80e90ce
 prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "47"
+version: "48"
