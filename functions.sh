@@ -190,12 +190,14 @@ to_array() {
 build() {
   puts "building $PACKAGE..."
   if [ -z "$BUILD" ]; then
-    TASK=assemble${FLAVOR}Release
+    ASSEMBLE=assemble${FLAVOR}Release
+    LINT=lintVital${FLAVOR}Release
     if [ -n "$PROJECT" ]; then
-      TASK=$PROJECT:$TASK
+      ASSEMBLE=$PROJECT:$ASSEMBLE
+      LINT=$PROJECT:$LINT
     fi
 
-    /bin/bash -c "$GRADLE --exclude-task lintVital --stacktrace $TASK"
+    /bin/bash -c "$GRADLE --exclude-task $LINT --stacktrace $ASSEMBLE"
   else
     eval "$BUILD"
   fi
