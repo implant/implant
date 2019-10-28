@@ -42,6 +42,7 @@ load_config() {
   GIT_TAGS=$(get_config git.tags)
   VERSION=$(get_config version)
   GRADLEPROPS=$(get_config gradle_props "$DEFAULT_GRADLE_PROPS")
+  GRADLE_OPTS=$(get_config gradle_opts)
   puts
 }
 

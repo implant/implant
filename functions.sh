@@ -191,13 +191,11 @@ build() {
   puts "building $PACKAGE..."
   if [ -z "$BUILD" ]; then
     ASSEMBLE=assemble${FLAVOR}Release
-    LINT=lintVital${FLAVOR}Release
     if [ -n "$PROJECT" ]; then
       ASSEMBLE=$PROJECT:$ASSEMBLE
-      LINT=$PROJECT:$LINT
     fi
 
-    /bin/bash -c "$GRADLE --exclude-task $LINT --stacktrace $ASSEMBLE"
+    /bin/bash -c "$GRADLE $GRADLE_OPTS --stacktrace $ASSEMBLE"
   else
     eval "$BUILD"
   fi
