@@ -1,6 +1,6 @@
 name: SkyTube Extra
 git:
   url: https://github.com/ram-on/SkyTube
-  sha: a3a9d63
+  sha: fc8eff8
 flavor: extra
-version: "25"
+version: "26"
