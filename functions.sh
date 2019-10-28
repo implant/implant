@@ -195,7 +195,7 @@ build() {
       TASK=$PROJECT:$TASK
     fi
 
-    /bin/bash -c "$GRADLE --stacktrace $TASK"
+    /bin/bash -c "$GRADLE --exclude-task lintVital --stacktrace $TASK"
   else
     eval "$BUILD"
   fi
