@@ -1,0 +1,6 @@
+name: Firefox Lockwise
+git:
+  url: https://github.com/mozilla-lockwise/lockwise-android
+  sha: ef26efb
+  tags: release-v[0-9.]+
+version: "5215"
