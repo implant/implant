@@ -1,5 +1,5 @@
 name: EteSync
 git:
   url: https://github.com/etesync/android
-  sha: "3769938"
-version: "90"
+  sha: 4493a3f
+version: "91"
