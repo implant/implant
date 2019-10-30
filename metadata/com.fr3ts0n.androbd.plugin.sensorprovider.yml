@@ -1,0 +1,7 @@
+name: AndrOBD SensorProvider
+git:
+  url: https://github.com/fr3ts0n/AndrOBD-Plugin
+  sha: ac73c71
+gradle: 5.4.1
+project: SensorProvider
+version: "10004"
