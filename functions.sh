@@ -367,3 +367,11 @@ checksum() {
 sha256() {
   sha256sum "$1" | awk '{ printf $1 }'
 }
+
+get_subdir() {
+  dirname "$1"
+}
+
+get_project() {
+  basename "$1"
+}

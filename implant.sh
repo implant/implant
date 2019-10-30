@@ -169,6 +169,9 @@ build_app() {
 
   clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
 
+  cd "$(get_subdir "$PROJECT")"
+  PROJECT="$(get_project "$PROJECT")"
+
   find "./$PROJECT" -regex '.*\.apk$' -exec rm -v {} \;
 
   download_gradle

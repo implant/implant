@@ -1,0 +1,7 @@
+name: Music Player GO
+git:
+  url: https://github.com/enricocid/Music-Player-GO
+  sha: 50627f8
+project: project/app
+#build: $GRADLE app:assemble
+version: "127"
