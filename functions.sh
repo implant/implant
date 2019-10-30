@@ -195,7 +195,7 @@ build() {
       ASSEMBLE=$PROJECT:$ASSEMBLE
     fi
 
-    /bin/bash -c "$GRADLE $GRADLE_OPTS --stacktrace $ASSEMBLE"
+    /bin/bash -c "$GRADLE $GRADLE_OPTS $ASSEMBLE"
   else
     eval "$BUILD"
   fi
@@ -374,4 +374,9 @@ get_subdir() {
 
 get_project() {
   basename "$1"
+}
+
+print_log_tail() {
+  yellow "last 15 lines of $LOG"
+  tail -n 15 "$LOG"
 }

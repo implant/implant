@@ -58,6 +58,7 @@ update_apps() {
       green "OK"
     else
       red "ERROR"
+      print_log_tail
     fi
   done
 }
@@ -141,6 +142,7 @@ build_apps() {
       green "OK"
     else
       red "FAILED"
+      print_log_tail
       continue
     fi
 
