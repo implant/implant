@@ -1,0 +1,6 @@
+name: Alarmio
+git:
+  url: https://github.com/fennifith/Alarmio
+  sha: 8b218d2
+flavor: oss
+version: "20"
