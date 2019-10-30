@@ -1,6 +1,6 @@
 name: QKSMS
 git:
-  url: https://github.com/moezbhatti/qksms.git
+  url: https://github.com/moezbhatti/qksms
   sha: 1484ab3
 project: presentation
 flavor: noanalytics
