@@ -1,7 +1,7 @@
 name: Fair Email
 git:
   url: https://github.com/M66B/FairEmail
-  sha: 9bf7e64
+  sha: 16ff79e
 flavor: full
 prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "795"
+version: "796"
