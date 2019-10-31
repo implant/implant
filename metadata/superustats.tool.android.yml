@@ -1,0 +1,6 @@
+name: SuperUStats
+git:
+  url: https://gitlab.com/superustats/superustats
+  sha: bd6b7d7
+project: ""
+version: "12"
