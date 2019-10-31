@@ -1,0 +1,5 @@
+name: DiskUsage
+git:
+  url: https://github.com/IvanVolosyuk/diskusage
+  sha: 64479bf
+version: "4002"
