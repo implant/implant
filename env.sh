@@ -17,7 +17,6 @@ LOG=$IMPLANT/build.log
 VERBOSE=${VERBOSE:-0}
 INSTALL=0
 SERVE=0
-REINSTALL=0
 GIT_PUSH=0
 GIT_USER=implant-bot
 GIT_EMAIL=implant-bot@tasks.org

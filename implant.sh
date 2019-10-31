@@ -133,7 +133,7 @@ build_apps() {
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
     VERSION=$(get_config version "" "$METADATA/$PACKAGE.yml" 2>/dev/null)
-    if [ "$REINSTALL" -eq 0 ] && up_to_date "$PACKAGE" "$VERSION"; then
+    if up_to_date "$PACKAGE" "$VERSION"; then
       puts "$PACKAGE up to date"
       continue
     fi
@@ -224,10 +224,6 @@ case $1 in
   i | install)
     shift
     INSTALL=1
-    if [ "${1:-}" == "--reinstall" ]; then
-      shift
-      REINSTALL=1
-    fi
     build_apps "$@"
     ;;
   b | build)
