@@ -1,5 +1,5 @@
 name: Phonograph
 git:
   url: https://github.com/kabouzeid/Phonograph
-  sha: 546c912
-version: "170"
+  sha: d74b58c
+version: "176"
