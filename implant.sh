@@ -138,6 +138,12 @@ build_apps() {
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
     VERSION=$(get_config version "" "$METADATA/$PACKAGE.yml" 2>/dev/null)
+
+    if [ "$INSTALL" -eq 1 ] && [ "$(get_installed_version_code "$PACKAGE")" == "$VERSION" ]; then
+      puts "$PACKAGE up to date"
+      continue
+    fi
+
     if up_to_date "$PACKAGE" "$VERSION"; then
       puts "$PACKAGE up to date"
     else
@@ -152,7 +158,7 @@ build_apps() {
       fi
     fi
 
-    if [ "$INSTALL" -eq 1 ] && [ "$(get_installed_version_code "$PACKAGE")" != "$VERSION" ]; then
+    if [ "$INSTALL" -eq 1 ]; then
       adb install "$APKS/$PACKAGE-$VERSION.apk" 1>&2
     fi
   done
