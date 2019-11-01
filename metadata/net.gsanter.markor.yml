@@ -1,6 +1,6 @@
 name: Markor
 git:
   url: https://github.com/gsantner/markor
-  sha: 5ca6b9b
+  sha: eedcd35
 flavor: flavorDefault
-version: "100"
+version: "101"
