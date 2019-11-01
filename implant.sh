@@ -51,6 +51,7 @@ update_apps() {
     APPS=(metadata/*.yml)
     set -- "${APPS[@]}"
   fi
+  RESULT=0
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
     put "updating $PACKAGE..."
@@ -59,8 +60,10 @@ update_apps() {
     else
       red "ERROR"
       print_log_tail
+      RESULT=1
     fi
   done
+  return $RESULT
 }
 
 find_apk() {
@@ -130,6 +133,7 @@ build_apps() {
     readarray STDIN_ARGS </dev/stdin
     set -- "${STDIN_ARGS[@]}"
   fi
+  RESULT=0
   for PACKAGE in "$@"; do
     PACKAGE=$(get_package "$PACKAGE")
     VERSION=$(get_config version "" "$METADATA/$PACKAGE.yml" 2>/dev/null)
@@ -142,6 +146,7 @@ build_apps() {
       else
         red "FAILED"
         print_log_tail
+        RESULT=1
         continue
       fi
     fi
@@ -150,6 +155,7 @@ build_apps() {
       adb install "$APKS/$PACKAGE-$VERSION.apk" 1>&2
     fi
   done
+  return $RESULT
 }
 
 build_app() {
@@ -225,10 +231,12 @@ case $1 in
     shift
     INSTALL=1
     build_apps "$@"
+    exit $?
     ;;
   b | build)
     shift
     build_apps "$@"
+    exit $?
     ;;
   fdroid)
     shift
@@ -240,7 +248,9 @@ case $1 in
       APPS=(metadata/*.yml)
       set -- "${APPS[@]}"
     fi
-    build_apps "$@"
+    if ! build_apps "$@"; then
+        exit 1
+    fi
     put "generating fdroid index..."
     if (make_repo); then
       green "OK"
@@ -260,6 +270,7 @@ case $1 in
     INSTALL=1
     get_installed_packages
     build_apps "${PACKAGES[@]}"
+    exit $?
     ;;
   l | list)
     shift
@@ -295,6 +306,7 @@ case $1 in
       GIT_PUSH=1
     fi
     update_apps "$@"
+    exit $?
     ;;
   test)
     ./test_functions.sh && ./test_fdroid.sh
