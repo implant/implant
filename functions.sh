@@ -131,15 +131,7 @@ get_installed_packages() {
 }
 
 up_to_date() {
-  if [ -z "$2" ]; then
-    return 1
-  fi
-
-  if [ "$INSTALL" -eq 1 ]; then
-    [ "$(get_install_version_code "$1")" == "$2" ]
-  else
-    [ -f "$APKS/$1-$2.apk" ]
-  fi
+  [ -n "$2" ] && [ -f "$APKS/$1-$2.apk" ]
 }
 
 get_installed_version_code() {
