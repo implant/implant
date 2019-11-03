@@ -1,7 +1,7 @@
 name: Call Recorder
 git:
   url: https://gitlab.com/axet/android-call-recorder
-  sha: 608ae301
+  sha: 45776ea
   tags: callrecorder-[0-9.]+
 gradle: 5.4.1
-version: "213"
+version: "216"
