@@ -3,5 +3,5 @@ git:
   url: https://gitlab.com/axet/android-hourly-reminder
   sha: 02a75fc7
   tags: hourlyreminder-[0-9.]+
-gradle: 5.1.1
+gradle: 5.4.1
 version: "410"
