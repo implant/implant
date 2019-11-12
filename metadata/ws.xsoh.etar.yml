@@ -1,7 +1,7 @@
 name: Etar Calendar
 git:
   url: https://github.com/Etar-Group/Etar-Calendar
-  sha: 7c4cac2
+  sha: c2c5bf2
 project: ""
 gradle: 5.4.1
-version: "20"
+version: "21"
