@@ -1,5 +1,5 @@
 name: Forecastie
 git:
   url: https://github.com/martykan/forecastie
-  sha: 449da9b
-version: "37"
+  sha: "3800438"
+version: "38"
