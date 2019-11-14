@@ -1,9 +1,9 @@
 name: Signal
 git:
   url: https://github.com/signalapp/Signal-Android
-  sha: ee267d4
+  sha: 739fe58
 project: ""
 flavor: website
 prebuild: |
   sed -i -e 's/task.finalizedBy signProductionWebsiteRelease//g' -e '/abi {/,/}/d' build.gradle
-version: "5670"
+version: "5680"
