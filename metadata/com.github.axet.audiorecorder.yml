@@ -1,7 +1,7 @@
 name: Audio Recorder
 git:
   url: https://gitlab.com/axet/android-audio-recorder
-  sha: 6a94fd5
+  sha: ee82c16
   tags: audiorecorder-[0-9.]+
 gradle: 5.4.1
-version: "335"
+version: "336"
