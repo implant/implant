@@ -1,6 +1,6 @@
 name: Simple Calendar
 git:
   url: https://github.com/SimpleMobileTools/Simple-Calendar
-  sha: 76751f4
+  sha: 2f05540
 prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "163"
+version: "164"
