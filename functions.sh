@@ -315,7 +315,7 @@ clone() {
 
 download_gradle() {
   if [ -z "$GRADLE_VERSION" ]; then
-    DISTRIBUTION=$(grep -e "^distributionUrl=https\\\\://services.gradle.org/" gradle/wrapper/gradle-wrapper.properties)
+    DISTRIBUTION=$(grep -e "^distributionUrl=https\\\\://services.gradle.org/" "$SRC/$PACKAGE/gradle/wrapper/gradle-wrapper.properties")
     GRADLE_VERSION=$(echo "$DISTRIBUTION" | grep -o "[0-9]\+\(\.[0-9]\+\)\+")
   fi
   GRADLE_ZIP_URL=https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
