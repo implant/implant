@@ -187,7 +187,7 @@ build() {
       ASSEMBLE=$PROJECT:$ASSEMBLE
     fi
 
-    /bin/bash -c "$GRADLE $GRADLE_OPTS $ASSEMBLE"
+    /bin/bash -c "$GRADLE --no-daemon $GRADLE_OPTS $ASSEMBLE"
   else
     eval "$BUILD"
   fi
