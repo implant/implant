@@ -1,7 +1,7 @@
 name: Wikipedia
 git:
   url: https://github.com/wikimedia/apps-android-wikipedia
-  sha: 74f702b
+  sha: 79e9dbf
   tags: r/[0-9.]+-r-[0-9-]+
 flavor: fdroid
-version: "50304"
+version: "50305"
