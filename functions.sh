@@ -201,9 +201,10 @@ setup_gradle_properties() {
   if [ -z "$GRADLEPROPS" ]; then
     return 0
   fi
-  puts "creating gradle.properties..."
-  echo "" >>gradle.properties
-  echo "$GRADLEPROPS" >>gradle.properties
+  gradle_props=$SRC/$PACKAGE/gradle.properties
+  puts "creating $gradle_props..."
+  echo "" >>"$gradle_props"
+  echo "$GRADLEPROPS" >>"$gradle_props"
 }
 
 setup_ndk() {
