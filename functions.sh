@@ -184,7 +184,7 @@ build() {
   if [ -z "$BUILD" ]; then
     ASSEMBLE=assemble${FLAVOR}Release
     if [ -n "$PROJECT" ]; then
-      ASSEMBLE=$PROJECT:$ASSEMBLE
+      ASSEMBLE=${PROJECT/\//:}:$ASSEMBLE
     fi
     cd "$SRC/$PACKAGE/$SUBDIR" || exit 1
     /bin/bash -c "$GRADLE --no-daemon $GRADLE_OPTS $ASSEMBLE"
@@ -359,14 +359,6 @@ checksum() {
 
 sha256() {
   sha256sum "$1" | awk '{ printf $1 }'
-}
-
-get_subdir() {
-  dirname "$1"
-}
-
-get_project() {
-  basename "$1"
 }
 
 print_log_tail() {

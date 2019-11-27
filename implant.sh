@@ -184,10 +184,9 @@ build_app() {
 
   clone_and_cd "$GIT_URL" "$SRC/$PACKAGE" "$GIT_SHA"
 
-  cd "$(get_subdir "$PROJECT")"
-  PROJECT="$(get_project "$PROJECT")"
+  MODULE_PATH=$SRC/$PACKAGE/$SUBDIR/$PROJECT
 
-  find "./$PROJECT" -regex '.*\.apk$' -exec rm -v {} \;
+  find "$MODULE_PATH" -regex '.*\.apk$' -exec rm -v {} \;
 
   download_gradle
 
@@ -197,13 +196,13 @@ build_app() {
     -e "s/.*signingConfig .*//g" \
     -e "s/apply plugin: 'com.google.gms.google-services'//g" \
     -e "s/apply plugin: 'io.fabric'//g" \
-    "$PWD/$PROJECT/$SUBDIR"/build.gradle*
+    "$MODULE_PATH"/build.gradle*
 
   prebuild
 
   build
 
-  find_apk "./$PROJECT" "*.apk"
+  find_apk "$MODULE_PATH" "*.apk"
 
   if [ -z "$(get_version_name "$apk")" ]; then
     puts "Missing version name"
