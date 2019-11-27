@@ -26,6 +26,7 @@ load_config() {
   puts
   puts "***** $PACKAGE $(date) *****"
   NAME=$(get_config name)
+  SUBDIR=$(get_config subdir)
   PROJECT=$(get_config project app)
   FLAVOR=$(get_config flavor)
   NDK=$(get_config ndk)
@@ -190,7 +191,7 @@ build_app() {
     -e "s/.*signingConfig .*//g" \
     -e "s/apply plugin: 'com.google.gms.google-services'//g" \
     -e "s/apply plugin: 'io.fabric'//g" \
-    "$PWD/$PROJECT"/build.gradle*
+    "$PWD/$PROJECT/$SUBDIR"/build.gradle*
 
   prebuild
 

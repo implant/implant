@@ -186,7 +186,7 @@ build() {
     if [ -n "$PROJECT" ]; then
       ASSEMBLE=$PROJECT:$ASSEMBLE
     fi
-
+    cd "$SRC/$PACKAGE/$SUBDIR" || exit 1
     /bin/bash -c "$GRADLE --no-daemon $GRADLE_OPTS $ASSEMBLE"
   else
     eval "$BUILD"
@@ -201,7 +201,7 @@ setup_gradle_properties() {
   if [ -z "$GRADLEPROPS" ]; then
     return 0
   fi
-  gradle_props=$SRC/$PACKAGE/gradle.properties
+  gradle_props=$SRC/$PACKAGE/$SUBDIR/gradle.properties
   puts "creating $gradle_props..."
   echo "" >>"$gradle_props"
   echo "$GRADLEPROPS" >>"$gradle_props"
@@ -316,7 +316,7 @@ clone() {
 
 download_gradle() {
   if [ -z "$GRADLE_VERSION" ]; then
-    DISTRIBUTION=$(grep -e "^distributionUrl=https\\\\://services.gradle.org/" "$SRC/$PACKAGE/gradle/wrapper/gradle-wrapper.properties")
+    DISTRIBUTION=$(grep -e "^distributionUrl=https\\\\://services.gradle.org/" "$SRC/$PACKAGE/$SUBDIR/gradle/wrapper/gradle-wrapper.properties")
     GRADLE_VERSION=$(echo "$DISTRIBUTION" | grep -o "[0-9]\+\(\.[0-9]\+\)\+")
   fi
   GRADLE_ZIP_URL=https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip
