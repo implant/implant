@@ -1,5 +1,5 @@
 name: Aurora Store
 git:
   url: https://gitlab.com/AuroraOSS/AuroraStore
-  sha: b19686f
+  sha: 2fb6881
 version: "13"
