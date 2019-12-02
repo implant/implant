@@ -1,6 +1,6 @@
 name: K-9 Mail
 git:
   url: https://github.com/k9mail/k-9
-  sha: 6ff1b67
+  sha: 33c875e
 project: app/k9mail
-version: "27000"
+version: "27001"
