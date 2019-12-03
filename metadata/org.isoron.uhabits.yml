@@ -1,0 +1,5 @@
+name: Loop Habit Tracker
+git:
+  url: https://github.com/iSoron/uhabits
+  sha: 957a5b7
+version: "38"
