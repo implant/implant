@@ -1,6 +1,6 @@
 name: Simple Contacts
 git:
   url: https://github.com/SimpleMobileTools/Simple-Contacts
-  sha: a33b3ab
+  sha: 91beb38
 prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "53"
+version: "54"
