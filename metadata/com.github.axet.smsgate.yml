@@ -1,7 +1,7 @@
 name: SMS Gate
 git:
   url: https://gitlab.com/axet/android-sms-gate
-  sha: 8fc15cf
+  sha: c8b027d
   tags: smsgate-[0-9.]+
 gradle: 5.4.1
-version: "236"
+version: "237"
