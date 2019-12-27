@@ -1,6 +1,6 @@
 name: OpenTracks
 git:
   url: https://github.com/dennisguse/OpenTracks
-  sha: e77590a
+  sha: 931574b
 project: ""
-version: "3195"
+version: "3213"
