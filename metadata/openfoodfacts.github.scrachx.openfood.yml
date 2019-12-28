@@ -1,6 +1,6 @@
 name: Open Food Facts
 git:
   url: https://github.com/openfoodfacts/openfoodfacts-androidapp
-  sha: befb45d
+  sha: 02a776c
 flavor: "off"
 version: "325"
