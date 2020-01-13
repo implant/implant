@@ -5,5 +5,5 @@ git:
 project: ""
 flavor: website
 prebuild: |
-  sed -i -e 's/task.finalizedBy signProductionWebsiteRelease//g' -e '/abi {/,/}/d' build.gradle
+  sed -i -e 's/task.finalizedBy signProductionWebsiteRelease//g' -e '/abi {/,/}/d' app/build.gradle
 version: "5720"
