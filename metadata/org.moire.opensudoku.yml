@@ -1,5 +1,5 @@
 name: Open Sudoku
 git:
   url: https://github.com/ogarcia/opensudoku
-  sha: 6e1b548
-version: "20191025"
+  sha: 87c32ac
+version: "20200115"
