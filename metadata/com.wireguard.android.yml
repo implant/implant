@@ -1,6 +1,6 @@
 name: WireGuard
 git:
   url: https://git.zx2c4.com/wireguard-android
-  sha: 727f465
+  sha: 0cad5bd
 deps: make patch
-version: "463"
+version: "464"
