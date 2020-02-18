@@ -1,5 +1,5 @@
 name: Simple Keyboard
 git:
   url: https://github.com/rkkr/simple-keyboard
-  sha: 1b85189
-version: "67"
+  sha: 42b76e7
+version: "68"
