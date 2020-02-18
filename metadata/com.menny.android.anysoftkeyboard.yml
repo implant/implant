@@ -1,8 +1,9 @@
 name: AnySoftKeyboard
 git:
   url: https://github.com/AnySoftKeyboard/AnySoftKeyboard
-  sha: 805764d
+  sha: e57c9cc
   tags: '[0-9.]+-r[0-9.]+'
 deps: make
-prebuild: if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/StaticVersionGenerator()/StaticVersionGenerator($VERSION)/" "$PROJECT"/build.gradle; fi
-version: "1"
+prebuild: if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/StaticVersionGenerator()/StaticVersionGenerator($VERSION)/"
+  "$PROJECT"/build.gradle; fi
+version: "2"
