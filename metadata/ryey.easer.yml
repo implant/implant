@@ -1,6 +1,6 @@
 name: Easer
 git:
   url: https://github.com/renyuneyun/Easer
-  sha: 5b9a38b
+  sha: f1dab90
 flavor: stable
-version: "122"
+version: "123"
