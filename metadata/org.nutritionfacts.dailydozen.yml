@@ -1,6 +1,6 @@
 name: Dr. Greger's Daily Dozen
 git:
   url: https://github.com/nutritionfactsorg/daily-dozen-android
-  sha: b3073e8
+  sha: aecd951
 flavor: fdroid
-version: "48"
+version: "52"
