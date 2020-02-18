@@ -1,7 +1,7 @@
 name: Torrent Client
 git:
   url: https://gitlab.com/axet/android-torrent-client
-  sha: f8440ad
+  sha: abcfa82
   tags: torrentclient-[0-9.]+
 gradle: 5.4.1
-version: "705"
+version: "707"
