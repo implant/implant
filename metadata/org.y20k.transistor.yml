@@ -1,5 +1,5 @@
 name: Transistor
 git:
   url: https://github.com/y20k/transistor
-  sha: 96521db
-version: "69"
+  sha: cf026ae
+version: "71"
