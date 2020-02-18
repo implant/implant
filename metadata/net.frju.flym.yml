@@ -1,6 +1,6 @@
 name: Flym
 git:
   url: https://github.com/FredJul/Flym
-  sha: 00e14e9
+  sha: 8e8d583
 prebuild: sed -i '/local\.properties/d' "$PROJECT"/build.gradle
-version: "27"
+version: "28"
