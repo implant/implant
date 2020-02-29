@@ -1,6 +1,6 @@
 name: OpenTasks
 git:
   url: https://github.com/dmfs/opentasks
-  sha: dedb8f9
+  sha: e750aca
 project: opentasks
-version: "77600"
+version: "5199"
