@@ -1,6 +1,6 @@
 name: andOTP
 git:
   url: https://github.com/andOTP/andOTP
-  sha: 7c34318
-version: "26"
+  sha: b8b9834
+version: "28"
 flavor: fdroid
