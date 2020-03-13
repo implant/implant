@@ -1,7 +1,7 @@
 name: Music Player GO
 git:
   url: https://github.com/enricocid/Music-Player-GO
-  sha: 909a0ae
+  sha: 5daa431
 subdir: project
 project: app
-version: "144"
+version: "147"
