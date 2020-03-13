@@ -1,6 +1,6 @@
 name: SuperFreezZ
 git:
   url: https://gitlab.com/SuperFreezZ/SuperFreezZ
-  sha: c1609f3
+  sha: 67966c8
 project: ""
-version: "100"
+version: "101"
