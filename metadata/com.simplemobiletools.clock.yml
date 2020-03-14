@@ -1,6 +1,5 @@
 name: Simple Clock
 git:
   url: https://github.com/SimpleMobileTools/Simple-Clock
-  sha: d39de74
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "15"
+  sha: 171e6f2
+version: "16"

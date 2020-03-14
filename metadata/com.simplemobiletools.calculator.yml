@@ -1,6 +1,5 @@
 name: Simple Calculator
 git:
   url: https://github.com/SimpleMobileTools/Simple-Calculator
-  sha: ded3c19
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "29"
+  sha: 4c048c7
+version: "32"

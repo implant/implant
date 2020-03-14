@@ -1,6 +1,5 @@
 name: Simple Flashlight
 git:
   url: https://github.com/SimpleMobileTools/Simple-Flashlight
-  sha: 4cc3ef7
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "35"
+  sha: d70be95
+version: "38"

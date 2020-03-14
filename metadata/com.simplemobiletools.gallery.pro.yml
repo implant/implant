@@ -2,5 +2,4 @@ name: Simple Gallery
 git:
   url: https://github.com/SimpleMobileTools/Simple-Gallery
   sha: c07b01b
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
 version: "275"

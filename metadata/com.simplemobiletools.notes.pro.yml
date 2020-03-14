@@ -1,6 +1,5 @@
 name: Simple Notes
 git:
   url: https://github.com/SimpleMobileTools/Simple-Notes
-  sha: 60a40f0
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "67"
+  sha: d0257c2
+version: "70"

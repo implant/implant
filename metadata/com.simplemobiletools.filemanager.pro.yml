@@ -1,6 +1,5 @@
 name: Simple File Manager
 git:
   url: https://github.com/SimpleMobileTools/Simple-File-Manager
-  sha: "2719583"
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "79"
+  sha: 01d0103
+version: "86"

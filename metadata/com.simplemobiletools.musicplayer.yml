@@ -1,6 +1,5 @@
 name: Simple Music Player
 git:
   url: https://github.com/SimpleMobileTools/Simple-Music-Player
-  sha: d4e3e19
-prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "62"
+  sha: f5397e2
+version: "64"
