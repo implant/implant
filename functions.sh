@@ -187,7 +187,7 @@ build() {
       ASSEMBLE=${PROJECT/\//:}:$ASSEMBLE
     fi
     cd "$SRC/$PACKAGE/$SUBDIR" || exit 1
-    /bin/bash -c "$GRADLE --no-daemon $GRADLE_OPTS $ASSEMBLE"
+    /bin/bash -c "$GRADLE --no-daemon $GRADLE_OPTS clean $ASSEMBLE"
   else
     eval "$BUILD"
   fi
