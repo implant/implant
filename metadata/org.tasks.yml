@@ -3,5 +3,5 @@ git:
   url: https://github.com/tasks/tasks
   sha: b3806bd
 flavor: generic
-gradle_props: tasks_mapbox_key_debug=pk.eyJ1IjoiYmFrZXJiYSIsImEiOiJjazExMXNvcHIwMDExM2NtaXdpYjc5ODJpIn0.fHR4HTUMOg3-k87aDzTLHw
+gradle_props: tasks_mapbox_key=pk.eyJ1IjoiYmFrZXJiYSIsImEiOiJjazExMXNvcHIwMDExM2NtaXdpYjc5ODJpIn0.fHR4HTUMOg3-k87aDzTLHw
 version: "691"
