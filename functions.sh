@@ -312,6 +312,9 @@ clone() {
       exit 1
     fi
   )
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
 }
 
 download_gradle() {
