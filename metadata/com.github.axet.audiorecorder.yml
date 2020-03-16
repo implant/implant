@@ -3,5 +3,5 @@ git:
   url: https://gitlab.com/axet/android-audio-recorder
   sha: ee82c16
   tags: audiorecorder-[0-9.]+
-gradle: 5.4.1
+gradle: 5.6.4
 version: "336"
