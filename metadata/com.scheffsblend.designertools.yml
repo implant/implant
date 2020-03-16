@@ -1,6 +1,6 @@
 name: Designer Tools
 git:
   url: https://github.com/0xD34D/DesignerTools
-  sha: 0ed2459
+  sha: db2c8d9
   tags: release-[0-9.]+
-version: "4"
+version: "5"
