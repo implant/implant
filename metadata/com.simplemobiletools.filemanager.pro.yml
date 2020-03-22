@@ -1,5 +1,5 @@
 name: Simple File Manager
 git:
   url: https://github.com/SimpleMobileTools/Simple-File-Manager
-  sha: 01d0103
-version: "86"
+  sha: 544cfd7
+version: "87"
