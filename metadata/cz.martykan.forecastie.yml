@@ -1,6 +1,6 @@
 name: Forecastie
 git:
   url: https://github.com/martykan/forecastie
-  sha: 1155afd
-version: "46"
+  sha: b2c49a5
+version: "47"
 gradle_opts: -x app:lintVitalRelease
