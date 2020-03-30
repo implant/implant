@@ -1,5 +1,5 @@
 name: Escapepod
 git:
   url: https://github.com/y20k/escapepod
-  sha: c004b69
-version: "25"
+  sha: 43944b7
+version: "26"
