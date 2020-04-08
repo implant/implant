@@ -1,5 +1,5 @@
 name: Trackbook
 git:
   url: https://github.com/y20k/trackbook
-  sha: 3324f85
-version: "39"
+  sha: 8796aa9
+version: "40"
