@@ -1,5 +1,5 @@
 name: Simple Music Player
 git:
   url: https://github.com/SimpleMobileTools/Simple-Music-Player
-  sha: 6c2fbd6
-version: "65"
+  sha: 0d0c7ad
+version: "66"
