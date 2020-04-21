@@ -1,5 +1,5 @@
 name: Simple Calendar
 git:
   url: https://github.com/SimpleMobileTools/Simple-Calendar
-  sha: ed25a11
-version: "174"
+  sha: 760d348
+version: "175"
