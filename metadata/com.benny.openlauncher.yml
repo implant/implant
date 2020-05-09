@@ -1,6 +1,6 @@
 name: OpenLauncher
 git:
   url: https://github.com/OpenLauncherTeam/openlauncher
-  sha: 56054b8
+  sha: 73968b6
 flavor: FlavorDefault
-version: "40"
+version: "41"
