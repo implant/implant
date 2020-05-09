@@ -1,5 +1,5 @@
 name: Open Camera
 git:
   url: https://git.code.sf.net/p/opencamera/code
-  sha: b9de786
-version: "74"
+  sha: 7932c1f
+version: "77"
