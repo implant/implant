@@ -1,5 +1,5 @@
 name: Audinaut
 git:
   url: https://github.com/nvllsvm/Audinaut
-  sha: 8fc54ac
-version: "201"
+  sha: d1f1331
+version: "202"
