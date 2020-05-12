@@ -1,5 +1,5 @@
 name: Vanilla
 git:
   url: https://github.com/vanilla-music/vanilla
-  sha: c717332
-version: "10840"
+  sha: 2d94f46
+version: "10850"
