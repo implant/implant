@@ -1,7 +1,7 @@
 name: LeafPic Revived
 git:
   url: https://github.com/apcro/leafpicrevived
-  sha: f1d99aa
+  sha: d771427
 project: leafpicrevived
 prebuild: sed -i -e '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "19"
+version: "24"
