@@ -259,13 +259,25 @@ clone_and_cd() {
 
 zipalign() {
   zipalign=$(find_build_tool zipalign)
-  puts "aligning $1 to $2..."
-  if ! $zipalign -f -v -p 4 "$1" "$2"; then
-    exit 1
-  fi
-  puts "verifying alignment for $2"
-  if ! $zipalign -c -v 4 "$2"; then
-    exit 1
+  $zipalign -c 4 "$1"
+  result=$?
+  if [ $result -eq 0 ]; then
+      mv "$1" "$2"
+  else
+      puts "aligning $1 to $2 with $zipalign..."
+      $zipalign -f -p 4 "$1" "$2"
+      result=$?
+      if [ $result -ne 0 ]; then
+        puts "zipalign error: $result"
+        exit 1
+      fi
+      puts "verifying alignment for $2"
+      $zipalign -c 4 "$2"
+      result=$?
+      if [ $result -ne 0 ]; then
+        puts "alignment verification error: $result"
+        exit 1
+      fi
   fi
 }
 
