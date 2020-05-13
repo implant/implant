@@ -1,6 +1,6 @@
 FROM openjdk:8u222-stretch
 
-ENV SDK=https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip \
+ENV SDK=https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
     YQ=https://github.com/mikefarah/yq/releases/download/2.4.0/yq_linux_amd64 \
     HOME=/root \
     IMPLANT=/root/implant \
@@ -15,8 +15,9 @@ RUN apt-get update && \
     mkdir -p $ANDROID_HOME /root/.implant && \
     unzip sdk.zip -d $ANDROID_HOME && \
     rm sdk.zip && \
-    yes | $ANDROID_HOME/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses && \
-    $ANDROID_HOME/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
+    yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && \
+    $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" && \
+    $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
 
 WORKDIR $IMPLANT
 
