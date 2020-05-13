@@ -1,6 +1,6 @@
 name: Voice
 git:
   url: https://github.com/PaulWoitaschek/Voice
-  sha: 21480cb
+  sha: 9cf1dc1
 flavor: opensource
-version: "3060327"
+version: "3060342"
