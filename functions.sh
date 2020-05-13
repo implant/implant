@@ -182,7 +182,7 @@ to_array() {
 build() {
   puts "building $PACKAGE..."
   if [ -z "$BUILD" ]; then
-    ASSEMBLE=assemble${FLAVOR}Release
+    ASSEMBLE=assemble${FLAVOR}${TARGET}
     if [ -n "$PROJECT" ]; then
       ASSEMBLE=${PROJECT/\//:}:$ASSEMBLE
     fi

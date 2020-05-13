@@ -29,6 +29,7 @@ load_config() {
   SUBDIR=$(get_config subdir)
   PROJECT=$(get_config project app)
   FLAVOR=$(get_config flavor)
+  TARGET=$(get_config target Release)
   NDK=$(get_config ndk)
   PREBUILD=$(get_config prebuild)
   BUILD=$(get_config build)
