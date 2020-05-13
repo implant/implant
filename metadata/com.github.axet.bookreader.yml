@@ -3,5 +3,5 @@ git:
   url: https://gitlab.com/axet/android-book-reader
   sha: 9bba2a7
   tags: bookreader-[0-9.]+
-gradle: 5.4.1
+gradle: 5.6.4
 version: "375"
