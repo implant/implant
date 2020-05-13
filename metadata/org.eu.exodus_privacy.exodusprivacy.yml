@@ -1,0 +1,5 @@
+name: Exodus Privacy
+git:
+  url: https://github.com/Exodus-Privacy/exodus-android-app
+  sha: 1f3d830
+version: "8"
