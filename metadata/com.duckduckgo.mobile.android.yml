@@ -1,5 +1,5 @@
 name: DuckDuckGo
 git:
   url: https://github.com/duckduckgo/Android
-  sha: 0b167e1
-version: "55301"
+  sha: abba57c
+version: "55400"
