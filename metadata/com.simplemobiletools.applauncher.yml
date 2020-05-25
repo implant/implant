@@ -1,5 +1,5 @@
 name: Simple App Launcher
 git:
   url: https://github.com/SimpleMobileTools/Simple-App-Launcher
-  sha: 4bc4fd0
-version: "24"
+  sha: 95920e8
+version: "25"
