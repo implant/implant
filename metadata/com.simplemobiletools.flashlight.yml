@@ -1,5 +1,5 @@
 name: Simple Flashlight
 git:
   url: https://github.com/SimpleMobileTools/Simple-Flashlight
-  sha: 9861be4
-version: "39"
+  sha: 2181fee
+version: "41"
