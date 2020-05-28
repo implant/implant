@@ -1,5 +1,5 @@
 name: Simple Clock
 git:
   url: https://github.com/SimpleMobileTools/Simple-Clock
-  sha: 64989d2
-version: "18"
+  sha: 60b5be3
+version: "19"
