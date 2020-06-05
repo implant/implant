@@ -16,8 +16,7 @@ RUN apt-get update && \
     unzip sdk.zip -d $ANDROID_HOME && \
     rm sdk.zip && \
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses && \
-    $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" && \
-    $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
+    $ANDROID_HOME/tools/bin/sdkmanager "platform-tools"
 
 WORKDIR $IMPLANT
 
