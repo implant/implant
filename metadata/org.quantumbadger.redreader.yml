@@ -1,6 +1,6 @@
 name: RedReader
 git:
   url: https://github.com/QuantumBadger/RedReader
-  sha: 2eaae4d
+  sha: 958eb24
 project: ""
-version: "89"
+version: "90"
