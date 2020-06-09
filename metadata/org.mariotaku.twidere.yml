@@ -1,7 +1,7 @@
 name: Twidere
 git:
   url: https://github.com/TwidereProject/Twidere-Android
-  sha: be402dd
+  sha: aba0d0b
 project: twidere
 flavor: fdroid
-version: "512"
+version: "513"
