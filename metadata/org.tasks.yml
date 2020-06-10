@@ -1,7 +1,7 @@
 name: Tasks
 git:
   url: https://github.com/tasks/tasks
-  sha: 79e2daa
+  sha: 7ca58c4
 flavor: generic
 gradle_props: tasks_mapbox_key=pk.eyJ1IjoiYmFrZXJiYSIsImEiOiJjazExMXNvcHIwMDExM2NtaXdpYjc5ODJpIn0.fHR4HTUMOg3-k87aDzTLHw
-version: "90501"
+version: "90602"
