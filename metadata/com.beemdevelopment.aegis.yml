@@ -1,5 +1,5 @@
 name: Aegis
 git:
   url: https://github.com/beemdevelopment/Aegis
-  sha: dbedc9d
-version: "28"
+  sha: 6e54497
+version: "35"
