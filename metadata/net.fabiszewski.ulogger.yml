@@ -1,5 +1,5 @@
 name: μlogger
 git:
   url: https://github.com/bfabiszewski/ulogger-android
-  sha: de99635
-version: "208"
+  sha: c82c30e
+version: "300"
