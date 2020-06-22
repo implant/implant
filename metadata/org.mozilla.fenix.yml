@@ -1,10 +1,10 @@
 name: Firefox Preview
 git:
   url: https://github.com/mozilla-mobile/fenix
-  sha: 12e81b8
+  sha: b94cfdf
 flavor: fenix
 target: production
 prebuild: |
   sed -i -e "s/Config.releaseVersionName(project)/\"$(git describe --contains "$GIT_SHA")\"/" -e 's/"x86", "armeabi-v7a", "arm64-v8a", "x86_64"/"armeabi-v7a"/g' "$PROJECT"/build.gradle
   if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/generatedVersionCode = .*/generatedVersionCode = $VERSION as int/" automation/gradle/versionCode.gradle; fi
-version: "21342216"
+version: "21741553"
