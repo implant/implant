@@ -1,6 +1,6 @@
 name: F-Droid
 git:
   url: https://gitlab.com/fdroid/fdroidclient
-  sha: 90d312c
+  sha: 2ca702a
 flavor: full
-version: "1008050"
+version: "1009000"
