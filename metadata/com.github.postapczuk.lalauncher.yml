@@ -1,6 +1,6 @@
 name: Light Launcher
 git:
   url: https://github.com/light-launcher/Light-Android-Launcher
-  sha: a36b7c9
+  sha: 299e29e
 project: LaLauncher
 version: "18"
