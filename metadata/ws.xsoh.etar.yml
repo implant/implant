@@ -1,6 +1,6 @@
 name: Etar Calendar
 git:
   url: https://github.com/Etar-Group/Etar-Calendar
-  sha: eaa404b
+  sha: 62a0ff6
 project: ""
-version: "23"
+version: "24"
