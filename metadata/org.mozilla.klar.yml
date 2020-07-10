@@ -1,9 +1,9 @@
 name: Firefox Klar
 git:
   url: https://github.com/mozilla-mobile/focus-android
-  sha: 8f5b182
+  sha: bffd015
 prebuild: |
   echo "--" > .adjust_token
   if [ -z "${UPDATE_SHA:-}" ]; then sed -i "s/generatedVersionCode = .*/generatedVersionCode = $VERSION as int/" tools/gradle/versionCode.gradle; fi
 flavor: KlarArm
-version: "341822319"
+version: "341922318"
