@@ -1,6 +1,6 @@
 name: Slide
 git:
   url: https://github.com/ccrama/Slide
-  sha: c364426
+  sha: 09950f9
 flavor: noGPlay
-version: "323"
+version: "326"
