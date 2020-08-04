@@ -1,6 +1,6 @@
 name: NetGuard
 git:
   url: https://github.com/M66B/NetGuard
-  sha: abd771c
+  sha: 4e27a45
 prebuild: sed -i '/keystoreProperties/d' "$PROJECT"/build.gradle
-version: "2020070801"
+version: "2020071701"
