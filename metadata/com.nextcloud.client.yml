@@ -1,8 +1,8 @@
 name: Nextcloud
 git:
   url: https://github.com/nextcloud/android
-  sha: 0abb3ba
+  sha: ce19f3a
   tags: stable-[0-9.]+
 project: ""
 flavor: generic
-version: "30120090"
+version: "30120190"
