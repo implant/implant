@@ -1,7 +1,7 @@
 name: Blokada
 git:
   url: https://github.com/blokadaorg/blokada
-  sha: c3f31c3
+  sha: 9b7e22e
 flavor: community
 prebuild: sed -i '/BLOKADA_/d' "$PROJECT"/build.gradle
-version: "407000003"
+version: "408000001"
