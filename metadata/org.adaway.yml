@@ -1,6 +1,6 @@
 name: AdAway
 git:
   url: https://github.com/AdAway/AdAway
-  sha: a556272
+  sha: e4cf47b
 deps: make
-version: "40305"
+version: "40306"
