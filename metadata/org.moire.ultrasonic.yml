@@ -1,6 +1,6 @@
 name: Ultrasonic
 git:
   url: https://github.com/ultrasonic/ultrasonic
-  sha: 0edaa29
+  sha: b04f309
 project: ultrasonic
-version: "75"
+version: "78"
