@@ -1,5 +1,5 @@
 name: DNS66
 git:
   url: https://github.com/julian-klode/dns66
-  sha: 5b57d6d
-version: "26"
+  sha: 4305ffe
+version: "27"
