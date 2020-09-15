@@ -1,6 +1,6 @@
 name: AndrOBD
 git:
   url: https://github.com/fr3ts0n/AndrOBD
-  sha: db2ed47
+  sha: 8f8cc31
 project: androbd
-version: "20201"
+version: "20202"
