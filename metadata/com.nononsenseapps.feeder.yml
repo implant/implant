@@ -1,5 +1,5 @@
 name: Feeder
 git:
   url: https://gitlab.com/spacecowboy/Feeder
-  sha: d75831e
-version: "79"
+  sha: 0edaa9b
+version: "80"
