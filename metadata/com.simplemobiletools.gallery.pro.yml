@@ -1,6 +1,6 @@
 name: Simple Gallery
 git:
   url: https://github.com/SimpleMobileTools/Simple-Gallery
-  sha: 78d80ab
+  sha: 4c5820c
 flavor: foss
-version: "320"
+version: "321"
