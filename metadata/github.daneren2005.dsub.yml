@@ -1,6 +1,6 @@
 name: DSub
 git:
   url: https://github.com/daneren2005/Subsonic
-  sha: 2c9056a
+  sha: 9bc552b
 flavor: floss
-version: "202"
+version: "205"
