@@ -1,6 +1,6 @@
 name: Vinyl
 git:
   url: https://github.com/AdrienPoupa/VinylMusicPlayer
-  sha: 9971a70
+  sha: e132515
 flavor: fdroid
-version: "170"
+version: "172"
