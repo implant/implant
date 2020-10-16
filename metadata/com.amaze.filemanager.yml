@@ -1,6 +1,6 @@
 name: Amaze File Manager
 git:
   url: https://github.com/TeamAmaze/AmazeFileManager
-  sha: 04d29df
+  sha: 98fb2d1
 flavor: fdroid
-version: "84"
+version: "89"
