@@ -1,5 +1,5 @@
 name: Wallabag
 git:
   url: https://github.com/wallabag/android-app
-  sha: "9022657"
-version: "226"
+  sha: "1202556"
+version: "227"
