@@ -1,7 +1,7 @@
 name: AntennaPod
 git:
   url: https://github.com/AntennaPod/AntennaPod
-  sha: e1ff4c8
+  sha: ee4b2c0
   tags: '[0-9.]+[a-z]?'
 flavor: free
-version: "2000195"
+version: "2000295"
