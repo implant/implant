@@ -1,6 +1,6 @@
 name: EteSync
 git:
   url: https://github.com/etesync/android
-  sha: 6c800fa
-version: "20100"
+  sha: 5f1ee70
+version: "20101"
 gradle_opts: --exclude-task lintVital
