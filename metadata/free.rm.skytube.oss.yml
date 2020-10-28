@@ -1,6 +1,6 @@
 name: SkyTube
 git:
   url: https://github.com/ram-on/SkyTube
-  sha: 5f6643d
+  sha: b0ee5ea
 flavor: oss
-version: "33"
+version: "34"
