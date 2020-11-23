@@ -1,5 +1,5 @@
 name: Simple Camera
 git:
   url: https://github.com/SimpleMobileTools/Simple-Camera
-  sha: 6c557be
-version: "74"
+  sha: ebf9820
+version: "75"
