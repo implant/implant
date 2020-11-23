@@ -1,5 +1,5 @@
 name: Simple Draw
 git:
   url: https://github.com/SimpleMobileTools/Simple-Draw
-  sha: 6a57547
-version: "55"
+  sha: a482519
+version: "56"
