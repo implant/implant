@@ -1,5 +1,5 @@
 name: NewPipe
 git:
   url: https://github.com/TeamNewPipe/NewPipe
-  sha: 25d5551
-version: "956"
+  sha: 57abe27
+version: "958"
