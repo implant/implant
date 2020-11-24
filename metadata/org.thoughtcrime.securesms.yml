@@ -3,7 +3,7 @@ git:
   url: https://github.com/signalapp/Signal-Android
   sha: 533d866
 project: ""
-flavor: website
+flavor: websiteProd
 prebuild: |
   sed -i -e 's/task.finalizedBy signProductionWebsiteRelease//g' -e '/abi {/,/}/d' app/build.gradle
 version: "7190"
