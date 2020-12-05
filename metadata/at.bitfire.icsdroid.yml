@@ -1,6 +1,6 @@
 name: ICSx⁵
 git:
   url: https://gitlab.com/bitfireAT/icsx5
-  sha: dd3c48d
+  sha: 07be03e
 flavor: standard
-version: "47"
+version: "48"
