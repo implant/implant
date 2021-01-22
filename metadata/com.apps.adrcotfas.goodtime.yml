@@ -1,6 +1,6 @@
 name: Goodtime
 git:
   url: https://github.com/goodtime-productivity/Goodtime
-  sha: ba18197
+  sha: 027a0bb
 flavor: fdroid
-version: "128"
+version: "129"
