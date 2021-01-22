@@ -1,6 +1,6 @@
 name: GPS Logger
 git:
   url: https://github.com/mendhak/gpslogger
-  sha: baff16b
+  sha: 1a3f983
 project: gpslogger
-version: "105"
+version: "107"
