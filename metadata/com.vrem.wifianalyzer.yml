@@ -1,6 +1,6 @@
 name: WiFi Analyzer
 git:
   url: https://github.com/VREMSoftwareDevelopment/WiFiAnalyzer
-  sha: 70acd2a
+  sha: d88ccd5
   tags: V[0-9.]+-F-DROID
-version: "53"
+version: "54"
