@@ -1,6 +1,6 @@
 name: DAVx⁵
 git:
   url: https://gitlab.com/bitfireAT/davx5-ose
-  sha: 35a6ddb
+  sha: 40a35ac
   tags: v[0-9.]+-ose
-version: "303070006"
+version: "303080002"
