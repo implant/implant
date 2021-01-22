@@ -1,5 +1,5 @@
 name: Simple Calculator
 git:
   url: https://github.com/SimpleMobileTools/Simple-Calculator
-  sha: 7599b5e
-version: "37"
+  sha: 48f6329
+version: "38"
