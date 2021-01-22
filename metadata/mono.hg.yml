@@ -1,5 +1,5 @@
 name: HgLauncher
 git:
   url: https://github.com/F4uzan/HgLauncher
-  sha: b987503
-version: "1500000"
+  sha: ae096bd
+version: "1510000"
