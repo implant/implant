@@ -1,5 +1,5 @@
 name: Simple Contacts
 git:
   url: https://github.com/SimpleMobileTools/Simple-Contacts
-  sha: 681ea5a
-version: "77"
+  sha: cf8bc27
+version: "79"
