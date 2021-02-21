@@ -1,5 +1,5 @@
 name: KISS Launcher
 git:
   url: https://github.com/Neamar/KISS
-  sha: a1929c7
-version: "180"
+  sha: e6fa6cf
+version: "185"
