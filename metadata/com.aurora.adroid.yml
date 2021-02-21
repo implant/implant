@@ -1,5 +1,5 @@
 name: Aurora Droid
 git:
   url: https://gitlab.com/AuroraOSS/auroradroid
-  sha: a1f06ee
-version: "6"
+  sha: d93864e
+version: "7"
